@@ -8,7 +8,7 @@ export default function FAQ() {
   const current = faqData[activeCategory];
 
   return (
-    <section className="faq">
+    <section className="faq" id="faq">
       <div className="content-wrapper">
         <div className="faq-header">
           <h2>Frequently Asked Questions</h2>

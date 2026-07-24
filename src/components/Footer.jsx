@@ -1,4 +1,5 @@
 import { footerData } from "../data";
+import { Link } from "react-router";
 
 const Footer = () => {
   return (
@@ -15,7 +16,7 @@ const Footer = () => {
                     <ul>
                       {section.links.map((link) => (
                         <li key={link.linkName}>
-                          <a href={link.linkPath}>{link.linkName}</a>
+                          <Link to={link.linkPath}>{link.linkName}</Link>
                         </li>
                       ))}
                     </ul>
@@ -31,7 +32,7 @@ const Footer = () => {
                     <ul>
                       {section.links.map((link) => (
                         <li key={link.linkName}>
-                          <a href={link.linkPath}>{link.linkName}</a>
+                          <Link to={link.linkPath}>{link.linkName}</Link>
                         </li>
                       ))}
                     </ul>

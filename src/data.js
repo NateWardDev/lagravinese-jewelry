@@ -65,7 +65,7 @@ export const footerData = [
       },
       {
         linkName: "FAQ",
-        linkPath: "inquiries#faq",
+        linkPath: "/inquiries#faq",
       },
     ],
   },
