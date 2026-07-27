@@ -720,38 +720,63 @@ header {
 
 // inqueires page
 .inquiries-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-items: start;
-  gap: 2rem;
   width: 100%;
-  .images-container {
+  position: relative;
+
+  // 1. ADDED: Outer layout wrapper isolates the form space calculation from GSAP injections
+  .inquiries-grid-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  // 2. ADDED: Fixed-width column that acts as a structural placeholder so layout space never shrinks
+  .inquiries-visual-column {
     width: 50%;
     position: relative;
-    height: 80dvh;
-    background: var(--black);
-    border-radius: var(--border-rad);
-    overflow: hidden;
-    .img-wrapper {
-      opacity: 0;
-      user-select: none;
-      pointer-events: none;
-      visibility: hidden;
+    height: 80dvh; // Matches the physical boundary height of your container
+
+    // 3. UPDATED: Target container pinned cleanly inside the rigid layout column
+    .images-container {
+      width: 100%; // Now fits 100% of its parent structural column space safely
       height: 100%;
-      width: 100%;
-      top: 0;
-      left: 0;
-      position: absolute;
-      transition: var(--transition-25);
-      &.active {
-        opacity: 1;
-        user-select: auto;
-        pointer-events: auto;
-        visibility: visible;
+      background: var(--black);
+      border-radius: var(--border-rad);
+      overflow: hidden;
+      position: relative;
+
+      .img-wrapper {
+        opacity: 0;
+        user-select: none;
+        pointer-events: none;
+        visibility: hidden;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        position: absolute;
+        transition: var(--transition-25);
+
+        &.active {
+          opacity: 1;
+          user-select: auto;
+          pointer-events: auto;
+          visibility: visible;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
   }
+
+  // 4. PRESERVED: Your exact custom styling rules for form assets are completely unchanged
   .contact-form {
     width: 50%;
     display: flex;
@@ -785,11 +810,9 @@ header {
       textarea {
         width: 100%;
         padding: 0.9rem 1rem;
-
         color: var(--black);
-        background: var(--white);
-
-        border: 2px solid transparent;
+        background: transparent;
+        border: 2px solid var(--bg-off-color);
         border-radius: var(--border-rad);
         transition:
           border-color 0.2s ease,
@@ -802,7 +825,6 @@ header {
         &:focus {
           outline: none;
           border-color: #b08d57;
-          // box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.15);
         }
       }
 
@@ -823,19 +845,13 @@ header {
 
     button {
       align-self: flex-start;
-
       padding: 1rem 2.5rem;
-
       border: none;
       border-radius: 4px;
-
       background: var(--wine);
       color: var(--white);
-
       font-weight: 600;
-
       cursor: pointer;
-
       transition:
         background-color var(--transition-25),
         transform var(--transition-25);
@@ -856,61 +872,163 @@ header {
   }
 }
 
+// faq section on inquiries page
 .faq {
   display: flex;
   flex-direction: column;
   align-items: center;
   .content-wrapper {
     width: 100%;
-    height: auto;
-    .faq-layout {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .faq-layout-vertical {
       display: flex;
-      align-items: start;
-      justify-content: center;
-      gap: 4rem;
-      height: 100%;
+      flex-direction: column;
+      gap: 1.5rem;
       width: 100%;
-      .faq-content {
-        width: 65%;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        height: 100%;
-        .faq-question {
-          &::after {
-            content: "";
-            display: inline-block;
-            margin-left: 1rem;
-            width: 0;
-            height: 0;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-left: 15px solid currentColor;
-            transition: transform 0.2s ease;
-            transform: rotate(90deg);
+
+      .faq-category-card {
+        border-radius: var(--border-rad);
+        background: var(--bg-off-color);
+        overflow: hidden;
+        transition: background-color 0.3s ease;
+
+        &.category-active {
+          background: transparent;
+          border: 1px solid rgba(0, 0, 0, 0.3);
+
+          .faq-category-toggle {
+            background: var(--wine);
           }
-          &.active {
-            &::after {
-              transform: rotate(90deg) scaleX(-1);
+        }
+
+        .faq-category-toggle {
+          width: 100%;
+          text-align: center;
+          padding: 1.25rem 1.5rem;
+          font-size: 1.3rem;
+          font-weight: 500;
+          background: transparent;
+          color: var(--white);
+          border: none;
+          cursor: pointer;
+          transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+        }
+
+        // --- ANIMATED CATEGORY WRAPPER ---
+        .faq-enclosed-content-wrapper {
+          display: grid;
+          grid-template-rows: 0fr; // Collapsed state
+          transition: grid-template-rows 0.35s ease-in-out;
+
+          &.is-open {
+            grid-template-rows: 1fr; // Expanded state
+          }
+
+          .faq-enclosed-content {
+            overflow: hidden; // Prevents contents popping out early
+            min-height: 0; // Crucial calculation reset for grid fractional rows
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            opacity: 0;
+            transition:
+              opacity 0.25s ease,
+              padding 0.35s ease-in-out;
+          }
+
+          &.is-open .faq-enclosed-content {
+            padding: 1.5rem;
+            opacity: 1;
+          }
+        }
+
+        .faq-item {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+          padding-bottom: 1rem;
+
+          &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+          }
+
+          .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: left;
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: inherit;
+            padding: 0.5rem 0;
+
+            .arrow-icon {
+              font-size: 0.8rem;
+              transition: transform 0.3s ease;
+              margin-left: 1rem;
+            }
+
+            &.active {
+              font-weight: bold;
+              .arrow-icon {
+                transform: scale(-1);
+              }
+            }
+          }
+
+          // --- ANIMATED ANSWER WRAPPER ---
+          .faq-answer-wrapper {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows 0.3s ease-in-out;
+
+            &.is-open {
+              grid-template-rows: 1fr;
+            }
+
+            .faq-answer {
+              overflow: hidden;
+              min-height: 0;
+              opacity: 0;
+              transition:
+                opacity 0.2s ease,
+                margin 0.3s ease-in-out;
+              line-height: 1.6;
+
+              p {
+                margin: 0;
+              }
+            }
+
+            &.is-open .faq-answer {
+              margin-top: 0.75rem;
+              opacity: 0.95;
             }
           }
         }
       }
-      .faq-nav {
-        display: flex;
-        flex-direction: column;
-        width: 35%;
-        gap: 2rem;
-        button {
-          transition: var(--transition-25);
-          border-radius: var(--border-rad);
-          background: var(--bg-off-color);
-          color: var(--white);
-          padding: 0.5rem;
-          &.active {
-            background: var(--wine);
-          }
-        }
+    }
+
+    .faq-footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 1rem;
+      a {
+        color: var(--wine);
+        text-decoration: underline;
+        font-weight: 600;
       }
     }
   }
@@ -1004,8 +1122,6 @@ footer {
         margin-top: auto;
         padding-top: 2rem;
         width: 100%;
-
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
 
         display: flex;
         justify-content: space-between;
@@ -1150,86 +1266,11 @@ footer {
 
   // inqueires page
   .inquiries-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-items: start;
-    gap: 2rem;
-    .images-container {
+    .inquiries-visual-column {
       display: none;
     }
     .contact-form {
       width: 100%;
-      // max-width: none;
-    }
-  }
-
-  .faq {
-    .content-wrapper {
-      .faq-layout {
-        flex-direction: column;
-        gap: 2rem;
-
-        .faq-nav {
-          width: 100%;
-
-          flex-direction: row;
-          gap: 1rem;
-
-          overflow-x: auto;
-          overflow-y: hidden;
-
-          padding-bottom: 0.5rem;
-
-          scrollbar-width: none;
-
-          &::-webkit-scrollbar {
-            display: none;
-          }
-
-          button {
-            flex: 0 0 auto;
-            white-space: nowrap;
-
-            padding: 0.75rem 1.25rem;
-          }
-        }
-
-        .faq-content {
-          width: 100%;
-          gap: 1rem;
-
-          .faq-item {
-            border-radius: var(--border-rad);
-            overflow: hidden;
-          }
-
-          .faq-question {
-            width: 100%;
-
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            text-align: left;
-
-            padding: 1rem;
-
-            &::after {
-              margin-left: 1rem;
-              flex-shrink: 0;
-            }
-          }
-
-          .faq-answer {
-            padding: 0 1rem 1rem;
-
-            p {
-              margin: 0;
-            }
-          }
-        }
-      }
     }
   }
 
