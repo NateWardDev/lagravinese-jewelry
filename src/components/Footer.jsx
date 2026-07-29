@@ -73,7 +73,9 @@ const Footer = () => {
 
             <p>
               Website by{" "}
-              <a href="https://narleywebstudios.com">Narley Web Studios</a>
+              <a href="https://narleywebstudios.com" target="_blank">
+                Narley Web Studios
+              </a>
             </p>
           </div>
         </div>

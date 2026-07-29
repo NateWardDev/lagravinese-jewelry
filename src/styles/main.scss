@@ -78,7 +78,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 0.25rem 01rem;
+
     .logo {
       width: 50px;
     }
@@ -116,7 +117,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 1rem 7rem;
+    padding: 0.5rem 7rem;
+    color: var(--black);
     transition: var(--transition-25);
     .main-links {
       display: flex;
@@ -183,6 +185,7 @@ body {
         align-items: center;
         justify-content: center;
         a {
+          color: var(--white);
           transition: var(--transition-25);
           border-radius: 0.5rem;
           display: flex;
@@ -230,11 +233,11 @@ body {
         }
       }
     }
-    a {
+    a,
+    .social-links li a {
       color: var(--black);
-    }
-    .logo {
-      filter: invert(0);
+
+      color: var(--black);
     }
   }
   &.hide-menu {
@@ -344,9 +347,6 @@ section {
     max-width: 1600px;
     margin: auto auto;
   }
-  &.collections-desktop {
-    margin-bottom: 0;
-  }
   &.about {
     padding: 5rem;
     h2 {
@@ -364,199 +364,309 @@ section {
 }
 
 // all page headers
-header {
-  height: 100dvh;
+.header-hero {
   position: relative;
-  .imgs-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  width: 100%;
+  height: 60dvh; // Default height for all non-home pages
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  top: 0;
+  // Specific height for Home route
+  &.home {
+    height: 100dvh;
+  }
+
+  // Single Background Image & Overlay
+  .img-wrapper {
+    border-radius: 0;
+    position: absolute;
+    // inset: 0;
     width: 100%;
-    .img-wrapper {
-      width: 50%;
-      height: 100%;
-      border-radius: 0;
-      z-index: -1;
-    }
+    height: 100%;
+    z-index: 1;
+
+    // Dark fade overlay using ::after
     &::after {
       content: "";
       position: absolute;
       inset: 0;
-      pointer-events: none;
-
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.6) 0%,
-        rgba(0, 0, 0, 0.3) 7%,
+        rgba(0, 0, 0, 0.3) 7.5%,
         rgba(0, 0, 0, 0) 15%
       );
+      pointer-events: none;
     }
   }
+
+  // Centered Header Text
   .text-wrapper {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    width: 100%;
-    padding: 0.5rem;
+    z-index: 2;
     text-align: center;
-    color: var(--white);
-    text-shadow: 0 4px 16px #00000081;
-  }
-  &.journey,
-  &.work,
-  &.inquiries {
-    height: 75dvh;
-    .imgs-container {
-      .img-wrapper {
-        width: 100%;
-        &:last-child {
-          display: none;
-        }
-      }
-    }
-  }
-  &.inquiries {
-    height: 50dvh;
-  }
-}
-
-.card {
-  opacity: 1;
-  transform: translateY(0);
-  transition: var(--transition-4);
-  &.active {
-    opacity: 0;
+    color: #ffffff;
+    padding: 0 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 }
 
 // for cards basic styling
-.cards-container {
-  display: flex;
-  gap: 2.5rem;
-  height: auto;
-  flex-wrap: wrap;
-  align-items: start;
-  justify-content: center;
-  .card {
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    min-width: 250px;
-    width: calc(33% - 1.5rem);
-    position: relative;
-    .text-wrapper {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: end;
-      position: absolute;
-      bottom: 0;
-      color: var(--white);
-      width: 100%;
-      border-radius: var(--border-rad);
-      overflow: hidden;
-      h3 {
-        padding-left: 1rem;
-        margin: auto 0;
-      }
-    }
-    .img-wrapper {
-      height: 100%;
-      position: relative;
-      overflow: hidden;
-
-      &::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-
-        background: linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.55) 0%,
-          rgba(0, 0, 0, 0.25) 15%,
-          rgba(0, 0, 0, 0) 30%
-        );
-      }
-    }
-    .button-wrapper {
-      border-radius: 75% 0 0 0;
-      padding: 1.5rem 1rem 1rem 1.5rem;
-      display: flex;
-      align-items: center;
-      position: relative;
-      justify-content: center;
-      background: var(--wine);
-      color: var(--white);
-      transition: var(--transition-25);
-      span {
-        height: 100%;
-        opacity: 1;
-        transition: var(--transition-25);
-      }
-      svg {
-        position: absolute;
-        top: 55%;
-        left: 55%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        opacity: 0;
-        transition: var(--transition-25);
-      }
-      &:hover {
-        background: var(--accent);
-        span {
-          opacity: 0;
-        }
-        svg {
-          opacity: 1;
-        }
-      }
-    }
-  }
-}
-
-.collections-mobile {
-  display: none;
-  flex-direction: column;
-  height: auto;
-  .cards-container {
-    flex-direction: column;
-    width: 100%;
-    .card {
-      height: 55dvh;
-    }
-  }
-}
-
-.collections-desktop {
-  height: 100dvh;
+.highlights-carousel {
+  padding: 3rem 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  .cards-container {
-    padding-right: 4rem;
+  h2 {
+    text-align: center;
+  }
+
+  /* Scroll Track Centering Engine */
+  .cards-track {
     display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: max-content; // Container grows with cards
-    height: 70%;
+    gap: 2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Track Spacers: Dynamically centers the first & last cards based on viewport */
+    &::before,
     &::after {
       content: "";
-      flex: 0 0 4rem;
+      /* Desktop Default (> 1024px): 50vw - (70vw / 2) */
+      flex: 0 0 calc(50vw - 35vw);
+
+      @media screen and (max-width: 1024px) {
+        /* Large Tablet (<= 1024px): 50vw - (75vw / 2) */
+        flex: 0 0 calc(50vw - 37.5vw);
+      }
+
+      @media screen and (max-width: 768px) {
+        /* Tablet (<= 768px): 50vw - (85vw / 2) */
+        flex: 0 0 calc(50vw - 42.5vw);
+      }
+
+      @media screen and (max-width: 480px) {
+        /* Mobile (<= 480px): 50vw - (92vw / 2) */
+        flex: 0 0 calc(50vw - 46vw);
+      }
     }
+
     .card {
-      flex: 0 0 500px; // Don't shrink, fixed width
-      width: 500px;
-      height: 100%;
+      /* Desktop Default (> 1024px): 70% width */
+      flex: 0 0 70vw;
+      max-width: 1100px;
+      height: 600px;
+      scroll-snap-align: center;
+      border-radius: var(--border-rad, 16px);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+
+      @media screen and (max-width: 1024px) {
+        /* Large Tablet: 75% width */
+        flex: 0 0 75vw;
+        max-width: none;
+      }
+
+      @media screen and (max-width: 768px) {
+        /* Tablet: 85% width */
+        flex: 0 0 85vw;
+        height: 550px;
+      }
+
+      @media screen and (max-width: 480px) {
+        /* Mobile: 92% width */
+        flex: 0 0 92vw;
+        height: 500px;
+      }
+
+      /* Full background image */
+      .img-wrapper {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.6) 0%,
+            rgba(0, 0, 0, 0.15) 40%,
+            rgba(0, 0, 0, 0) 100%
+          );
+          pointer-events: none;
+        }
+      }
+
+      &:hover .img-wrapper img {
+        transform: scale(1.04);
+      }
+
+      /* Hover Reveal Container */
+      .card-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+
+        /* Default state: Header sits at bottom center */
+        .card-header {
+          text-align: center;
+          color: var(--white, #ffffff);
+          transition: transform 0.35s ease;
+
+          h3 {
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+          }
+        }
+
+        /* Default state: View Button is hidden below card */
+        .button-wrapper {
+          margin-top: 0.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: var(--wine);
+          color: #ffffff;
+          padding: 0.5rem 1.5rem;
+          border-radius: 30px;
+          text-decoration: none;
+          font-weight: 500;
+          opacity: 0;
+          transform: translateY(15px);
+          transition:
+            opacity 0.3s ease,
+            transform 0.3s ease,
+            background 0.25s ease;
+
+          &:hover {
+            background: var(--accent, #6e1e35);
+          }
+        }
+      }
+
+      /* HOVER STATE: Slides title up and reveals View Collection button */
+      &:hover .card-content {
+        .card-header {
+          transform: translateY(-5px);
+        }
+
+        .button-wrapper {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     }
+  }
+
+  /* Bottom Controls Bar */
+  .controls-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    .pagination-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--bg-color);
+      filter: brightness(0.9);
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+
+      .dot-btn {
+        border: none;
+        outline: none;
+        background: var(--wine);
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        padding: 0;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          width 0.3s ease,
+          border-radius 0.3s ease;
+
+        &.active {
+          width: 60px;
+          border-radius: 10px;
+
+          .progress-fill {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--accent);
+            transform-origin: left;
+            animation: progressFill linear forwards;
+          }
+        }
+      }
+    }
+
+    .play-pause-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--wine);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: background 0.2s ease;
+
+      &:hover {
+        background: var(--accent);
+      }
+    }
+  }
+}
+
+@keyframes progressFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 
@@ -567,8 +677,6 @@ header {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  height: 90dvh;
 
   .content-wrapper {
     display: flex;
@@ -1120,7 +1228,7 @@ footer {
 
       .footer-bottom {
         margin-top: auto;
-        padding-top: 2rem;
+
         width: 100%;
 
         display: flex;
@@ -1235,11 +1343,12 @@ footer {
   .collections-mobile {
     display: flex;
     .cards-container {
-      flex-direction: column;
-      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
       .card {
         height: 55dvh;
-        width: 100%;
+        width: calc(50% - 0.5rem);
       }
     }
   }
@@ -1315,15 +1424,6 @@ footer {
     }
   }
 
-  .collections-mobile {
-    .cards-container {
-      gap: 1rem;
-      .card {
-        width: 100%;
-      }
-    }
-  }
-
   .home-contact {
     display: flex;
     flex-direction: column;
@@ -1332,6 +1432,20 @@ footer {
         height: 450px;
 
         gap: 0.75rem;
+      }
+    }
+  }
+  .collections-mobile {
+    display: flex;
+    .cards-container {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      width: 100%;
+      border: 1px solid;
+      .card {
+        height: 55dvh;
+        width: 100%;
       }
     }
   }

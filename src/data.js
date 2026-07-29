@@ -88,45 +88,37 @@ export const footerData = [
 ];
 
 // images for headers
-import homeImage1 from "/images/greenCoat.jpeg";
-import homeImage2 from "/images/cosmos.jpeg";
-import journeyImage1 from "/images/greenCoat.jpeg";
-import journeyImage2 from "/images/cosmos.jpeg";
-import workImage1 from "/images/greenCoat.jpeg";
-import workImage2 from "/images/cosmos.jpeg";
-import inquiriesImage1 from "/images/greenCoat.jpeg";
-import inquiriesImage2 from "/images/cosmos.jpeg";
+import homeImage from "/images/greenCoat.jpeg";
+import journeyImage from "/images/greenCoat.jpeg";
+import workImage from "/images/greenCoat.jpeg";
+import inquiriesImage from "/images/greenCoat.jpeg";
 
 export const headerData = [
   {
     path: "/",
     name: "home",
-    img1: homeImage1,
-    img2: homeImage2,
+    img: homeImage,
     mainText: "LaGravinese",
     secondText: "Custom Jewelry",
   },
   {
     path: "/journey",
     name: "journey",
-    img1: journeyImage1,
-    img2: journeyImage2,
+    img: journeyImage,
     mainText: "Our Journey",
     secondText: "A Family Legacy",
   },
   {
     path: "/work",
     name: "work",
-    img1: workImage1,
-    img2: workImage2,
+    img: workImage,
     mainText: "Our Work",
     secondText: "Crafted with Precision",
   },
   {
     path: "/inquiries",
     name: "inquiries",
-    img1: inquiriesImage1,
-    img2: inquiriesImage2,
+    img: inquiriesImage,
     mainText: "Inquiries",
     secondText: "Let's Create Together",
   },
