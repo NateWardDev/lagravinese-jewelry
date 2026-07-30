@@ -1471,28 +1471,29 @@ footer {
     }
   }
   // testimonials section
+  /* 1. Ensure parent section allows overflow scrolling */
   .testimonials {
+    overflow: visible;
+    width: 100%;
+
     .content-wrapper {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-
-      /* 1. Explicitly override desktop centering to fix scroll clipping */
-      justify-content: flex-start;
+      flex-wrap: nowrap !important;
+      justify-content: flex-start !important;
       align-items: stretch;
-      gap: 1.25rem;
+      gap: 1.5rem;
 
-      /* 2. Enable horizontal scrolling & momentum */
-      overflow-x: auto;
+      /* 2. Full-bleed horizontal scroll track */
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: auto !important;
       overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
 
-      /* 3. Padding and Snap Padding for left/right screen spacing */
-      padding-inline: 1.5rem;
-      scroll-padding-inline: 1.5rem;
-      padding-bottom: 1rem; /* Space for box-shadows */
+      /* 3. Padding on left/right edges */
+      padding-left: 1.5rem;
+      scroll-padding-left: 1.5rem;
 
       /* Hide Scrollbars */
       scrollbar-width: none;
@@ -1502,28 +1503,23 @@ footer {
       }
 
       .card {
-        flex: 0 0 auto; /* Stop flex cards from shrinking */
-        width: 80%;
-        min-width: 260px;
-        max-width: 320px;
+        /* 4. Strict flex sizing to guarantee cards don't shrink or squish */
+        flex: 0 0 320px !important; /* Fixed width per card */
+        width: 320px !important;
+        min-width: 280px !important;
         height: 500px;
         max-height: 65dvh;
-
-        /* Snap behavior */
+        margin: 0 !important; /* Prevent auto-margins from breaking scroll track */
+        box-shadow: none;
+        /* Snap alignment */
         scroll-snap-align: start;
-        scroll-snap-stop: always;
 
         .background-image {
+          display: none;
           position: absolute;
           inset: 0;
-          opacity: 1;
+          // opacity: 1;
           z-index: 1;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
         }
 
         .text-wrapper {
@@ -1531,12 +1527,17 @@ footer {
           z-index: 2;
           margin-top: 0;
         }
+        &:hover {
+          .names {
+            backdrop-filter: brightness(1) blur(0);
+          }
+        }
       }
 
-      /* 4. Fix for Safari ignoring right-padding in scroll containers */
+      /* 5. Essential Safari/Mobile Chrome Fix: Forces scroll track to register full right width */
       &::after {
         content: "";
-        flex: 0 0 0.5rem; /* Acts as an invisible right margin spacer */
+        display: block;
       }
     }
   }
