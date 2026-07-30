@@ -267,13 +267,11 @@ export const homeContactData = {
 // home About section
 import homeAboutPhoto from "/images/siblings.jpg";
 export const homeAboutData = {
+  heading: "Our Journey",
   image: {
     src: homeAboutPhoto,
     alt: "The LaGravinese family",
   },
-
-  heading: "Our Journey",
-
   paragraphs: [
     "For four generations, the LaGravinese name has been rooted in the jewelry industry through craftsmanship, integrity, and a passion for helping people celebrate life's most meaningful moments.",
 
@@ -281,7 +279,6 @@ export const homeAboutData = {
 
     "Whether you're choosing your first meaningful piece, redesigning a treasured heirloom, or creating something entirely new, we're here to guide you with honesty, education, and genuine care.",
   ],
-
   button: {
     text: "Learn More",
     path: "/journey",
@@ -301,6 +298,8 @@ import pendants from "/images/pendant.jpeg";
 export const collections = {
   header: "What We Create",
   icon: FaArrowRight,
+  pageLink: "Gallery",
+  linkTo: "/work",
   items: [
     {
       title: "Engagement Rings",
@@ -343,6 +342,36 @@ export const collections = {
       image: pendants,
       alt: "Custom pendant",
       link: "/collections/pendants",
+    },
+  ],
+};
+
+export const services = {
+  header: "Jewelry Services",
+  icon: FaArrowRight,
+  pageLink: "Services",
+  linkTo: "/work",
+  items: [
+    {
+      title: "Professional Jewelry Appraisals",
+      image: engagementRings,
+      alt: "Custom engagement ring",
+      description:
+        "Receive a detailed, professional evaluation of your jewelry for insurance, estate planning, resale, or personal records.",
+    },
+    {
+      title: "Stone Replacement & Resetting",
+      image: bracelets,
+      alt: "Custom engagement ring",
+      description:
+        "Restore your favorite pieces with expert stone replacement, secure resetting, and precision craftsmanship.",
+    },
+    {
+      title: "Custom Jewelry Design",
+      image: pendants,
+      alt: "Custom engagement ring",
+      description:
+        "Work one-on-one with our designers to create a unique, handcrafted piece tailored to your vision and style.",
     },
   ],
 };

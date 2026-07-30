@@ -14,6 +14,10 @@
 }
 
 .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
   box-shadow: var(--box-shadow);
   color: var(--white);
   border-radius: var(--border-rad);
@@ -22,6 +26,7 @@
   background: var(--wine);
   &:hover {
     background: var(--accent);
+    transform: translateY(-3px);
   }
   &.white {
     background: var(--bg-color);
@@ -49,6 +54,7 @@ body {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    object-position: center;
   }
 }
 
@@ -334,13 +340,14 @@ body {
 
 // genral padding
 header {
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
 }
 section {
-  padding: 0 5rem;
-  margin-bottom: 5rem;
+  padding: 2.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   h2 {
-    padding-bottom: 2rem;
     text-align: center;
   }
   .content-wrapper {
@@ -348,18 +355,10 @@ section {
     margin: auto auto;
   }
   &.about {
-    padding: 5rem;
-    h2 {
-      padding-bottom: 0rem;
-    }
+    margin: 2.5rem 0;
   }
-  &.testimonials {
-    h2 {
-      padding-bottom: 3rem;
-    }
-  }
-  &.inquiries-section {
-    padding: 5rem 5rem 6.5rem 5rem;
+  &.highlights-carousel {
+    padding: 2.5rem 0;
   }
 }
 
@@ -413,9 +412,8 @@ section {
   }
 }
 
-// for cards basic styling
+// home collections section
 .highlights-carousel {
-  padding: 3rem 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -551,17 +549,13 @@ section {
         }
 
         /* Default state: View Button is hidden below card */
-        .button-wrapper {
+        .page-link {
           margin-top: 0.5rem;
           display: flex;
           align-items: center;
           gap: 0.5rem;
           background: var(--wine);
           color: #ffffff;
-          padding: 0.5rem 1.5rem;
-          border-radius: 30px;
-          text-decoration: none;
-          font-weight: 500;
           opacity: 0;
           transform: translateY(15px);
           transition:
@@ -581,7 +575,7 @@ section {
           transform: translateY(-5px);
         }
 
-        .button-wrapper {
+        .page-link {
           opacity: 1;
           transform: translateY(0);
         }
@@ -595,7 +589,6 @@ section {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin-top: 2rem;
 
     .pagination-pill {
       display: flex;
@@ -603,7 +596,7 @@ section {
       gap: 0.6rem;
       background: var(--bg-color);
       filter: brightness(0.9);
-      padding: 0.6rem 1.2rem;
+      padding: 1rem 1.5rem;
       border-radius: 30px;
 
       .dot-btn {
@@ -639,28 +632,9 @@ section {
         }
       }
     }
-
-    .play-pause-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: none;
-      background: var(--wine);
-      color: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.8rem;
-      transition: background 0.2s ease;
-
-      &:hover {
-        background: var(--accent);
-      }
-    }
   }
 }
-
+// fills the bar on bottom
 @keyframes progressFill {
   from {
     transform: scaleX(0);
@@ -670,6 +644,202 @@ section {
   }
 }
 
+// home services section
+.services-feature-section {
+  max-width: 1500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  /* Main Stage Frame */
+  .services-stage {
+    &.desktop {
+      display: grid;
+      grid-template-columns: 500px 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      background: var(--wine);
+      border-radius: var(--border-rad);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 600px; /* Gives plenty of vertical space */
+    }
+    &.mobile {
+      display: none;
+      flex-direction: column;
+      gap: 3rem;
+      .service-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        .img-wrapper {
+          box-shadow: var(--box-shadow);
+          max-height: 350px;
+          aspect-ratio: 1 / 1;
+        }
+      }
+    }
+  }
+
+  /* Left Side: Interactive Controls */
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    z-index: 2;
+
+    .service-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+
+      /* Button Toggle */
+      .pill-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: var(--border-rad);
+        color: var(--white);
+        backdrop-filter: blur(1rem);
+        background: #04040450;
+        font-size: 1.25rem;
+        cursor: pointer;
+        transition:
+          background var(--transition-25),
+          transform var(--transition-4),
+          filter var(--transition-25);
+
+        &:hover {
+          filter: brightness(1.2);
+        }
+      }
+
+      /* Active Pill State (Desktop) */
+      &.active {
+        .pill-button {
+          filter: brightness(1);
+          background: var(--accent);
+        }
+      }
+
+      /* Animated Height Wrapper (CSS Grid Animation) */
+      .description-wrapper {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+        width: 100%;
+
+        .description-card-inner {
+          overflow: hidden;
+        }
+
+        /* Card Content Styling */
+        .description-card {
+          margin-top: 0.75rem;
+          max-width: 500px;
+          background: var(--accent);
+          padding: 1.25rem;
+          border-radius: var(--border-rad);
+          color: var(--white);
+
+          /* Fade & Slide Transition */
+          opacity: 0;
+          transform: translateY(-8px);
+          transition:
+            opacity 0.3s ease,
+            transform 0.3s ease;
+        }
+      }
+
+      /* Open State: Expands Grid & Fades In Text (Desktop) */
+      &.active .description-wrapper {
+        grid-template-rows: 1fr;
+
+        .description-card {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.05s;
+        }
+      }
+    }
+  }
+
+  /* Right Side: Full Background Preview Frame */
+  .services-preview-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    .img-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      /* Stacked Images for Smooth Cross-Fade */
+      .preview-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+
+        /* Transition settings */
+        opacity: 0;
+        transform: scale(1.02);
+        transition:
+          opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        pointer-events: none;
+
+        /* Visible Image State */
+        &.active {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Soft Left Gradient Vignette for readability */
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(0, 0, 0, 0.4) 15%,
+          rgba(245, 245, 247, 0) 35%
+        );
+        pointer-events: none;
+      }
+    }
+  }
+
+  /* Centered Bottom CTA Button */
+  .services-footer {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* Smooth Entrance Keyframe for Description Bubble */
+@keyframes bubbleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// home about section
 .about {
   background-image: url("../images/brown-leaf-bg.png");
   background-color: var(--accent);
@@ -709,10 +879,10 @@ section {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 2.5rem;
+    gap: 1.5rem;
     .card {
       border-radius: var(--border-rad);
-      // overflow: hidden;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -721,16 +891,39 @@ section {
       background: var(--wine);
       color: var(--white);
       min-width: 250px;
-      width: calc(25% - 2.5rem);
+      width: calc(25% - 1.5rem);
       box-shadow: var(--box-shadow);
+      gap: 0;
+
       .img-wrapper {
-        z-index: 2;
-        position: absolute;
+        margin: 1rem;
+        width: 100px;
+        min-height: 100px;
+        max-height: 100px;
         border-radius: 50%;
-        width: 40%;
-        transform: translate(10%, -30%);
-        aspect-ratio: 1 / 1;
-        box-shadow: var(--box-shadow);
+      }
+      .text-wrapper {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: start;
+        height: 100%;
+        .names {
+          z-index: 3;
+          padding: 0.25rem 1rem;
+          border-radius: var(--border-rad);
+          transition: var(--transition-25);
+        }
+      }
+      &:hover {
+        .background-image {
+          opacity: 1;
+          // clip-path: circle(150% at 10% 0);
+        }
+        .names {
+          backdrop-filter: brightness(0.8) blur(1rem);
+        }
       }
       .background-image {
         z-index: 1;
@@ -751,24 +944,7 @@ section {
           object-fit: cover;
         }
       }
-      .text-wrapper {
-        margin-top: 30%;
-        padding: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 100%;
-      }
-      &:hover {
-        .background-image {
-          opacity: 1;
-          // clip-path: circle(150% at 10% 0);
-        }
-      }
     }
-  }
-  .controls-wrapper {
-    display: none;
   }
 }
 
@@ -1020,7 +1196,6 @@ section {
           width: 100%;
           text-align: center;
           padding: 1.25rem 1.5rem;
-          font-size: 1.3rem;
           font-weight: 500;
           background: transparent;
           color: var(--white);
@@ -1077,13 +1252,11 @@ section {
             text-align: left;
             background: transparent;
             border: none;
-            font-size: 1.1rem;
             cursor: pointer;
             color: inherit;
             padding: 0.5rem 0;
 
             .arrow-icon {
-              font-size: 0.8rem;
               transition: transform 0.3s ease;
               margin-left: 1rem;
             }
@@ -1132,7 +1305,6 @@ section {
     .faq-footer {
       text-align: center;
       margin-top: 4rem;
-      font-size: 1rem;
       a {
         color: var(--wine);
         text-decoration: underline;
@@ -1265,26 +1437,24 @@ footer {
   }
 
   // padding
-  header {
-    margin-bottom: 5rem;
-  }
   section {
-    padding: 0 3rem;
-    margin-bottom: 5rem;
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     h2 {
-      padding-bottom: 1.5rem;
-      text-align: left;
+      text-align: center;
+    }
+    .content-wrapper {
+      max-width: 1600px;
+      margin: auto auto;
     }
     &.about {
-      padding: 5rem 3rem;
+      margin: 2.5rem 0;
     }
+    &.highlights-carousel,
     &.testimonials {
-      h2 {
-        padding-bottom: 0rem;
-      }
-    }
-    &.inquiries-section {
-      padding: 0 3rem;
+      padding: 2.5rem 0;
     }
   }
 
@@ -1303,58 +1473,97 @@ footer {
   // testimonials section
   .testimonials {
     .content-wrapper {
-      display: flex; /* Ensure display is flex */
+      display: flex;
+      flex-direction: row;
       flex-wrap: nowrap;
-      justify-content: start;
-      gap: 1rem;
 
-      /* CSS Carousel Magic */
+      /* 1. Explicitly override desktop centering to fix scroll clipping */
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: 1.25rem;
+
+      /* 2. Enable horizontal scrolling & momentum */
       overflow-x: auto;
+      overflow-y: hidden;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch; /* Smooth momentum scrolling for iOS */
+      -webkit-overflow-scrolling: touch;
 
-      padding-top: 3rem;
+      /* 3. Padding and Snap Padding for left/right screen spacing */
+      padding-inline: 1.5rem;
+      scroll-padding-inline: 1.5rem;
+      padding-bottom: 1rem; /* Space for box-shadows */
+
+      /* Hide Scrollbars */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
 
       .card {
-        box-shadow: none;
-        flex: 0 0 auto; /* Prevent cards from shrinking */
-        height: 600px;
-        max-height: 70dvh;
-        min-width: 250px;
-        max-width: 300px;
-        width: 75%;
+        flex: 0 0 auto; /* Stop flex cards from shrinking */
+        width: 80%;
+        min-width: 260px;
+        max-width: 320px;
+        height: 500px;
+        max-height: 65dvh;
 
-        /* Snap alignment */
+        /* Snap behavior */
         scroll-snap-align: start;
+        scroll-snap-stop: always;
 
         .background-image {
-          position: relative;
+          position: absolute;
+          inset: 0;
           opacity: 1;
+          z-index: 1;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
+
         .text-wrapper {
+          position: relative;
+          z-index: 2;
           margin-top: 0;
         }
+      }
+
+      /* 4. Fix for Safari ignoring right-padding in scroll containers */
+      &::after {
+        content: "";
+        flex: 0 0 0.5rem; /* Acts as an invisible right margin spacer */
       }
     }
   }
 
   // home collections
-  .collections-mobile {
-    display: flex;
-    .cards-container {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1rem;
+  .highlights-carousel {
+    /* Scroll Track Centering Engine */
+    .cards-track {
       .card {
-        height: 55dvh;
-        width: calc(50% - 0.5rem);
+        /* Hover Reveal Container */
+        .card-content {
+          /* Default state: Header sits at bottom center */
+          .card-header {
+            h3 {
+              margin: 0;
+              text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            }
+          }
+          /* Default state: View Button is hidden below card */
+          .button-wrapper {
+            opacity: 1;
+            transform: translateY(0px);
+          }
+        }
+        /* HOVER STATE: Slides title up and reveals View Collection button */
       }
     }
-  }
-
-  .collections-desktop {
-    display: none;
   }
 
   .home-contact {
@@ -1406,21 +1615,23 @@ footer {
 @media screen and (max-width: 768px) {
   // padding
   section {
-    padding: 0 1.5rem;
-    margin-bottom: 5rem;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     h2 {
-      padding-bottom: 1.5rem;
+      text-align: center;
+    }
+    .content-wrapper {
+      max-width: 1600px;
+      margin: auto auto;
     }
     &.about {
-      padding: 5rem 1.5rem;
+      margin: 2.5rem 0;
     }
+    &.highlights-carousel,
     &.testimonials {
-      h2 {
-        padding-bottom: 0rem;
-      }
-    }
-    &.inquiries-section {
-      padding: 0 1.5rem;
+      padding: 2.5rem 0;
     }
   }
 
@@ -1435,17 +1646,13 @@ footer {
       }
     }
   }
-  .collections-mobile {
-    display: flex;
-    .cards-container {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: 1rem;
-      width: 100%;
-      border: 1px solid;
-      .card {
-        height: 55dvh;
-        width: 100%;
+  .services-feature-section {
+    .services-stage {
+      &.desktop {
+        display: none;
+      }
+      &.mobile {
+        display: flex;
       }
     }
   }
@@ -1454,21 +1661,23 @@ footer {
 @media screen and (max-width: 480px) {
   // padding
   section {
-    padding: 0 0.75rem;
-    margin-bottom: 5rem;
+    padding: 2.5rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
     h2 {
-      padding-bottom: 0.75rem;
+      text-align: center;
+    }
+    .content-wrapper {
+      max-width: 1600px;
+      margin: auto auto;
     }
     &.about {
-      padding: 5rem 0.75rem;
+      margin: 2.5rem 0;
     }
+    &.highlights-carousel,
     &.testimonials {
-      h2 {
-        padding-bottom: 0rem;
-      }
-    }
-    &.inquiries-section {
-      padding: 0 0.75rem;
+      padding: 2.5rem 0;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { collections } from "../data";
+import { Link } from "react-router";
 
 const DURATION_PER_SLIDE = 10000;
 
@@ -107,10 +108,10 @@ const CollectionsHome = () => {
                 <h3>{item.title}</h3>
               </div>
 
-              <a className="button-wrapper" href={item.link}>
-                <span>View Collection</span>
+              <Link className="page-link" to={collections.linkTo}>
+                <span>{collections.pageLink}</span>
                 <Icon />
-              </a>
+              </Link>
             </div>
           </div>
         ))}
