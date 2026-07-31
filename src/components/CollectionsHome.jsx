@@ -38,6 +38,8 @@ const CollectionsHome = () => {
     // Schedule auto-advance only if user isn't holding or dragging
     if (!isUserInteracting.current) {
       timerRef.current = gsap.delayedCall(DURATION_PER_SLIDE, () => {
+        // Flag programmatic scroll BEFORE updating index so scroll engine triggers
+        isProgrammaticScroll.current = true;
         setActiveIndex((prev) => (prev + 1) % collections.items.length);
       });
     }
@@ -47,7 +49,7 @@ const CollectionsHome = () => {
     };
   }, [activeIndex]);
 
-  // 2. Programmatic Center Scroll Engine (Clicking Dots)
+  // 2. Center Scroll Engine (Handles Timer & Dot Clicks)
   useEffect(() => {
     if (!trackRef.current) return;
 
@@ -55,6 +57,7 @@ const CollectionsHome = () => {
     const cards = track.querySelectorAll(".card");
     const targetCard = cards[activeIndex];
 
+    // Only scroll programmatically when flagged (from timer or dot click)
     if (targetCard && isProgrammaticScroll.current) {
       const cardOffset = targetCard.offsetLeft;
       const cardWidth = targetCard.offsetWidth;
@@ -70,7 +73,7 @@ const CollectionsHome = () => {
 
       scrollTimeoutRef.current = setTimeout(() => {
         isProgrammaticScroll.current = false;
-      }, 500);
+      }, 600);
     }
 
     return () => {
@@ -82,7 +85,6 @@ const CollectionsHome = () => {
   const handleScroll = () => {
     if (isProgrammaticScroll.current || !trackRef.current) return;
 
-    // Use requestAnimationFrame so frame renders stay smooth and uninterrupted
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
     rafRef.current = requestAnimationFrame(() => {
@@ -105,7 +107,6 @@ const CollectionsHome = () => {
         }
       });
 
-      // Update active dot in real time, but synchronized with display refresh rate
       if (closestIndex !== activeIndex) {
         setActiveIndex(closestIndex);
       }
@@ -117,7 +118,6 @@ const CollectionsHome = () => {
     isUserInteracting.current = true;
     if (timerRef.current) timerRef.current.pause();
 
-    // Temporarily turn off CSS snap so dragging feels completely free/fluid
     if (trackRef.current) {
       trackRef.current.style.scrollSnapType = "none";
     }
@@ -126,7 +126,6 @@ const CollectionsHome = () => {
   const handleTouchEnd = () => {
     isUserInteracting.current = false;
 
-    // Re-enable CSS snap once touch ends so it gently settles in center
     if (trackRef.current) {
       trackRef.current.style.scrollSnapType = "x mandatory";
     }
