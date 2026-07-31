@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { collections } from "../data";
 import { Link } from "react-router";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-const DURATION_PER_SLIDE = 10000;
+const DURATION_PER_SLIDE = 4; // 4 seconds
 
 const CollectionsHome = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -10,9 +12,42 @@ const CollectionsHome = () => {
   const trackRef = useRef(null);
   const isProgrammaticScroll = useRef(false);
   const scrollTimeoutRef = useRef(null);
-  const prevIndexRef = useRef(0);
+  const isUserInteracting = useRef(false);
+  const rafRef = useRef(null);
 
-  // 1. Center Scroll Engine with Dynamic Distance Lock
+  const activeProgressRef = useRef(null);
+  const timerRef = useRef(null);
+
+  // 1. GSAP Timer & Progress Bar Engine
+  useGSAP(() => {
+    if (timerRef.current) timerRef.current.kill();
+
+    if (activeProgressRef.current) {
+      gsap.fromTo(
+        activeProgressRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: DURATION_PER_SLIDE,
+          ease: "none",
+          transformOrigin: "left center",
+        },
+      );
+    }
+
+    // Schedule auto-advance only if user isn't holding or dragging
+    if (!isUserInteracting.current) {
+      timerRef.current = gsap.delayedCall(DURATION_PER_SLIDE, () => {
+        setActiveIndex((prev) => (prev + 1) % collections.items.length);
+      });
+    }
+
+    return () => {
+      if (timerRef.current) timerRef.current.kill();
+    };
+  }, [activeIndex]);
+
+  // 2. Programmatic Center Scroll Engine (Clicking Dots)
   useEffect(() => {
     if (!trackRef.current) return;
 
@@ -20,16 +55,12 @@ const CollectionsHome = () => {
     const cards = track.querySelectorAll(".card");
     const targetCard = cards[activeIndex];
 
-    if (targetCard) {
-      isProgrammaticScroll.current = true;
-
-      // Calculate exact scroll coordinate to center the target card
+    if (targetCard && isProgrammaticScroll.current) {
       const cardOffset = targetCard.offsetLeft;
       const cardWidth = targetCard.offsetWidth;
       const trackWidth = track.offsetWidth;
       const targetScrollLeft = cardOffset - trackWidth / 2 + cardWidth / 2;
 
-      // Always smooth scroll (even when wrapping around from last to first)
       track.scrollTo({
         left: targetScrollLeft,
         behavior: "smooth",
@@ -37,17 +68,9 @@ const CollectionsHome = () => {
 
       if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
 
-      // Calculate distance jumped
-      const distance = Math.abs(activeIndex - prevIndexRef.current);
-      prevIndexRef.current = activeIndex;
-
-      // Dynamic lock duration: base 500ms + 120ms per card jumped (capped at 1400ms)
-      // Gives full-width smooth transitions enough time to settle without onScroll intercepting
-      const lockDuration = Math.min(500 + distance * 120, 1400);
-
       scrollTimeoutRef.current = setTimeout(() => {
         isProgrammaticScroll.current = false;
-      }, lockDuration);
+      }, 500);
     }
 
     return () => {
@@ -55,36 +78,64 @@ const CollectionsHome = () => {
     };
   }, [activeIndex]);
 
-  // 2. Handle manual swipe / drag scrolling and sync activeIndex
+  // 3. Fluid Proximity Scroll Detection using requestAnimationFrame
   const handleScroll = () => {
     if (isProgrammaticScroll.current || !trackRef.current) return;
 
-    const track = trackRef.current;
-    const trackCenter = track.scrollLeft + track.offsetWidth / 2;
-    const cards = track.querySelectorAll(".card");
+    // Use requestAnimationFrame so frame renders stay smooth and uninterrupted
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
 
-    let closestIndex = 0;
-    let minDistance = Infinity;
+    rafRef.current = requestAnimationFrame(() => {
+      if (!trackRef.current) return;
 
-    cards.forEach((card, index) => {
-      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
-      const distance = Math.abs(cardCenter - trackCenter);
+      const track = trackRef.current;
+      const trackCenter = track.scrollLeft + track.offsetWidth / 2;
+      const cards = track.querySelectorAll(".card");
 
-      if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = index;
+      let closestIndex = activeIndex;
+      let minDistance = Infinity;
+
+      cards.forEach((card, index) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const distance = Math.abs(cardCenter - trackCenter);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          closestIndex = index;
+        }
+      });
+
+      // Update active dot in real time, but synchronized with display refresh rate
+      if (closestIndex !== activeIndex) {
+        setActiveIndex(closestIndex);
       }
     });
+  };
 
-    if (closestIndex !== activeIndex) {
-      setActiveIndex(closestIndex);
-      prevIndexRef.current = closestIndex;
+  // 4. Touch & Drag Handlers to temporarily unlock snap for fluid physics
+  const handleTouchStart = () => {
+    isUserInteracting.current = true;
+    if (timerRef.current) timerRef.current.pause();
+
+    // Temporarily turn off CSS snap so dragging feels completely free/fluid
+    if (trackRef.current) {
+      trackRef.current.style.scrollSnapType = "none";
     }
   };
 
-  // 3. Auto-advance callback when timer finishes
-  const handleAnimationEnd = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % collections.items.length);
+  const handleTouchEnd = () => {
+    isUserInteracting.current = false;
+
+    // Re-enable CSS snap once touch ends so it gently settles in center
+    if (trackRef.current) {
+      trackRef.current.style.scrollSnapType = "x mandatory";
+    }
+  };
+
+  const handleManualSelect = (index) => {
+    if (index === activeIndex) return;
+    isProgrammaticScroll.current = true;
+    setActiveIndex(index);
   };
 
   const Icon = collections.icon;
@@ -96,7 +147,15 @@ const CollectionsHome = () => {
       </div>
 
       {/* Main Track */}
-      <div className="cards-track" ref={trackRef} onScroll={handleScroll}>
+      <div
+        className="cards-track"
+        ref={trackRef}
+        onScroll={handleScroll}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onMouseDown={handleTouchStart}
+        onMouseUp={handleTouchEnd}
+      >
         {collections.items.map((item) => (
           <div className="card" key={item.title}>
             <div className="img-wrapper">
@@ -124,17 +183,11 @@ const CollectionsHome = () => {
             <button
               key={index}
               className={`dot-btn ${index === activeIndex ? "active" : ""}`}
-              onClick={() => setActiveIndex(index)}
+              onClick={() => handleManualSelect(index)}
               aria-label={`Go to slide ${index + 1}`}
             >
               {index === activeIndex && (
-                <span
-                  className="progress-fill"
-                  onAnimationEnd={handleAnimationEnd}
-                  style={{
-                    animationDuration: `${DURATION_PER_SLIDE}ms`,
-                  }}
-                />
+                <span className="progress-fill" ref={activeProgressRef} />
               )}
             </button>
           ))}

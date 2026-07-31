@@ -1,10 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Anton&family=Cormorant:ital,wght@0,300..700;1,300..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Jomhuria&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Questrial&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-
 :root {
-  --bg-color: #faf0e6;
-  --bg-off-color: #967d90;
-  --wine: #4d2430;
-  --accent: #967d90;
+  --bg-color: #f9f7f1;
+  --bg-off-color: #551f22;
+  --wine: #301415;
+  --accent: #551f22;
   --black: #000;
   --white: #fff;
   --transition-25: 0.25s ease-in-out;
@@ -40,7 +38,6 @@
 
 body {
   background: var(--bg-color);
-  font-family: "Cormorant", serif;
   font-optical-sizing: auto;
   // font-weight: <weight>;
   font-style: normal;
@@ -123,13 +120,13 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem 7rem;
+    padding: 01.5rem 3vw;
     color: var(--black);
     transition: var(--transition-25);
     .main-links {
       display: flex;
       flex-direction: row;
-      gap: 3rem;
+      gap: 2rem;
       padding: 0;
       margin: 0 auto;
       a {
@@ -217,6 +214,7 @@ body {
       }
     }
     .desktop-container {
+      padding: 0.75rem 3vw;
       .main-links {
         padding: 0;
         margin: 0 auto;
@@ -340,10 +338,13 @@ body {
 
 // genral padding
 header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 5rem;
+  &.journey {
+    margin-bottom: 0;
+  }
 }
 section {
-  padding: 2.5rem 5rem;
+  padding: 5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -355,10 +356,16 @@ section {
     margin: auto auto;
   }
   &.about {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
     margin: 2.5rem 0;
   }
   &.highlights-carousel {
     padding: 2.5rem 0;
+  }
+  &.timeline {
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
@@ -413,53 +420,277 @@ section {
 }
 
 // home collections section
+// .highlights-carousel {
+//   width: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   h2 {
+//     text-align: center;
+//   }
+
+//   /* Scroll Track Centering Engine */
+//   .cards-track {
+//     display: flex;
+//     gap: 2rem;
+//     overflow-x: auto;
+//     overflow-y: hidden;
+//     scroll-snap-type: x mandatory;
+//     scroll-behavior: smooth;
+//     scrollbar-width: none;
+
+//     &::-webkit-scrollbar {
+//       display: none;
+//     }
+
+//     /* Track Spacers: Dynamically centers the first & last cards based on viewport */
+//     &::before,
+//     &::after {
+//       content: "";
+//       /* Desktop Default (> 1024px): 50vw - (70vw / 2) */
+//       flex: 0 0 calc(50vw - 35vw);
+
+//       @media screen and (max-width: 1024px) {
+//         /* Large Tablet (<= 1024px): 50vw - (75vw / 2) */
+//         flex: 0 0 calc(50vw - 37.5vw);
+//       }
+
+//       @media screen and (max-width: 768px) {
+//         /* Tablet (<= 768px): 50vw - (85vw / 2) */
+//         flex: 0 0 calc(50vw - 42.5vw);
+//       }
+
+//       @media screen and (max-width: 480px) {
+//         /* Mobile (<= 480px): 50vw - (92vw / 2) */
+//         flex: 0 0 calc(50vw - 46vw);
+//       }
+//     }
+
+//     .card {
+//       /* Desktop Default (> 1024px): 70% width */
+//       flex: 0 0 70vw;
+//       max-width: 1100px;
+//       height: 600px;
+//       scroll-snap-align: center;
+//       border-radius: var(--border-rad, 16px);
+//       overflow: hidden;
+//       position: relative;
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: flex-end;
+//       align-items: center;
+
+//       @media screen and (max-width: 1024px) {
+//         /* Large Tablet: 75% width */
+//         flex: 0 0 75vw;
+//         max-width: none;
+//       }
+
+//       @media screen and (max-width: 768px) {
+//         /* Tablet: 85% width */
+//         flex: 0 0 85vw;
+//         height: 550px;
+//       }
+
+//       @media screen and (max-width: 480px) {
+//         /* Mobile: 92% width */
+//         flex: 0 0 92vw;
+//         height: 500px;
+//       }
+
+//       /* Full background image */
+//       .img-wrapper {
+//         position: absolute;
+//         inset: 0;
+//         width: 100%;
+//         height: 100%;
+//         z-index: 1;
+
+//         img {
+//           width: 100%;
+//           height: 100%;
+//           object-fit: cover;
+//           display: block;
+//           transition: transform 0.4s ease;
+//         }
+
+//         &::after {
+//           content: "";
+//           position: absolute;
+//           inset: 0;
+//           background: linear-gradient(
+//             to top,
+//             rgba(0, 0, 0, 0.6) 0%,
+//             rgba(0, 0, 0, 0.15) 40%,
+//             rgba(0, 0, 0, 0) 100%
+//           );
+//           pointer-events: none;
+//         }
+//       }
+
+//       &:hover .img-wrapper img {
+//         transform: scale(1.04);
+//       }
+
+//       /* Hover Reveal Container */
+//       .card-content {
+//         position: relative;
+//         z-index: 2;
+//         width: 100%;
+//         padding: 1.5rem;
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         justify-content: flex-end;
+//         transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+
+//         /* Default state: Header sits at bottom center */
+//         .card-header {
+//           text-align: center;
+//           color: var(--white, #ffffff);
+//           transition: transform 0.35s ease;
+
+//           h3 {
+//             margin: 0;
+//             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+//           }
+//         }
+
+//         /* Default state: View Button is hidden below card */
+//         .page-link {
+//           margin-top: 0.5rem;
+//           display: flex;
+//           align-items: center;
+//           gap: 0.5rem;
+//           background: var(--wine);
+//           color: #ffffff;
+//           opacity: 0;
+//           transform: translateY(15px);
+//           transition:
+//             opacity 0.3s ease,
+//             transform 0.3s ease,
+//             background 0.25s ease;
+
+//           &:hover {
+//             background: var(--accent, #6e1e35);
+//           }
+//         }
+//       }
+
+//       /* HOVER STATE: Slides title up and reveals View Collection button */
+//       &:hover .card-content {
+//         .card-header {
+//           transform: translateY(-5px);
+//         }
+
+//         .page-link {
+//           opacity: 1;
+//           transform: translateY(0);
+//         }
+//       }
+//     }
+//   }
+
+//   /* Bottom Controls Bar */
+//   .controls-wrapper {
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     gap: 1rem;
+
+//     .pagination-pill {
+//       display: flex;
+//       align-items: center;
+//       gap: 0.6rem;
+//       background: var(--bg-color);
+//       filter: brightness(0.9);
+//       padding: 1rem 1.5rem;
+//       border-radius: 30px;
+
+//       .dot-btn {
+//         border: none;
+//         outline: none;
+//         background: var(--wine);
+//         width: 15px;
+//         height: 15px;
+//         border-radius: 50%;
+//         padding: 0;
+//         cursor: pointer;
+//         position: relative;
+//         overflow: hidden;
+//         transition:
+//           width 0.3s ease,
+//           border-radius 0.3s ease;
+
+//         &.active {
+//           width: 60px;
+//           border-radius: 10px;
+
+//           .progress-fill {
+//             display: block;
+//             position: absolute;
+//             top: 0;
+//             left: 0;
+//             height: 100%;
+//             width: 100%;
+//             background: var(--accent);
+//             filter: brightness(2.5);
+//             transform-origin: left;
+//             animation: progressFill linear forwards;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// // fills the bar on bottom
+// @keyframes progressFill {
+//   from {
+//     transform: scaleX(0);
+//   }
+//   to {
+//     transform: scaleX(1);
+//   }
+// }
+
 .highlights-carousel {
   width: 100%;
   display: flex;
   flex-direction: column;
+
   h2 {
     text-align: center;
   }
 
-  /* Scroll Track Centering Engine */
   .cards-track {
     display: flex;
     gap: 2rem;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    /* REMOVED: scroll-behavior: smooth; (prevents double-smoothing & snap jitter) */
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
       display: none;
     }
 
-    /* Track Spacers: Dynamically centers the first & last cards based on viewport */
     &::before,
     &::after {
       content: "";
-      /* Desktop Default (> 1024px): 50vw - (70vw / 2) */
       flex: 0 0 calc(50vw - 35vw);
 
       @media screen and (max-width: 1024px) {
-        /* Large Tablet (<= 1024px): 50vw - (75vw / 2) */
         flex: 0 0 calc(50vw - 37.5vw);
       }
-
       @media screen and (max-width: 768px) {
-        /* Tablet (<= 768px): 50vw - (85vw / 2) */
         flex: 0 0 calc(50vw - 42.5vw);
       }
-
       @media screen and (max-width: 480px) {
-        /* Mobile (<= 480px): 50vw - (92vw / 2) */
         flex: 0 0 calc(50vw - 46vw);
       }
     }
 
     .card {
-      /* Desktop Default (> 1024px): 70% width */
       flex: 0 0 70vw;
       max-width: 1100px;
       height: 600px;
@@ -473,24 +704,18 @@ section {
       align-items: center;
 
       @media screen and (max-width: 1024px) {
-        /* Large Tablet: 75% width */
         flex: 0 0 75vw;
         max-width: none;
       }
-
       @media screen and (max-width: 768px) {
-        /* Tablet: 85% width */
         flex: 0 0 85vw;
         height: 550px;
       }
-
       @media screen and (max-width: 480px) {
-        /* Mobile: 92% width */
         flex: 0 0 92vw;
         height: 500px;
       }
 
-      /* Full background image */
       .img-wrapper {
         position: absolute;
         inset: 0;
@@ -524,7 +749,6 @@ section {
         transform: scale(1.04);
       }
 
-      /* Hover Reveal Container */
       .card-content {
         position: relative;
         z-index: 2;
@@ -536,7 +760,6 @@ section {
         justify-content: flex-end;
         transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 
-        /* Default state: Header sits at bottom center */
         .card-header {
           text-align: center;
           color: var(--white, #ffffff);
@@ -548,7 +771,6 @@ section {
           }
         }
 
-        /* Default state: View Button is hidden below card */
         .page-link {
           margin-top: 0.5rem;
           display: flex;
@@ -569,7 +791,6 @@ section {
         }
       }
 
-      /* HOVER STATE: Slides title up and reveals View Collection button */
       &:hover .card-content {
         .card-header {
           transform: translateY(-5px);
@@ -583,7 +804,6 @@ section {
     }
   }
 
-  /* Bottom Controls Bar */
   .controls-wrapper {
     display: flex;
     align-items: center;
@@ -626,21 +846,12 @@ section {
             height: 100%;
             width: 100%;
             background: var(--accent);
-            transform-origin: left;
-            animation: progressFill linear forwards;
+            filter: brightness(2.5);
+            /* Handled via GSAP scaleX */
           }
         }
       }
     }
-  }
-}
-// fills the bar on bottom
-@keyframes progressFill {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
   }
 }
 
@@ -1314,6 +1525,110 @@ section {
   }
 }
 
+// timeline on our jounrey page
+
+.timeline {
+  &.mobile {
+    margin: 3.5rem 0;
+    height: auto;
+    display: none;
+    flex-direction: column;
+    gap: 4rem;
+    .timeline-section {
+      display: flex;
+      flex-direction: row;
+      gap: 1.5rem;
+
+      .timeline-text {
+        text-align: left;
+        width: 50%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        gap: 1rem;
+      }
+
+      .img-wrapper {
+        width: 50%;
+        max-height: 50dvh;
+      }
+
+      &:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  gap: 2rem;
+  overflow: hidden;
+  position: relative;
+
+  /* Middle Column */
+  &-images-viewport {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+    .timeline-images {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+      /* 15vh top & bottom padding aligns a 70dvh image 
+        dead center in a 100vh viewport 
+      */
+      padding: 15vh 0;
+      will-change: transform;
+
+      .img-wrapper {
+        width: 100%;
+        height: 70dvh;
+        border-radius: var(--border-rad);
+        overflow: hidden;
+        flex-shrink: 0;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  /* Right Column */
+  &-text {
+    width: 40%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .text-wrapper {
+      position: absolute;
+      opacity: 0; /* Default for non-first items */
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      &:first-child {
+        opacity: 1; /* First item starts fully visible */
+      }
+
+      .text-year {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+// footer for all pages
 footer {
   background: var(--wine);
   color: var(--white);
@@ -1593,6 +1908,16 @@ footer {
     }
   }
 
+  // timeline on our jounrey page
+  .timeline {
+    &.desktop {
+      display: none;
+    }
+    &.mobile {
+      display: flex;
+    }
+  }
+
   footer {
     height: auto;
     clip-path: none;
@@ -1654,6 +1979,26 @@ footer {
       }
       &.mobile {
         display: flex;
+      }
+    }
+  }
+
+  .timeline {
+    &.mobile {
+      .timeline-section {
+        flex-direction: column;
+        .timeline-text,
+        .img-wrapper {
+          width: 100%;
+        }
+        .img-wrapper {
+          height: 75dvh;
+          min-height: none;
+        }
+
+        &:nth-child(even) {
+          flex-direction: column;
+        }
       }
     }
   }

@@ -573,3 +573,91 @@ export const faqData = [
     ],
   },
 ];
+
+// timeline
+import journeyImage1 from "/images/journey1.jpg";
+import journeyImage2 from "/images/journey2.jpg";
+import journeyImage3 from "/images/journey2.jpg";
+import journeyImage4 from "/images/siblings.jpg";
+
+export const journeyTimeline = {
+  images: [
+    {
+      imgSrc: journeyImage1,
+      imgAlt: "placeholder",
+    },
+    {
+      imgSrc: journeyImage2,
+      imgAlt: "placeholder",
+    },
+    {
+      imgSrc: journeyImage3,
+      imgAlt: "placeholder",
+    },
+    {
+      imgSrc: journeyImage4,
+      imgAlt: "placeholder",
+    },
+  ],
+  text: [
+    {
+      generation: "1st Gen",
+      years: "1920",
+      head: "The Craft Begins",
+      desc: "Founded in a modest workbench workshop, our story began with raw metals, hand-forged techniques, and an unyielding dedication to true artisan benchwork.",
+    },
+    {
+      generation: "2nd Gen",
+      years: "1950",
+      head: "Refining the Heritage",
+      desc: "Expanding into bespoke gemstone cutting and intricate stone setting, the second generation elevated our signature style into timeless mid-century heirlooms.",
+    },
+    {
+      generation: "3rd Gen",
+      years: "1980",
+      head: "Mastering the Modern Classic",
+      desc: "Bridging traditional goldsmithing with modern design aesthetics, we introduced custom engagement creations tailored to the modern romantic.",
+    },
+    {
+      generation: "4th Gen",
+      years: "2010",
+      head: "Innovation & Legacy",
+      desc: "Combining state-of-the-art 3D modeling with four generations of bench mastery, we turn your unique stories into handcrafted modern masterpieces.",
+    },
+  ],
+};
+
+export const journeyTimelineMobile = [
+  {
+    generation: "1st Gen",
+    years: "1920",
+    head: "The Craft Begins",
+    desc: "Founded in a modest workbench workshop, our story began with raw metals, hand-forged techniques, and an unyielding dedication to true artisan benchwork.",
+    imgSrc: journeyImage1,
+    imgAlt: "1st Generation handcrafted jewelry workbench",
+  },
+  {
+    generation: "2nd Gen",
+    years: "1950",
+    head: "Refining the Heritage",
+    desc: "Expanding into bespoke gemstone cutting and intricate stone setting, the second generation elevated our signature style into timeless mid-century heirlooms.",
+    imgSrc: journeyImage2,
+    imgAlt: "2nd Generation custom gemstone setting",
+  },
+  {
+    generation: "3rd Gen",
+    years: "1980",
+    head: "Mastering the Modern Classic",
+    desc: "Bridging traditional goldsmithing with modern design aesthetics, we introduced custom engagement creations tailored to the modern romantic.",
+    imgSrc: journeyImage3,
+    imgAlt: "3rd Generation custom engagement ring",
+  },
+  {
+    generation: "4th Gen",
+    years: "2010",
+    head: "Innovation & Legacy",
+    desc: "Combining state-of-the-art 3D modeling with four generations of bench mastery, we turn your unique stories into handcrafted modern masterpieces.",
+    imgSrc: journeyImage4,
+    imgAlt: "4th Generation modern bespoke jewelry creation",
+  },
+];
