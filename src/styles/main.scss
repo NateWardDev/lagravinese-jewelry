@@ -1,49 +1,23 @@
 :root {
-  --bg-color: #f9f7f1;
-  --bg-off-color: #551f22;
-  --wine: #301415;
-  --accent: #551f22;
-  --black: #000;
-  --white: #fff;
   --transition-25: 0.25s ease-in-out;
   --transition-4: 0.4s ease-in-out;
   --border-rad: 0.25rem;
   --box-shadow: rgba(76, 76, 76, 0.2) 0px 8px 24px;
 }
 
-.page-link {
+@mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  box-shadow: var(--box-shadow);
-  color: var(--white);
-  border-radius: var(--border-rad);
-  padding: 0.4rem 1.4rem;
-  transition: var(--transition-25);
-  background: var(--wine);
-  &:hover {
-    background: var(--accent);
-    transform: translateY(-3px);
-  }
-  &.white {
-    background: var(--bg-color);
-    color: var(--black);
-    &:hover {
-      background: var(--wine);
-      color: var(--white);
-    }
-  }
 }
 
 body {
-  background: var(--bg-color);
   font-optical-sizing: auto;
-  // font-weight: <weight>;
   font-style: normal;
   width: 100dvw;
   overflow-x: hidden;
 }
+
 .img-wrapper {
   border-radius: var(--border-rad);
   overflow: hidden;
@@ -63,25 +37,67 @@ body {
   }
 }
 
+/* Global Page Link / Button Styling */
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: row;
+  margin: auto;
+  font-size: 1.25rem;
+  border-radius: var(--border-rad);
+  padding: 0.4rem 1.4rem;
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-text);
+  transition: var(--transition-25);
+
+  &:hover {
+    background-color: var(--btn-secondary-hover);
+  }
+
+  &.left {
+    margin: unset;
+    margin-right: auto;
+  }
+
+  &.right {
+    margin: unset;
+    margin-left: auto;
+  }
+
+  &.white-btn {
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+
+    &:hover {
+      background-color: var(--btn-bg-hover);
+      color: var(--text-on-dark);
+    }
+  }
+}
+
+/* TOPNAV */
 .topnav {
-  transform: translate(0);
   z-index: 100;
   position: fixed;
   top: 0;
   width: 100%;
   transform: translateY(0%);
   transition: var(--transition-25);
+
   a,
   p {
-    color: var(--white);
+    color: var(--text-on-dark);
     transition: var(--transition-25);
   }
+
   .mobile-container {
     display: none;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 0.25rem 01rem;
+    padding: 0.25rem 1rem;
 
     .logo {
       width: 50px;
@@ -97,7 +113,6 @@ body {
         width: 30px;
         height: 4px;
         border-radius: 10px;
-        background: var(--white);
         transition: var(--transition-25);
       }
       &.menu-open {
@@ -115,14 +130,16 @@ body {
       }
     }
   }
+
   .desktop-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 01.5rem 3vw;
-    color: var(--black);
+    padding: 1rem 4rem;
+    color: var(--text-main);
     transition: var(--transition-25);
+
     .main-links {
       display: flex;
       flex-direction: row;
@@ -132,48 +149,9 @@ body {
       a {
         position: relative;
         padding: 0.5rem 0.75rem;
-        &::after {
-          pointer-events: none;
-          user-select: none;
-          transition: var(--transition-4);
-          content: "";
-          position: absolute;
-          width: 10%;
-          height: 3px;
-          border-radius: 0px;
-          top: 105%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-        &.active {
-          &::after {
-            background: var(--white);
-            width: 0.55rem;
-            height: 0.55rem;
-            border-radius: 50%;
-            top: 100%;
-          }
-          &:hover {
-            &::after {
-              background: var(--white);
-              width: 0.55rem;
-              height: 0.55rem;
-              border-radius: 50%;
-              top: 100%;
-            }
-          }
-        }
-        &:hover {
-          &::after {
-            background: var(--white);
-            width: 0.55rem;
-            height: 0.55rem;
-            border-radius: 50%;
-            top: 100%;
-          }
-        }
       }
     }
+
     .logo,
     .social-links {
       display: flex;
@@ -181,14 +159,15 @@ body {
       justify-content: center;
       width: 150px;
     }
+
     .social-links {
       gap: 2rem;
+      justify-content: end;
       li {
         display: flex;
-        align-items: center;
+        align-items: end;
         justify-content: center;
         a {
-          color: var(--white);
           transition: var(--transition-25);
           border-radius: 0.5rem;
           display: flex;
@@ -196,54 +175,11 @@ body {
           justify-content: center;
           height: 40px;
           width: 40px;
-          &:hover {
-            color: var(--white);
-            background: var(--bg-off-color);
-          }
         }
       }
     }
   }
-  &.nav-scroll-color {
-    background-color: var(--bg-color);
-    .mobile-container {
-      .mobile-menu-bars {
-        .bar {
-          background: var(--black);
-        }
-      }
-    }
-    .desktop-container {
-      padding: 0.75rem 3vw;
-      .main-links {
-        padding: 0;
-        margin: 0 auto;
-        a {
-          &.active {
-            &::after {
-              background: var(--wine);
-            }
-            &:hover {
-              &::after {
-                background: var(--wine);
-              }
-            }
-          }
-          &:hover {
-            &::after {
-              background: var(--wine);
-            }
-          }
-        }
-      }
-    }
-    a,
-    .social-links li a {
-      color: var(--black);
 
-      color: var(--black);
-    }
-  }
   &.hide-menu {
     transform: translateY(-100%);
   }
@@ -253,7 +189,6 @@ body {
   border-radius: 1rem 1rem 0 0;
   z-index: 99;
   transition: var(--transition-25);
-  // opacity: 0;
   pointer-events: none;
   user-select: none;
   visibility: hidden;
@@ -262,11 +197,12 @@ body {
   bottom: 0;
   height: 70%;
   width: 100%;
-  background-color: var(--wine);
+  background-color: var(--bg-accent);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .main-nav {
     display: flex;
     flex-direction: column;
@@ -275,11 +211,13 @@ body {
     gap: 5rem;
     width: 100%;
     text-align: center;
-    color: var(--white);
+    color: var(--text-on-dark);
+
     ul {
       display: flex;
       flex-direction: column;
       gap: 2rem;
+
       li {
         overflow: hidden;
         a {
@@ -304,96 +242,94 @@ body {
         }
       }
     }
+
     .social-links {
       flex-direction: row;
       gap: 4rem;
-      li {
-        &:nth-child(1) a,
-        &:nth-child(2) a,
-        &:nth-child(3) a,
-        &:nth-child(4) a {
-          transition-delay: 0s;
-        }
+      li a {
+        transition-delay: 0s;
       }
     }
   }
+
   &.menu-open {
     opacity: 1;
     pointer-events: auto;
     user-select: auto;
     visibility: visible;
     clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 0);
-    .main-nav {
-      ul {
-        li {
-          a {
-            opacity: 1;
-            transform: translateY(0%);
-          }
-        }
-      }
+    .main-nav ul li a {
+      opacity: 1;
+      transform: translateY(0%);
     }
   }
 }
 
-// genral padding
+/* SECTION STRUCTURES */
 header {
   margin-bottom: 5rem;
   &.journey {
     margin-bottom: 0;
   }
 }
+
 section {
   padding: 5rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
   h2 {
     text-align: center;
   }
+
   .content-wrapper {
     max-width: 1600px;
     margin: auto auto;
   }
+
   &.about {
     padding-top: 5rem;
     padding-bottom: 5rem;
     margin: 2.5rem 0;
   }
+
+  /* Specific Carousel/Edge-to-Edge paddings preserved */
   &.highlights-carousel {
-    padding: 2.5rem 0;
+    padding-left: 0;
+    padding-right: 0;
   }
+
   &.timeline {
     padding-top: 0;
     padding-bottom: 0;
   }
+
+  &.faq {
+    padding-top: 2rem;
+  }
 }
 
-// all page headers
+/* HERO HEADER */
 .header-hero {
   position: relative;
   width: 100%;
-  height: 60dvh; // Default height for all non-home pages
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 60dvh;
+  @include flex-center;
   overflow: hidden;
   top: 0;
-  // Specific height for Home route
+
   &.home {
     height: 100dvh;
   }
 
-  // Single Background Image & Overlay
   .img-wrapper {
     border-radius: 0;
     position: absolute;
-    // inset: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
 
-    // Dark fade overlay using ::after
     &::after {
       content: "";
       position: absolute;
@@ -408,258 +344,21 @@ section {
     }
   }
 
-  // Centered Header Text
   .text-wrapper {
     position: absolute;
     z-index: 2;
     text-align: center;
-    color: #ffffff;
+    color: var(--text-on-dark);
     padding: 0 1.5rem;
     text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   }
 }
 
-// home collections section
-// .highlights-carousel {
-//   width: 100%;
-//   display: flex;
-//   flex-direction: column;
-//   h2 {
-//     text-align: center;
-//   }
-
-//   /* Scroll Track Centering Engine */
-//   .cards-track {
-//     display: flex;
-//     gap: 2rem;
-//     overflow-x: auto;
-//     overflow-y: hidden;
-//     scroll-snap-type: x mandatory;
-//     scroll-behavior: smooth;
-//     scrollbar-width: none;
-
-//     &::-webkit-scrollbar {
-//       display: none;
-//     }
-
-//     /* Track Spacers: Dynamically centers the first & last cards based on viewport */
-//     &::before,
-//     &::after {
-//       content: "";
-//       /* Desktop Default (> 1024px): 50vw - (70vw / 2) */
-//       flex: 0 0 calc(50vw - 35vw);
-
-//       @media screen and (max-width: 1024px) {
-//         /* Large Tablet (<= 1024px): 50vw - (75vw / 2) */
-//         flex: 0 0 calc(50vw - 37.5vw);
-//       }
-
-//       @media screen and (max-width: 768px) {
-//         /* Tablet (<= 768px): 50vw - (85vw / 2) */
-//         flex: 0 0 calc(50vw - 42.5vw);
-//       }
-
-//       @media screen and (max-width: 480px) {
-//         /* Mobile (<= 480px): 50vw - (92vw / 2) */
-//         flex: 0 0 calc(50vw - 46vw);
-//       }
-//     }
-
-//     .card {
-//       /* Desktop Default (> 1024px): 70% width */
-//       flex: 0 0 70vw;
-//       max-width: 1100px;
-//       height: 600px;
-//       scroll-snap-align: center;
-//       border-radius: var(--border-rad, 16px);
-//       overflow: hidden;
-//       position: relative;
-//       display: flex;
-//       flex-direction: column;
-//       justify-content: flex-end;
-//       align-items: center;
-
-//       @media screen and (max-width: 1024px) {
-//         /* Large Tablet: 75% width */
-//         flex: 0 0 75vw;
-//         max-width: none;
-//       }
-
-//       @media screen and (max-width: 768px) {
-//         /* Tablet: 85% width */
-//         flex: 0 0 85vw;
-//         height: 550px;
-//       }
-
-//       @media screen and (max-width: 480px) {
-//         /* Mobile: 92% width */
-//         flex: 0 0 92vw;
-//         height: 500px;
-//       }
-
-//       /* Full background image */
-//       .img-wrapper {
-//         position: absolute;
-//         inset: 0;
-//         width: 100%;
-//         height: 100%;
-//         z-index: 1;
-
-//         img {
-//           width: 100%;
-//           height: 100%;
-//           object-fit: cover;
-//           display: block;
-//           transition: transform 0.4s ease;
-//         }
-
-//         &::after {
-//           content: "";
-//           position: absolute;
-//           inset: 0;
-//           background: linear-gradient(
-//             to top,
-//             rgba(0, 0, 0, 0.6) 0%,
-//             rgba(0, 0, 0, 0.15) 40%,
-//             rgba(0, 0, 0, 0) 100%
-//           );
-//           pointer-events: none;
-//         }
-//       }
-
-//       &:hover .img-wrapper img {
-//         transform: scale(1.04);
-//       }
-
-//       /* Hover Reveal Container */
-//       .card-content {
-//         position: relative;
-//         z-index: 2;
-//         width: 100%;
-//         padding: 1.5rem;
-//         display: flex;
-//         flex-direction: column;
-//         align-items: center;
-//         justify-content: flex-end;
-//         transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
-
-//         /* Default state: Header sits at bottom center */
-//         .card-header {
-//           text-align: center;
-//           color: var(--white, #ffffff);
-//           transition: transform 0.35s ease;
-
-//           h3 {
-//             margin: 0;
-//             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-//           }
-//         }
-
-//         /* Default state: View Button is hidden below card */
-//         .page-link {
-//           margin-top: 0.5rem;
-//           display: flex;
-//           align-items: center;
-//           gap: 0.5rem;
-//           background: var(--wine);
-//           color: #ffffff;
-//           opacity: 0;
-//           transform: translateY(15px);
-//           transition:
-//             opacity 0.3s ease,
-//             transform 0.3s ease,
-//             background 0.25s ease;
-
-//           &:hover {
-//             background: var(--accent, #6e1e35);
-//           }
-//         }
-//       }
-
-//       /* HOVER STATE: Slides title up and reveals View Collection button */
-//       &:hover .card-content {
-//         .card-header {
-//           transform: translateY(-5px);
-//         }
-
-//         .page-link {
-//           opacity: 1;
-//           transform: translateY(0);
-//         }
-//       }
-//     }
-//   }
-
-//   /* Bottom Controls Bar */
-//   .controls-wrapper {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     gap: 1rem;
-
-//     .pagination-pill {
-//       display: flex;
-//       align-items: center;
-//       gap: 0.6rem;
-//       background: var(--bg-color);
-//       filter: brightness(0.9);
-//       padding: 1rem 1.5rem;
-//       border-radius: 30px;
-
-//       .dot-btn {
-//         border: none;
-//         outline: none;
-//         background: var(--wine);
-//         width: 15px;
-//         height: 15px;
-//         border-radius: 50%;
-//         padding: 0;
-//         cursor: pointer;
-//         position: relative;
-//         overflow: hidden;
-//         transition:
-//           width 0.3s ease,
-//           border-radius 0.3s ease;
-
-//         &.active {
-//           width: 60px;
-//           border-radius: 10px;
-
-//           .progress-fill {
-//             display: block;
-//             position: absolute;
-//             top: 0;
-//             left: 0;
-//             height: 100%;
-//             width: 100%;
-//             background: var(--accent);
-//             filter: brightness(2.5);
-//             transform-origin: left;
-//             animation: progressFill linear forwards;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-// // fills the bar on bottom
-// @keyframes progressFill {
-//   from {
-//     transform: scaleX(0);
-//   }
-//   to {
-//     transform: scaleX(1);
-//   }
-// }
-
+/* HIGHLIGHTS CAROUSEL */
 .highlights-carousel {
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  h2 {
-    text-align: center;
-  }
 
   .cards-track {
     display: flex;
@@ -667,7 +366,6 @@ section {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    /* REMOVED: scroll-behavior: smooth; (prevents double-smoothing & snap jitter) */
     scrollbar-width: none;
 
     &::-webkit-scrollbar {
@@ -695,7 +393,7 @@ section {
       max-width: 1100px;
       height: 600px;
       scroll-snap-align: center;
-      border-radius: var(--border-rad, 16px);
+      border-radius: var(--border-rad);
       overflow: hidden;
       position: relative;
       display: flex;
@@ -762,7 +460,7 @@ section {
 
         .card-header {
           text-align: center;
-          color: var(--white, #ffffff);
+          color: var(--text-on-dark);
           transition: transform 0.35s ease;
 
           h3 {
@@ -776,8 +474,7 @@ section {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          background: var(--wine);
-          color: #ffffff;
+          color: var(--btn-text);
           opacity: 0;
           transform: translateY(15px);
           transition:
@@ -786,7 +483,7 @@ section {
             background 0.25s ease;
 
           &:hover {
-            background: var(--accent, #6e1e35);
+            background: var(--btn-bg-hover);
           }
         }
       }
@@ -795,7 +492,6 @@ section {
         .card-header {
           transform: translateY(-5px);
         }
-
         .page-link {
           opacity: 1;
           transform: translateY(0);
@@ -805,24 +501,20 @@ section {
   }
 
   .controls-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     gap: 1rem;
 
     .pagination-pill {
-      display: flex;
-      align-items: center;
+      @include flex-center;
       gap: 0.6rem;
-      background: var(--bg-color);
-      filter: brightness(0.9);
+      background: var(--bg-secondary);
       padding: 1rem 1.5rem;
       border-radius: 30px;
 
       .dot-btn {
         border: none;
         outline: none;
-        background: var(--wine);
+        background: var(--bg-accent);
         width: 15px;
         height: 15px;
         border-radius: 50%;
@@ -845,9 +537,7 @@ section {
             left: 0;
             height: 100%;
             width: 100%;
-            background: var(--accent);
-            filter: brightness(2.5);
-            /* Handled via GSAP scaleX */
+            background: var(--btn-bg);
           }
         }
       }
@@ -855,35 +545,37 @@ section {
   }
 }
 
-// home services section
+/* SERVICES FEATURE SECTION */
 .services-feature-section {
   max-width: 1500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 
-  /* Main Stage Frame */
   .services-stage {
     &.desktop {
       display: grid;
       grid-template-columns: 500px 1fr;
       gap: 2.5rem;
       align-items: center;
-      background: var(--wine);
+      background: var(--bg-accent);
       border-radius: var(--border-rad);
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
-      min-height: 600px; /* Gives plenty of vertical space */
+      min-height: 600px;
     }
+
     &.mobile {
       display: none;
       flex-direction: column;
       gap: 3rem;
+
       .service-wrapper {
         display: flex;
         flex-direction: column;
         gap: 1rem;
+
         .img-wrapper {
           box-shadow: var(--box-shadow);
           max-height: 350px;
@@ -893,7 +585,6 @@ section {
     }
   }
 
-  /* Left Side: Interactive Controls */
   .services-list {
     display: flex;
     flex-direction: column;
@@ -904,17 +595,17 @@ section {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      justify-content: start;
 
-      /* Button Toggle */
       .pill-button {
         display: inline-flex;
         align-items: center;
         gap: 0.75rem;
         padding: 0.75rem 1.25rem;
         border-radius: var(--border-rad);
-        color: var(--white);
+        color: var(--text-on-dark);
         backdrop-filter: blur(1rem);
-        background: #04040450;
+        background: rgba(0, 0, 0, 0.3);
         font-size: 1.25rem;
         cursor: pointer;
         transition:
@@ -927,15 +618,13 @@ section {
         }
       }
 
-      /* Active Pill State (Desktop) */
       &.active {
         .pill-button {
           filter: brightness(1);
-          background: var(--accent);
+          background: var(--btn-bg);
         }
       }
 
-      /* Animated Height Wrapper (CSS Grid Animation) */
       .description-wrapper {
         display: grid;
         grid-template-rows: 0fr;
@@ -946,16 +635,13 @@ section {
           overflow: hidden;
         }
 
-        /* Card Content Styling */
         .description-card {
           margin-top: 0.75rem;
           max-width: 500px;
-          background: var(--accent);
+          background: var(--btn-bg);
           padding: 1.25rem;
           border-radius: var(--border-rad);
-          color: var(--white);
-
-          /* Fade & Slide Transition */
+          color: var(--text-on-dark);
           opacity: 0;
           transform: translateY(-8px);
           transition:
@@ -964,7 +650,6 @@ section {
         }
       }
 
-      /* Open State: Expands Grid & Fades In Text (Desktop) */
       &.active .description-wrapper {
         grid-template-rows: 1fr;
 
@@ -977,7 +662,6 @@ section {
     }
   }
 
-  /* Right Side: Full Background Preview Frame */
   .services-preview-frame {
     position: absolute;
     inset: 0;
@@ -990,7 +674,6 @@ section {
       height: 100%;
       position: relative;
 
-      /* Stacked Images for Smooth Cross-Fade */
       .preview-image {
         position: absolute;
         inset: 0;
@@ -998,8 +681,6 @@ section {
         height: 100%;
         object-fit: cover;
         object-position: center;
-
-        /* Transition settings */
         opacity: 0;
         transform: scale(1.02);
         transition:
@@ -1007,14 +688,12 @@ section {
           transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
         pointer-events: none;
 
-        /* Visible Image State */
         &.active {
           opacity: 1;
           transform: scale(1);
         }
       }
 
-      /* Soft Left Gradient Vignette for readability */
       &::after {
         content: "";
         position: absolute;
@@ -1031,30 +710,16 @@ section {
     }
   }
 
-  /* Centered Bottom CTA Button */
   .services-footer {
     display: flex;
     justify-content: center;
   }
 }
 
-/* Smooth Entrance Keyframe for Description Bubble */
-@keyframes bubbleFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.97);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-// home about section
+/* ABOUT SECTION */
 .about {
   background-image: url("../images/brown-leaf-bg.png");
-  background-color: var(--accent);
-  background-blend-mode: multiply; /* Try overlay, soft-light, darken, etc. */
+  background-blend-mode: multiply;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1063,15 +728,16 @@ section {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    // align-items: center;
     gap: 4rem;
-    color: #fff;
+    color: var(--text-on-dark);
+
     .img-wrapper {
-      outline: 3px solid var(--wine);
+      outline: 3px solid var(--bg-accent);
       border: 5px solid transparent;
       width: 45%;
       border-radius: 50% 50% 0.25rem 0.25rem;
     }
+
     .text-wrapper {
       margin: auto auto;
       width: 55%;
@@ -1083,14 +749,14 @@ section {
   }
 }
 
+/* TESTIMONIALS SECTION */
 .testimonials {
   .content-wrapper {
-    display: flex;
+    @include flex-center;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
     gap: 1.5rem;
+
     .card {
       border-radius: var(--border-rad);
       overflow: hidden;
@@ -1099,8 +765,7 @@ section {
       position: relative;
       height: 500px;
       max-height: 60dvh;
-      background: var(--wine);
-      color: var(--white);
+      color: var(--text-on-dark);
       min-width: 250px;
       width: calc(25% - 1.5rem);
       box-shadow: var(--box-shadow);
@@ -1113,6 +778,7 @@ section {
         max-height: 100px;
         border-radius: 50%;
       }
+
       .text-wrapper {
         padding: 1rem;
         display: flex;
@@ -1120,6 +786,7 @@ section {
         justify-content: space-between;
         align-items: start;
         height: 100%;
+
         .names {
           z-index: 3;
           padding: 0.25rem 1rem;
@@ -1127,15 +794,16 @@ section {
           transition: var(--transition-25);
         }
       }
+
       &:hover {
         .background-image {
           opacity: 1;
-          // clip-path: circle(150% at 10% 0);
         }
         .names {
           backdrop-filter: brightness(0.8) blur(1rem);
         }
       }
+
       .background-image {
         z-index: 1;
         transition: var(--transition-4);
@@ -1147,7 +815,6 @@ section {
         height: 100%;
         width: 100%;
         opacity: 0;
-        // clip-path: circle(0% at 10% 0);
 
         img {
           height: 100%;
@@ -1159,22 +826,24 @@ section {
   }
 }
 
+/* HOME CONTACT SECTION */
 .home-contact {
   display: flex;
   flex-direction: column;
+
   .content-wrapper {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     gap: 2rem;
     flex-direction: row;
     flex-wrap: wrap;
+
     .text-container,
     .images-container {
       height: 100%;
       width: calc(50% - 2rem);
     }
+
     .text-container {
       display: flex;
       align-items: start;
@@ -1188,12 +857,14 @@ section {
         gap: 2rem;
       }
     }
+
     .images-container {
       max-height: 600px;
       display: grid;
       gap: 1.5rem;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(4, 1fr);
+
       .img-wrapper {
         box-shadow: var(--box-shadow);
       }
@@ -1213,12 +884,11 @@ section {
   }
 }
 
-// inqueires page
+/* INQUIRIES SECTION */
 .inquiries-section {
   width: 100%;
   position: relative;
 
-  // 1. ADDED: Outer layout wrapper isolates the form space calculation from GSAP injections
   .inquiries-grid-wrapper {
     display: flex;
     align-items: flex-start;
@@ -1228,17 +898,15 @@ section {
     margin: 0 auto;
   }
 
-  // 2. ADDED: Fixed-width column that acts as a structural placeholder so layout space never shrinks
   .inquiries-visual-column {
     width: 50%;
     position: relative;
-    height: 80dvh; // Matches the physical boundary height of your container
+    height: 80dvh;
 
-    // 3. UPDATED: Target container pinned cleanly inside the rigid layout column
     .images-container {
-      width: 100%; // Now fits 100% of its parent structural column space safely
+      width: 100%;
       height: 100%;
-      background: var(--black);
+      background: var(--text-black);
       border-radius: var(--border-rad);
       overflow: hidden;
       position: relative;
@@ -1271,7 +939,6 @@ section {
     }
   }
 
-  // 4. PRESERVED: Your exact custom styling rules for form assets are completely unchanged
   .contact-form {
     width: 50%;
     display: flex;
@@ -1288,7 +955,7 @@ section {
     > p {
       margin-bottom: 1rem;
       text-align: center;
-      color: #666;
+      color: var(--text-muted);
     }
 
     .field-group {
@@ -1296,30 +963,26 @@ section {
       flex-direction: column;
       gap: 0.5rem;
 
-      label {
-        font-weight: 600;
-      }
-
       input,
       select,
       textarea {
         width: 100%;
         padding: 0.9rem 1rem;
-        color: var(--black);
+        color: var(--text-main);
         background: transparent;
-        border: 2px solid var(--bg-off-color);
+        border: 2px solid var(--bg-secondary);
         border-radius: var(--border-rad);
         transition:
           border-color 0.2s ease,
           box-shadow 0.2s ease;
 
         &::placeholder {
-          color: #999;
+          color: var(--text-muted);
         }
 
         &:focus {
           outline: none;
-          border-color: #b08d57;
+          border-color: var(--btn-bg);
         }
       }
 
@@ -1334,44 +997,17 @@ section {
       }
 
       .field-details {
-        color: #666;
-      }
-    }
-
-    button {
-      align-self: flex-start;
-      padding: 1rem 2.5rem;
-      border: none;
-      border-radius: 4px;
-      background: var(--wine);
-      color: var(--white);
-      font-weight: 600;
-      cursor: pointer;
-      transition:
-        background-color var(--transition-25),
-        transform var(--transition-25);
-
-      &:hover {
-        background: var(--accent);
-      }
-
-      &:active {
-        transform: scale(0.98);
-      }
-
-      &:focus-visible {
-        outline: 3px solid rgba(176, 141, 87, 0.25);
-        outline-offset: 3px;
+        color: var(--text-muted);
       }
     }
   }
 }
 
-// faq section on inquiries page
+/* FAQ SECTION */
 .faq {
-  display: flex;
+  @include flex-center;
   flex-direction: column;
-  align-items: center;
+
   .content-wrapper {
     width: 100%;
     max-width: 800px;
@@ -1390,16 +1026,16 @@ section {
 
       .faq-category-card {
         border-radius: var(--border-rad);
-        background: var(--bg-off-color);
+        background: var(--bg-secondary);
         overflow: hidden;
         transition: background-color 0.3s ease;
 
         &.category-active {
           background: transparent;
-          border: 1px solid rgba(0, 0, 0, 0.3);
+          border: 1px solid rgba(0, 0, 0, 0.15);
 
           .faq-category-toggle {
-            background: var(--wine);
+            background: var(--bg-accent);
           }
         }
 
@@ -1407,9 +1043,8 @@ section {
           width: 100%;
           text-align: center;
           padding: 1.25rem 1.5rem;
-          font-weight: 500;
           background: transparent;
-          color: var(--white);
+          color: var(--text-on-dark);
           border: none;
           cursor: pointer;
           transition:
@@ -1417,19 +1052,18 @@ section {
             color 0.3s ease;
         }
 
-        // --- ANIMATED CATEGORY WRAPPER ---
         .faq-enclosed-content-wrapper {
           display: grid;
-          grid-template-rows: 0fr; // Collapsed state
+          grid-template-rows: 0fr;
           transition: grid-template-rows 0.35s ease-in-out;
 
           &.is-open {
-            grid-template-rows: 1fr; // Expanded state
+            grid-template-rows: 1fr;
           }
 
           .faq-enclosed-content {
-            overflow: hidden; // Prevents contents popping out early
-            min-height: 0; // Crucial calculation reset for grid fractional rows
+            overflow: hidden;
+            min-height: 0;
             padding: 0 1.5rem;
             display: flex;
             flex-direction: column;
@@ -1447,7 +1081,7 @@ section {
         }
 
         .faq-item {
-          border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+          border-bottom: 1px solid rgba(0, 0, 0, 0.15);
           padding-bottom: 1rem;
 
           &:last-child {
@@ -1473,14 +1107,12 @@ section {
             }
 
             &.active {
-              font-weight: bold;
               .arrow-icon {
                 transform: scale(-1);
               }
             }
           }
 
-          // --- ANIMATED ANSWER WRAPPER ---
           .faq-answer-wrapper {
             display: grid;
             grid-template-rows: 0fr;
@@ -1517,7 +1149,7 @@ section {
       text-align: center;
       margin-top: 4rem;
       a {
-        color: var(--wine);
+        color: var(--btn-bg);
         text-decoration: underline;
         font-weight: 600;
       }
@@ -1525,15 +1157,23 @@ section {
   }
 }
 
-// timeline on our jounrey page
-
+/* TIMELINE SECTION */
 .timeline {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  gap: 2rem;
+  overflow: hidden;
+  position: relative;
+
   &.mobile {
     margin: 3.5rem 0;
     height: auto;
     display: none;
     flex-direction: column;
     gap: 4rem;
+
     .timeline-section {
       display: flex;
       flex-direction: row;
@@ -1559,15 +1199,7 @@ section {
       }
     }
   }
-  display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: 100vh;
-  gap: 2rem;
-  overflow: hidden;
-  position: relative;
 
-  /* Middle Column */
   &-images-viewport {
     width: 100%;
     height: 100vh;
@@ -1578,9 +1210,6 @@ section {
       display: flex;
       flex-direction: column;
       gap: 4rem;
-      /* 15vh top & bottom padding aligns a 70dvh image 
-        dead center in a 100vh viewport 
-      */
       padding: 15vh 0;
       will-change: transform;
 
@@ -1590,35 +1219,26 @@ section {
         border-radius: var(--border-rad);
         overflow: hidden;
         flex-shrink: 0;
-
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
       }
     }
   }
 
-  /* Right Column */
   &-text {
-    width: 40%;
+    width: 50%;
     position: relative;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
 
     .text-wrapper {
       position: absolute;
-      opacity: 0; /* Default for non-first items */
+      opacity: 0;
       pointer-events: none;
       display: flex;
       flex-direction: column;
       gap: 1rem;
 
       &:first-child {
-        opacity: 1; /* First item starts fully visible */
+        opacity: 1;
       }
 
       .text-year {
@@ -1628,17 +1248,19 @@ section {
   }
 }
 
-// footer for all pages
+/* FOOTER */
 footer {
-  background: var(--wine);
-  color: var(--white);
+  background: var(--bg-accent);
+  color: var(--text-on-dark);
   position: relative;
   height: 500px;
   clip-path: polygon(0% 0, 100% 0%, 100% 100%, 0 100%);
+
   .sticky-container {
     position: relative;
     height: calc(100dvh + 500px);
     top: -100dvh;
+
     .sticky-area {
       position: sticky;
       top: calc(100dvh - 500px);
@@ -1648,6 +1270,7 @@ footer {
       justify-content: space-around;
       flex-wrap: wrap;
       gap: 3rem;
+
       .footer-column {
         flex: 1;
         min-width: 220px;
@@ -1671,13 +1294,8 @@ footer {
           flex-direction: column;
           align-items: center;
           gap: 1rem;
-
           margin: 0;
           padding: 0;
-          list-style: none;
-        }
-
-        li {
           list-style: none;
         }
 
@@ -1687,7 +1305,7 @@ footer {
           transition: var(--transition-25);
 
           &:hover {
-            color: var(--wine);
+            color: var(--accent-primary);
           }
         }
       }
@@ -1697,6 +1315,7 @@ footer {
         flex-direction: column;
         align-items: center;
         gap: 1.5rem;
+
         ul {
           display: flex;
           flex-direction: row;
@@ -1715,9 +1334,7 @@ footer {
 
       .footer-bottom {
         margin-top: auto;
-
         width: 100%;
-
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -1733,7 +1350,7 @@ footer {
           transition: var(--transition-25);
 
           &:hover {
-            box-shadow: inset 0 -2px 0 0 var(--white);
+            box-shadow: inset 0 -2px 0 0 var(--text-on-dark);
           }
         }
       }
@@ -1741,6 +1358,7 @@ footer {
   }
 }
 
+/* MEDIA QUERIES */
 @media screen and (max-width: 1024px) {
   .topnav {
     .mobile-container {
@@ -1751,29 +1369,20 @@ footer {
     }
   }
 
-  // padding
   section {
-    padding: 2.5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    h2 {
-      text-align: center;
-    }
-    .content-wrapper {
-      max-width: 1600px;
-      margin: auto auto;
-    }
+    padding: 2.5rem 1.5rem;
+
     &.about {
       margin: 2.5rem 0;
     }
+
     &.highlights-carousel,
     &.testimonials {
-      padding: 2.5rem 0;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
-  // about section
   .about {
     height: auto;
     .content-wrapper {
@@ -1785,8 +1394,7 @@ footer {
       }
     }
   }
-  // testimonials section
-  /* 1. Ensure parent section allows overflow scrolling */
+
   .testimonials {
     overflow: visible;
     width: 100%;
@@ -1796,8 +1404,6 @@ footer {
       justify-content: flex-start !important;
       align-items: stretch;
       gap: 1.5rem;
-
-      /* 2. Full-bleed horizontal scroll track */
       width: 100%;
       max-width: 100vw;
       overflow-x: auto !important;
@@ -1805,35 +1411,28 @@ footer {
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       -webkit-overflow-scrolling: touch;
-
-      /* 3. Padding on left/right edges */
       padding-left: 1.5rem;
       scroll-padding-left: 1.5rem;
-
-      /* Hide Scrollbars */
       scrollbar-width: none;
-      -ms-overflow-style: none;
+
       &::-webkit-scrollbar {
         display: none;
       }
 
       .card {
-        /* 4. Strict flex sizing to guarantee cards don't shrink or squish */
-        flex: 0 0 320px !important; /* Fixed width per card */
+        flex: 0 0 320px !important;
         width: 320px !important;
         min-width: 280px !important;
         height: 500px;
         max-height: 65dvh;
-        margin: 0 !important; /* Prevent auto-margins from breaking scroll track */
+        margin: 0 !important;
         box-shadow: none;
-        /* Snap alignment */
         scroll-snap-align: start;
 
         .background-image {
           display: none;
           position: absolute;
           inset: 0;
-          // opacity: 1;
           z-index: 1;
         }
 
@@ -1842,6 +1441,7 @@ footer {
           z-index: 2;
           margin-top: 0;
         }
+
         &:hover {
           .names {
             backdrop-filter: brightness(1) blur(0);
@@ -1849,7 +1449,6 @@ footer {
         }
       }
 
-      /* 5. Essential Safari/Mobile Chrome Fix: Forces scroll track to register full right width */
       &::after {
         content: "";
         display: block;
@@ -1857,27 +1456,19 @@ footer {
     }
   }
 
-  // home collections
   .highlights-carousel {
-    /* Scroll Track Centering Engine */
     .cards-track {
       .card {
-        /* Hover Reveal Container */
         .card-content {
-          /* Default state: Header sits at bottom center */
-          .card-header {
-            h3 {
-              margin: 0;
-              text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            }
+          .card-header h3 {
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
           }
-          /* Default state: View Button is hidden below card */
           .button-wrapper {
             opacity: 1;
             transform: translateY(0px);
           }
         }
-        /* HOVER STATE: Slides title up and reveals View Collection button */
       }
     }
   }
@@ -1892,13 +1483,11 @@ footer {
         width: 100%;
       }
       .images-container {
-        // display: none;
         max-height: 600px;
       }
     }
   }
 
-  // inqueires page
   .inquiries-section {
     .inquiries-visual-column {
       display: none;
@@ -1908,7 +1497,6 @@ footer {
     }
   }
 
-  // timeline on our jounrey page
   .timeline {
     &.desktop {
       display: none;
@@ -1926,6 +1514,7 @@ footer {
       position: static;
       height: auto;
       top: 0;
+
       .sticky-area {
         position: static;
         height: auto;
@@ -1939,39 +1528,15 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
-  // padding
-  section {
-    padding: 2.5rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    h2 {
-      text-align: center;
-    }
-    .content-wrapper {
-      max-width: 1600px;
-      margin: auto auto;
-    }
-    &.about {
-      margin: 2.5rem 0;
-    }
-    &.highlights-carousel,
-    &.testimonials {
-      padding: 2.5rem 0;
-    }
-  }
-
   .home-contact {
     display: flex;
     flex-direction: column;
-    .content-wrapper {
-      .images-container {
-        height: 450px;
-
-        gap: 0.75rem;
-      }
+    .content-wrapper .images-container {
+      height: 450px;
+      gap: 0.75rem;
     }
   }
+
   .services-feature-section {
     .services-stage {
       &.desktop {
@@ -1993,7 +1558,7 @@ footer {
         }
         .img-wrapper {
           height: 75dvh;
-          min-height: none;
+          min-height: unset;
         }
 
         &:nth-child(even) {
@@ -2005,25 +1570,14 @@ footer {
 }
 
 @media screen and (max-width: 480px) {
-  // padding
   section {
-    padding: 2.5rem 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    h2 {
-      text-align: center;
-    }
-    .content-wrapper {
-      max-width: 1600px;
-      margin: auto auto;
-    }
-    &.about {
-      margin: 2.5rem 0;
-    }
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+
     &.highlights-carousel,
     &.testimonials {
-      padding: 2.5rem 0;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

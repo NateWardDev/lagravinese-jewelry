@@ -2,7 +2,7 @@ import { homeAboutData } from "../data";
 
 const AboutHome = () => {
   return (
-    <section className="about">
+    <section className="about bg-color-two">
       <div className="content-wrapper">
         <div className="img-wrapper">
           <img src={homeAboutData.image.src} alt={homeAboutData.image.alt} />
@@ -15,10 +15,7 @@ const AboutHome = () => {
             <p key={index}>{paragraph}</p>
           ))}
 
-          <a
-            className={homeAboutData.button.className}
-            href={homeAboutData.button.path}
-          >
+          <a className="page-link white left" href={homeAboutData.button.path}>
             {homeAboutData.button.text}
           </a>
         </div>

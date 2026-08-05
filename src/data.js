@@ -282,7 +282,6 @@ export const homeAboutData = {
   button: {
     text: "Learn More",
     path: "/journey",
-    className: "page-link white",
   },
 };
 

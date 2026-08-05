@@ -158,7 +158,9 @@ const Inquiries = () => {
             />
           </div>
 
-          <button type="submit">{contactForm.submitText}</button>
+          <button className="page-link left" type="submit">
+            {contactForm.submitText}
+          </button>
         </form>
       </div>
     </section>
