@@ -90,7 +90,6 @@ body {
     color: var(--text-on-dark);
     transition: var(--transition-25);
   }
-
   .mobile-container {
     display: none;
     flex-direction: row;
@@ -218,14 +217,12 @@ body {
       gap: 2rem;
 
       li {
-        overflow: hidden;
         a {
           transition-property: opacity transform;
           opacity: 0;
           transition: 0.4s ease-in-out;
           display: block;
           transform: translateY(100%);
-          padding: 0.5rem;
         }
         &:nth-child(1) a {
           transition-delay: 0.1s;
@@ -885,6 +882,7 @@ section {
 
 /* INQUIRIES SECTION */
 .inquiries-section {
+  padding-top: 7rem;
   width: 100%;
   position: relative;
 
@@ -1295,7 +1293,7 @@ section {
       }
 
       &.active .card-overlay {
-        opacity: 0;
+        opacity: 0.1;
       }
 
       &.dimmed .card-overlay {
@@ -1306,7 +1304,7 @@ section {
 
   .active-card-text-container {
     position: absolute;
-    bottom: 3.5rem;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -1326,9 +1324,21 @@ section {
         font-size: 3.5rem;
       }
       p {
-        font-size: 1.1rem;
-        opacity: 0.6;
+        font-size: 1.15rem;
       }
+      .text-below {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        white-space: nowrap;
+        justify-content: center;
+        gap: 4rem;
+      }
+    }
+    .subtext {
+      margin-top: 3rem;
+      font-size: 0.95rem;
     }
   }
 

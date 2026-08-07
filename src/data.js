@@ -4,18 +4,22 @@ export const navLinks = [
   {
     linkName: "Home",
     linkPath: "/",
+    navColor: "light-text",
   },
   {
     linkName: "Our Journey",
     linkPath: "/journey",
+    navColor: "light-text",
   },
   {
     linkName: "Our Work",
     linkPath: "/work",
+    navColor: "light-text",
   },
   {
     linkName: "Inquiries",
     linkPath: "/inquiries",
+    navColor: "dark-text",
   },
 ];
 
@@ -304,6 +308,7 @@ export const collections = {
       image: engagementRings,
       alt: "Custom engagement ring",
       link: "/collections/custom-engagement-rings",
+      index: 0,
       gallery: [
         engagementRings,
         weddingBands,
@@ -343,6 +348,7 @@ export const collections = {
       image: weddingBands,
       alt: "Wedding bands",
       link: "/collections/wedding-bands",
+      index: 1,
       gallery: [
         weddingBands,
         weddingBands,
@@ -357,6 +363,7 @@ export const collections = {
       image: anniversaryRings,
       alt: "Anniversary ring",
       link: "/collections/anniversary-rings",
+      index: 2,
       gallery: [
         engagementRings,
         weddingBands,
@@ -371,6 +378,7 @@ export const collections = {
       image: necklaces,
       alt: "Custom necklace",
       link: "/collections/necklaces",
+      index: 3,
       gallery: [
         engagementRings,
         weddingBands,
@@ -385,6 +393,7 @@ export const collections = {
       image: earrings,
       alt: "Custom earrings",
       link: "/collections/earrings",
+      index: 4,
       gallery: [
         engagementRings,
         weddingBands,
@@ -399,6 +408,7 @@ export const collections = {
       image: bracelets,
       alt: "Custom bracelet",
       link: "/collections/bracelets",
+      index: 5,
       gallery: [
         engagementRings,
         weddingBands,
@@ -413,6 +423,7 @@ export const collections = {
       image: pendants,
       alt: "Custom pendant",
       link: "/collections/pendants",
+      index: 6,
       gallery: [
         engagementRings,
         weddingBands,

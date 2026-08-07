@@ -12,12 +12,14 @@ const Topnav = () => {
 
   // pathname
   const pathname = useLocation().pathname;
+  const matchingLink = navLinks.find((link) => link.linkPath === pathname);
+  console.log(matchingLink);
 
   // List all main root pages here
   const mainPages = navLinks.map((item) => item.linkPath);
 
   // Is dark text needed? True if current pathname is NOT in mainPages
-  const isDarkText = !mainPages.includes(pathname);
+  const isDarkText = !mainPages.includes(pathname) || pathname === "/inquiries";
 
   // for scroll events to hide/ change color of the navbar
   useEffect(() => {
@@ -52,7 +54,7 @@ const Topnav = () => {
     <>
       {/* topnav */}
       <nav
-        className={`topnav ${navScroll ? "nav-scroll-color" : ""} ${navHide ? "hide-menu" : ""} ${isDarkText ? "dark-text" : ""}`}
+        className={`topnav ${navScroll ? "nav-scroll-color" : ""} ${navHide ? "hide-menu" : ""} ${isDarkText ? "dark-text" : ""} `}
       >
         {/* mobile ham menu & logo */}
         <div className="mobile-container">

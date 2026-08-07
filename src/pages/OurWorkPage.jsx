@@ -206,10 +206,20 @@ const OurWorkPage = () => {
         >
           <div className="title">
             <h1 className="category-title">{activeItem.title}</h1>
-            <p className="total-photos-sub">
-              {activeItem.gallery?.length || 0} Photos
-            </p>
+            <div className="text-below">
+              <p>
+                Slide {activeItem.index + 1} / {rawItems.length}
+              </p>
+              <p
+                className="total-photos-sub page-button"
+                to={`/work/${activeItem.id}`}
+              >
+                {activeItem.gallery?.length || 0} Photos
+              </p>
+            </div>
           </div>
+
+          <p className="subtext">Click Card to View</p>
         </div>
       )}
     </div>
