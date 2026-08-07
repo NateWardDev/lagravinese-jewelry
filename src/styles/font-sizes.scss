@@ -111,6 +111,21 @@ header {
 
 /* Navigation Typography & Color Behaviors */
 nav {
+  &.dark-text {
+    color: var(--text-black);
+    a,
+    p {
+      color: var(--text-main);
+    }
+    .bar {
+      background: var(--text-main);
+    }
+    .main-links a {
+      &::after {
+        background-color: var(--text-main);
+      }
+    }
+  }
   .bar {
     background: var(--text-on-dark);
   }
