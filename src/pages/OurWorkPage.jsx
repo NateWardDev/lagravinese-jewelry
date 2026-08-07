@@ -14,10 +14,13 @@ const OurWorkPage = () => {
   const targetX = useRef(0);
   const lastActiveIndex = useRef(-1);
 
-  // Drag state refs
+  // Drag & Velocity state refs
   const isDragging = useRef(false);
   const startX = useRef(0);
   const dragDistance = useRef(0);
+  const lastX = useRef(0);
+  const lastTime = useRef(0);
+  const velocityX = useRef(0);
 
   const [activeItem, setActiveItem] = useState(rawItems[0]);
 
@@ -54,31 +57,57 @@ const OurWorkPage = () => {
 
     updateDimensions();
 
-    // Touch & Pointer Handlers
+    // Touch & Pointer Handlers with Fast Drag & Velocity Physics
     const handlePointerDown = (e) => {
       isDragging.current = true;
       startX.current = e.clientX;
+      lastX.current = e.clientX;
+      lastTime.current = performance.now();
+      velocityX.current = 0;
       dragDistance.current = 0;
     };
 
     const handlePointerMove = (e) => {
       if (!isDragging.current) return;
-      const deltaX = e.clientX - startX.current;
-      startX.current = e.clientX;
+
+      const now = performance.now();
+      const dt = now - lastTime.current;
+      const clientX = e.clientX;
+      const deltaX = clientX - startX.current;
+
+      startX.current = clientX;
       dragDistance.current += Math.abs(deltaX);
 
-      // Higher multiplier on touch for responsive direct-tracking
-      targetX.current += deltaX * 1.35;
+      // High sensitivity multiplier for fast, responsive dragging
+      const isMobile = window.innerWidth <= 1024;
+      const sensitivity = isMobile ? 2.0 : 1.5;
+
+      targetX.current += deltaX * sensitivity;
+
+      // Calculate velocity for flick momentum
+      if (dt > 0) {
+        velocityX.current = (clientX - lastX.current) / dt;
+      }
+
+      lastX.current = clientX;
+      lastTime.current = now;
     };
 
     const handlePointerUp = () => {
+      if (!isDragging.current) return;
       isDragging.current = false;
+
+      // Apply flick momentum decay based on release velocity
+      const isMobile = window.innerWidth <= 1024;
+      const momentumFactor = isMobile ? 200 : 120;
+      targetX.current += velocityX.current * momentumFactor;
+      velocityX.current = 0;
     };
 
     const handleWheel = (e) => {
       const delta = e.deltaY || e.deltaX;
       const clampedDelta = Math.max(Math.min(delta, 100), -100);
-      targetX.current -= clampedDelta * 1.2;
+      targetX.current -= clampedDelta * 1.5;
     };
 
     window.addEventListener("wheel", handleWheel, { passive: true });
@@ -96,8 +125,8 @@ const OurWorkPage = () => {
         return;
       }
 
-      // Snappier lerp response (0.2 instead of 0.085)
-      currentX.current += (targetX.current - currentX.current) * 0.2;
+      // Fast, snappy lerp interpolation factor (0.28)
+      currentX.current += (targetX.current - currentX.current) * 0.28;
 
       const minBound = centerOffset - singleSetWidth * 2;
       const maxBound = centerOffset;
@@ -114,8 +143,7 @@ const OurWorkPage = () => {
       // Fast Direct GSAP Transform
       gsap.set(track, { x: currentX.current, force3D: true });
 
-      // MATH-BASED Active Calculation (Zero Layout Reads)
-      // Calculates closest index without getBoundingClientRect()
+      // MATH-BASED Active Calculation
       const relativeX = centerOffset - currentX.current;
       let closestIdx = Math.round(relativeX / stepWidth);
       closestIdx = ((closestIdx % totalCards) + totalCards) % totalCards;
