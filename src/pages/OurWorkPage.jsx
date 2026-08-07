@@ -78,14 +78,11 @@ const OurWorkPage = () => {
       startX.current = clientX;
       dragDistance.current += Math.abs(deltaX);
 
-      // High sensitivity multiplier for fast, responsive dragging
-      const isMobile = window.innerWidth <= 1024;
-      const sensitivity = isMobile ? 2.0 : 1.5;
+      // Direct, responsive manual drag tracking
+      targetX.current += deltaX;
 
-      targetX.current += deltaX * sensitivity;
-
-      // Calculate velocity for flick momentum
       if (dt > 0) {
+        // Calculate drag velocity (px / ms)
         velocityX.current = (clientX - lastX.current) / dt;
       }
 
@@ -93,14 +90,29 @@ const OurWorkPage = () => {
       lastTime.current = now;
     };
 
+    // MAGNETIC PINNING / SNAPPING FIX
     const handlePointerUp = () => {
       if (!isDragging.current) return;
       isDragging.current = false;
 
-      // Apply flick momentum decay based on release velocity
-      const isMobile = window.innerWidth <= 1024;
-      const momentumFactor = isMobile ? 200 : 120;
-      targetX.current += velocityX.current * momentumFactor;
+      // 1. Calculate current card index from the actual visible target position
+      const relativeX = centerOffset - targetX.current;
+      let targetCardIndex = Math.round(relativeX / stepWidth);
+
+      // 2. Check flick direction (velocity threshold lowered to 0.15 for easier swipes)
+      const speed = Math.abs(velocityX.current);
+      if (speed > 0.15) {
+        if (velocityX.current < 0) {
+          // Swiped left -> force next card
+          targetCardIndex = Math.floor(relativeX / stepWidth) + 1;
+        } else {
+          // Swiped right -> force previous card
+          targetCardIndex = Math.ceil(relativeX / stepWidth) - 1;
+        }
+      }
+
+      // 3. HARD PIN targetX directly to the exact card center
+      targetX.current = centerOffset - targetCardIndex * stepWidth;
       velocityX.current = 0;
     };
 

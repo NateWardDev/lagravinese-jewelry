@@ -1265,9 +1265,10 @@ section {
     display: flex;
     height: 100vh;
     will-change: transform;
-    gap: 2rem;
+    gap: 1rem;
 
     .slider-card {
+      cursor: pointer;
       position: relative;
       width: 60vw;
       height: 100vh;
@@ -1317,9 +1318,9 @@ section {
     white-space: nowrap;
     pointer-events: auto;
     font-weight: 500;
-
     .title {
-      text-shadow: 0 0 1rem #00000070;
+      min-width: 280px;
+      text-shadow: 0 0 1rem #000000a4;
       h1 {
         font-size: 3.5rem;
       }
@@ -1333,7 +1334,10 @@ section {
         align-items: center;
         white-space: nowrap;
         justify-content: center;
-        gap: 4rem;
+        gap: 1rem;
+        p {
+          text-shadow: 0 0 1rem #000000fd;
+        }
       }
     }
     .subtext {
@@ -1706,6 +1710,9 @@ section {
         }
       }
     }
+    svg {
+      font-size: 1.75rem;
+    }
   }
 
   .footer-bottom {
@@ -1743,6 +1750,12 @@ section {
     }
     .desktop-container {
       display: none;
+    }
+  }
+
+  .header-hero {
+    &.home {
+      height: 80dvh;
     }
   }
 
