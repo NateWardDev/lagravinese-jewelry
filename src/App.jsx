@@ -8,6 +8,7 @@ import OurWorkPage from "./pages/OurWorkPage";
 import HomePage from "./pages/HomePage";
 import JourneyPage from "./pages/JourneyPage";
 import InquiriesPage from "./pages/InquiriesPage";
+import CategoryPage from "./pages/CategoryPage";
 import Topnav from "./components/Topnav";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/journey" element={<JourneyPage />} />
         <Route path="/work" element={<OurWorkPage />} />
+        <Route path="/work/:id" element={<CategoryPage />} />
         <Route path="/inquiries" element={<InquiriesPage />} />
       </Routes>
       <Footer />

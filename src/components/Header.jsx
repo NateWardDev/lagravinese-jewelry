@@ -7,6 +7,10 @@ const Header = () => {
   const headerItem = headerData.find((item) => item.path === pathname);
   if (!headerItem) return null;
 
+  if (pathname.startsWith("/work")) {
+    return null;
+  }
+
   return (
     <header className={`header-hero ${headerItem.name}`}>
       {/* Background Image Container */}

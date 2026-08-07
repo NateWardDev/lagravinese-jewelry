@@ -92,7 +92,6 @@ import homeImage from "/images/greenCoat.jpeg";
 import journeyImage from "/images/greenCoat.jpeg";
 import workImage from "/images/greenCoat.jpeg";
 import inquiriesImage from "/images/greenCoat.jpeg";
-
 export const headerData = [
   {
     path: "/",
@@ -124,6 +123,7 @@ export const headerData = [
   },
 ];
 
+// Home testimonials Section
 import test1Head from "/images/eng-placeholder1.jpeg";
 import test2Head from "/images/eng-placeholder2.jpeg";
 import test3Head from "/images/eng-placeholder3.jpeg";
@@ -132,11 +132,8 @@ import test1Background from "/images/ring-test-placeholder1.webp";
 import test2Background from "/images/ring-test-placeholder2.webp";
 import test3Background from "/images/ring-test-placeholder3.jpg";
 import test4Background from "/images/ring-test-placeholder4.jpeg";
-
-// Home testimonials Section
 export const testimonialsData = {
   heading: "Kind Words from Our Clients",
-
   testimonials: [
     {
       id: 1,
@@ -296,51 +293,108 @@ import pendants from "/images/pendant.jpeg";
 
 export const collections = {
   header: "What We Create",
+  galleryheader: "Gallery",
   icon: FaArrowRight,
   pageLink: "Gallery",
   linkTo: "/work",
   items: [
     {
+      id: "engagement-rings",
       title: "Engagement Rings",
       image: engagementRings,
       alt: "Custom engagement ring",
       link: "/collections/custom-engagement-rings",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
     {
+      id: "wedding-bands",
       title: "Wedding Bands",
       image: weddingBands,
       alt: "Wedding bands",
       link: "/collections/wedding-bands",
+      gallery: [
+        weddingBands,
+        weddingBands,
+        weddingBands,
+        weddingBands,
+        weddingBands,
+      ],
     },
     {
+      id: "anniversary-rings",
       title: "Anniversary Rings",
       image: anniversaryRings,
       alt: "Anniversary ring",
       link: "/collections/anniversary-rings",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
     {
+      id: "necklaces",
       title: "Necklaces",
       image: necklaces,
       alt: "Custom necklace",
       link: "/collections/necklaces",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
     {
+      id: "earrings",
       title: "Earrings",
       image: earrings,
       alt: "Custom earrings",
       link: "/collections/earrings",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
     {
+      id: "bracelets",
       title: "Bracelets",
       image: bracelets,
       alt: "Custom bracelet",
       link: "/collections/bracelets",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
     {
+      id: "pendants",
       title: "Pendants",
       image: pendants,
       alt: "Custom pendant",
       link: "/collections/pendants",
+      gallery: [
+        engagementRings,
+        weddingBands,
+        anniversaryRings,
+        necklaces,
+        earrings,
+      ],
     },
   ],
 };
@@ -578,7 +632,6 @@ import journeyImage1 from "/images/journey1.jpg";
 import journeyImage2 from "/images/journey2.jpg";
 import journeyImage3 from "/images/journey2.jpg";
 import journeyImage4 from "/images/siblings.jpg";
-
 export const journeyTimeline = {
   images: [
     {

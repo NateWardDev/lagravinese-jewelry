@@ -1,7 +1,14 @@
 import { footerData } from "../data";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+
+  // Hide on /work and all nested sub-routes (e.g., /work/:id)
+  if (pathname.startsWith("/work")) {
+    return null;
+  }
+
   return (
     <footer className="site-footer">
       <div className="sticky-container">
@@ -65,6 +72,7 @@ const Footer = () => {
               )}
             </div>
           ))}
+
           <div className="footer-bottom">
             <p>
               &copy; {new Date().getFullYear()} LaGravinese Jewelry. All rights
@@ -73,7 +81,11 @@ const Footer = () => {
 
             <p>
               Website by{" "}
-              <a href="https://narleywebstudios.com" target="_blank">
+              <a
+                href="https://narleywebstudios.com"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Narley Web Studios
               </a>
             </p>
