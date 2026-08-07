@@ -12,35 +12,37 @@ const OurWorkPage = () => {
 
   const currentX = useRef(0);
   const targetX = useRef(0);
-  const lastActiveIndex = useRef(null);
+  const lastActiveIndex = useRef(-1);
 
   // Drag state refs
   const isDragging = useRef(false);
   const startX = useRef(0);
   const dragDistance = useRef(0);
 
-  // Active category state for fixed text display
   const [activeItem, setActiveItem] = useState(rawItems[0]);
 
   useEffect(() => {
-    if (
-      !trackRef.current ||
-      trackRef.current.children.length < rawItems.length * 2
-    )
-      return;
+    if (!trackRef.current || trackRef.current.children.length === 0) return;
 
     const track = trackRef.current;
     const cards = Array.from(track.children);
+    const totalCards = cards.length;
 
+    let cardWidth = 0;
+    let cardGap = 0;
+    let stepWidth = 0;
     let singleSetWidth = 0;
     let centerOffset = 0;
 
     const updateDimensions = () => {
+      if (!cards[0]) return;
       const firstCard = cards[0];
-      const secondSetFirstCard = cards[rawItems.length];
+      const style = window.getComputedStyle(track);
 
-      singleSetWidth = secondSetFirstCard.offsetLeft - firstCard.offsetLeft;
-      const cardWidth = firstCard.offsetWidth;
+      cardWidth = firstCard.offsetWidth;
+      cardGap = parseFloat(style.gap) || 0;
+      stepWidth = cardWidth + cardGap;
+      singleSetWidth = stepWidth * rawItems.length;
       centerOffset = (window.innerWidth - cardWidth) / 2;
 
       if (currentX.current === 0) {
@@ -52,14 +54,7 @@ const OurWorkPage = () => {
 
     updateDimensions();
 
-    // Wheel Event Handler
-    const handleWheel = (e) => {
-      const delta = e.deltaY || e.deltaX;
-      const clampedDelta = Math.max(Math.min(delta, 100), -100);
-      targetX.current -= clampedDelta * 0.85;
-    };
-
-    // Pointer (Touch & Drag) Event Handlers
+    // Touch & Pointer Handlers
     const handlePointerDown = (e) => {
       isDragging.current = true;
       startX.current = e.clientX;
@@ -72,18 +67,22 @@ const OurWorkPage = () => {
       startX.current = e.clientX;
       dragDistance.current += Math.abs(deltaX);
 
-      // Adjust multiplier if touch drag sensitivity needs tweaking
-      targetX.current += deltaX * 1.2;
+      // Higher multiplier on touch for responsive direct-tracking
+      targetX.current += deltaX * 1.35;
     };
 
     const handlePointerUp = () => {
       isDragging.current = false;
     };
 
+    const handleWheel = (e) => {
+      const delta = e.deltaY || e.deltaX;
+      const clampedDelta = Math.max(Math.min(delta, 100), -100);
+      targetX.current -= clampedDelta * 1.2;
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: true });
     window.addEventListener("resize", updateDimensions);
-
-    // Attach Pointer Events to Window for fluid dragging off-screen
     window.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointermove", handlePointerMove);
     window.addEventListener("pointerup", handlePointerUp);
@@ -92,15 +91,18 @@ const OurWorkPage = () => {
     let animationFrameId;
 
     const render = () => {
-      if (!singleSetWidth) return;
+      if (!singleSetWidth) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
 
-      // Smooth lerp movement
-      currentX.current += (targetX.current - currentX.current) * 0.085;
+      // Snappier lerp response (0.2 instead of 0.085)
+      currentX.current += (targetX.current - currentX.current) * 0.2;
 
       const minBound = centerOffset - singleSetWidth * 2;
       const maxBound = centerOffset;
 
-      // Seamless Wrapping
+      // Infinite wrapping bounds
       if (currentX.current <= minBound) {
         currentX.current += singleSetWidth;
         targetX.current += singleSetWidth;
@@ -109,31 +111,18 @@ const OurWorkPage = () => {
         targetX.current -= singleSetWidth;
       }
 
-      // Apply transform via GSAP
-      gsap.set(track, { x: currentX.current });
+      // Fast Direct GSAP Transform
+      gsap.set(track, { x: currentX.current, force3D: true });
 
-      // Highlight active card closest to screen center
-      const screenCenter = window.innerWidth / 2;
-      let closestCard = null;
-      let closestIdx = -1;
-      let minDistance = Infinity;
+      // MATH-BASED Active Calculation (Zero Layout Reads)
+      // Calculates closest index without getBoundingClientRect()
+      const relativeX = centerOffset - currentX.current;
+      let closestIdx = Math.round(relativeX / stepWidth);
+      closestIdx = ((closestIdx % totalCards) + totalCards) % totalCards;
 
-      cards.forEach((card, idx) => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.left + rect.width / 2;
-        const distance = Math.abs(screenCenter - cardCenter);
-
-        if (distance < minDistance) {
-          minDistance = distance;
-          closestCard = card;
-          closestIdx = idx;
-        }
-      });
-
-      // Update active state when index changes
-      if (closestIdx !== -1 && closestIdx !== lastActiveIndex.current) {
-        cards.forEach((card) => {
-          if (card === closestCard) {
+      if (closestIdx !== lastActiveIndex.current) {
+        cards.forEach((card, idx) => {
+          if (idx === closestIdx) {
             card.classList.add("active");
             card.classList.remove("dimmed");
           } else {
@@ -142,7 +131,6 @@ const OurWorkPage = () => {
           }
         });
 
-        // Set state for active item
         setActiveItem(infiniteItems[closestIdx]);
         lastActiveIndex.current = closestIdx;
       }
@@ -163,7 +151,6 @@ const OurWorkPage = () => {
     };
   }, [rawItems.length]);
 
-  // Prevent navigation click if user was dragging
   const handleCardClick = (id) => {
     if (dragDistance.current > 10) return;
     navigate(`/work/${id}`);
@@ -171,7 +158,6 @@ const OurWorkPage = () => {
 
   return (
     <div className="work-slider-container">
-      {/* Moving Cards Track */}
       <div className="slider-track" ref={trackRef}>
         {infiniteItems.map((item, idx) => (
           <div
@@ -180,11 +166,11 @@ const OurWorkPage = () => {
             onClick={() => handleCardClick(item.id)}
           >
             <img src={item.image} alt={item.title} className="card-bg-img" />
+            <div className="card-overlay" />
           </div>
         ))}
       </div>
 
-      {/* Fixed Bottom Center Info Overlay */}
       {activeItem && (
         <div
           className="active-card-text-container"
