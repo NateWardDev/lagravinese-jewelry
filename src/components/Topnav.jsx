@@ -12,8 +12,6 @@ const Topnav = () => {
 
   // pathname
   const pathname = useLocation().pathname;
-  const matchingLink = navLinks.find((link) => link.linkPath === pathname);
-  console.log(matchingLink);
 
   // List all main root pages here
   const mainPages = navLinks.map((item) => item.linkPath);
@@ -58,7 +56,7 @@ const Topnav = () => {
       >
         {/* mobile ham menu & logo */}
         <div className="mobile-container">
-          <Link link to="/" className="logo">
+          <Link to="/" className="logo">
             LG
           </Link>
 

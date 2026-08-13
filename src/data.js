@@ -4,17 +4,22 @@ export const navLinks = [
   {
     linkName: "Home",
     linkPath: "/",
-    navColor: "light-text",
+    navColor: "dark-text",
   },
   {
     linkName: "Our Journey",
     linkPath: "/journey",
-    navColor: "light-text",
+    navColor: "dark-text",
   },
   {
-    linkName: "Our Work",
+    linkName: "Our Collections",
     linkPath: "/work",
-    navColor: "light-text",
+    navColor: "dark-text",
+  },
+  {
+    linkName: "Our Process",
+    linkPath: "/process",
+    navColor: "dark-text",
   },
   {
     linkName: "Inquiries",
@@ -50,8 +55,13 @@ export const footerData = [
         linkPath: "/journey",
       },
       {
-        linkName: "Our Work",
+        linkName: "Our Collections",
         linkPath: "/work",
+      },
+      {
+        linkName: "Our Process",
+        linkPath: "/process",
+        navColor: "light-text",
       },
       {
         linkName: "Inquiries",
@@ -102,7 +112,7 @@ export const headerData = [
     name: "home",
     img: homeImage,
     mainText: "LaGravinese",
-    secondText: "Custom Jewelry",
+    secondText: "Jewelry",
   },
   {
     path: "/journey",
@@ -266,23 +276,25 @@ export const homeContactData = {
 };
 
 // home About section
-import homeAboutPhoto from "/images/siblings.jpg";
+import homeAboutPhoto1 from "/images/siblings.jpg";
+import homeAboutPhoto2 from "/images/earing-placeholder.png"; // Add your second image import here
+
 export const homeAboutData = {
-  heading: "Our Journey",
-  image: {
-    src: homeAboutPhoto,
-    alt: "The LaGravinese family",
+  heading: "Our Story",
+  images: {
+    src1: homeAboutPhoto1,
+    alt1: "Hand wearing oval engagement ring",
+    src2: homeAboutPhoto2,
+    alt2: "Model wearing gold pearl drop earrings",
   },
   paragraphs: [
-    "For four generations, the LaGravinese name has been rooted in the jewelry industry through craftsmanship, integrity, and a passion for helping people celebrate life's most meaningful moments.",
-
-    "Today, we're honored to continue that legacy by combining traditional values with a personalized approach to jewelry. We believe jewelry should be as meaningful as it is beautiful. Every piece tells a story of love, family, celebration, remembrance, or a new beginning.",
-
-    "Whether you're choosing your first meaningful piece, redesigning a treasured heirloom, or creating something entirely new, we're here to guide you with honesty, education, and genuine care.",
+    "For four generations, jewelry has been more than a profession in our family—it's been a tradition. As two sisters continuing our family's legacy, we're passionate about creating handcrafted pieces that celebrate life's most meaningful moments.",
+    "Whether you're celebrating an engagement, an anniversary, or another special milestone, we're honored to create jewelry you'll treasure for generations to come.",
   ],
   button: {
-    text: "Learn More",
+    text: "More About Us",
     path: "/journey",
+    icon: FaArrowRight,
   },
 };
 
@@ -296,7 +308,7 @@ import bracelets from "/images/bracelet-placeholder.jpg";
 import pendants from "/images/pendant.jpeg";
 
 export const collections = {
-  header: "What We Create",
+  header: "Our Collections",
   galleryheader: "Gallery",
   icon: FaArrowRight,
   pageLink: "Gallery",
@@ -435,30 +447,37 @@ export const collections = {
   ],
 };
 
+import { GiDiamondRing, GiGemPendant, GiScales } from "react-icons/gi";
+
 export const services = {
   header: "Jewelry Services",
   icon: FaArrowRight,
   pageLink: "Services",
   linkTo: "/work",
+  image: engagementRings,
+  imgAlt: "placeholder",
   items: [
     {
       title: "Professional Jewelry Appraisals",
+      icon: GiScales,
       image: engagementRings,
-      alt: "Custom engagement ring",
+      alt: "Jewelry Appraisal Services",
       description:
         "Receive a detailed, professional evaluation of your jewelry for insurance, estate planning, resale, or personal records.",
     },
     {
       title: "Stone Replacement & Resetting",
+      icon: GiGemPendant,
       image: bracelets,
-      alt: "Custom engagement ring",
+      alt: "Stone Replacement Services",
       description:
         "Restore your favorite pieces with expert stone replacement, secure resetting, and precision craftsmanship.",
     },
     {
       title: "Custom Jewelry Design",
+      icon: GiDiamondRing,
       image: pendants,
-      alt: "Custom engagement ring",
+      alt: "Custom Jewelry Design Services",
       description:
         "Work one-on-one with our designers to create a unique, handcrafted piece tailored to your vision and style.",
     },

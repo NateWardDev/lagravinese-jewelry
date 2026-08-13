@@ -35,21 +35,33 @@ const OurWorkPage = () => {
     let cardGap = 0;
     let stepWidth = 0;
     let singleSetWidth = 0;
+    let setModuloWidth = 0; // New tracking metric for geometric loop jumping
     let centerOffset = 0;
 
     const updateDimensions = () => {
-      if (!cards[0]) return;
-      const firstCard = cards[0];
-      const style = window.getComputedStyle(track);
+      if (!cards || cards.length < 2) return;
 
-      cardWidth = firstCard.offsetWidth;
-      cardGap = parseFloat(style.gap) || 0;
+      const firstCard = cards[0];
+      const secondCard = cards[1];
+
+      const firstCardRect = firstCard.getBoundingClientRect();
+      const secondCardRect = secondCard.getBoundingClientRect();
+
+      cardWidth = firstCardRect.width;
+      cardGap = secondCardRect.left - firstCardRect.right;
       stepWidth = cardWidth + cardGap;
-      singleSetWidth = stepWidth * rawItems.length;
+
+      // 1. FIX: The looping interval needs to be exactly equal to raw items multiplied by a full step module
+      setModuloWidth = stepWidth * rawItems.length;
+
+      // Static end-to-end edge mapping calculation
+      singleSetWidth =
+        cardWidth * rawItems.length + cardGap * (rawItems.length - 1);
       centerOffset = (window.innerWidth - cardWidth) / 2;
 
+      // 2. FIX: Initialize position using the structural step module so it aligns precisely with the loop reset points
       if (currentX.current === 0) {
-        const initialX = centerOffset - singleSetWidth;
+        const initialX = centerOffset - setModuloWidth;
         currentX.current = initialX;
         targetX.current = initialX;
       }
@@ -69,49 +81,38 @@ const OurWorkPage = () => {
 
     const handlePointerMove = (e) => {
       if (!isDragging.current) return;
-
       const now = performance.now();
       const dt = now - lastTime.current;
       const clientX = e.clientX;
       const deltaX = clientX - startX.current;
-
       startX.current = clientX;
       dragDistance.current += Math.abs(deltaX);
 
-      // Direct, responsive manual drag tracking
       targetX.current += deltaX;
 
       if (dt > 0) {
-        // Calculate drag velocity (px / ms)
         velocityX.current = (clientX - lastX.current) / dt;
       }
-
       lastX.current = clientX;
       lastTime.current = now;
     };
 
-    // MAGNETIC PINNING / SNAPPING FIX
     const handlePointerUp = () => {
       if (!isDragging.current) return;
       isDragging.current = false;
 
-      // 1. Calculate current card index from the actual visible target position
       const relativeX = centerOffset - targetX.current;
       let targetCardIndex = Math.round(relativeX / stepWidth);
 
-      // 2. Check flick direction (velocity threshold lowered to 0.15 for easier swipes)
       const speed = Math.abs(velocityX.current);
       if (speed > 0.15) {
         if (velocityX.current < 0) {
-          // Swiped left -> force next card
           targetCardIndex = Math.floor(relativeX / stepWidth) + 1;
         } else {
-          // Swiped right -> force previous card
           targetCardIndex = Math.ceil(relativeX / stepWidth) - 1;
         }
       }
 
-      // 3. HARD PIN targetX directly to the exact card center
       targetX.current = centerOffset - targetCardIndex * stepWidth;
       velocityX.current = 0;
     };
@@ -132,30 +133,27 @@ const OurWorkPage = () => {
     let animationFrameId;
 
     const render = () => {
-      if (!singleSetWidth) {
+      if (!setModuloWidth) {
         animationFrameId = requestAnimationFrame(render);
         return;
       }
 
-      // Fast, snappy lerp interpolation factor (0.28)
       currentX.current += (targetX.current - currentX.current) * 0.28;
 
-      const minBound = centerOffset - singleSetWidth * 2;
+      // 3. FIX: Calibrate loop thresholds cleanly using the standard repeating step modulo size
+      const minBound = centerOffset - setModuloWidth * 2;
       const maxBound = centerOffset;
 
-      // Infinite wrapping bounds
       if (currentX.current <= minBound) {
-        currentX.current += singleSetWidth;
-        targetX.current += singleSetWidth;
+        currentX.current += setModuloWidth;
+        targetX.current += setModuloWidth;
       } else if (currentX.current >= maxBound) {
-        currentX.current -= singleSetWidth;
-        targetX.current -= singleSetWidth;
+        currentX.current -= setModuloWidth;
+        targetX.current -= setModuloWidth;
       }
 
-      // Fast Direct GSAP Transform
       gsap.set(track, { x: currentX.current, force3D: true });
 
-      // MATH-BASED Active Calculation
       const relativeX = centerOffset - currentX.current;
       let closestIdx = Math.round(relativeX / stepWidth);
       closestIdx = ((closestIdx % totalCards) + totalCards) % totalCards;
@@ -170,7 +168,6 @@ const OurWorkPage = () => {
             card.classList.add("dimmed");
           }
         });
-
         setActiveItem(infiniteItems[closestIdx]);
         lastActiveIndex.current = closestIdx;
       }

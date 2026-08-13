@@ -1,23 +1,46 @@
 import { homeAboutData } from "../data";
+import { Link } from "react-router";
 
 const AboutHome = () => {
+  const ButtonIcon = homeAboutData.button.icon;
   return (
-    <section className="about bg-color-two">
-      <div className="content-wrapper">
-        <div className="img-wrapper">
-          <img src={homeAboutData.image.src} alt={homeAboutData.image.alt} />
+    <section className="about-section">
+      <div className="about-container">
+        {/* Left Column: Overlapping Images */}
+        <div className="images-column">
+          {/* Outer Gold Border Frame */}
+          <div className="gold-frame">
+            {/* Primary Large Image */}
+            <div className="primary-img-wrapper img-wrapper">
+              <img
+                src={homeAboutData.images.src1}
+                alt={homeAboutData.images.alt1}
+              />
+            </div>
+
+            {/* Secondary Overlapping Floating Image */}
+            <div className="secondary-img-wrapper img-wrapper">
+              <img
+                src={homeAboutData.images.src2}
+                alt={homeAboutData.images.alt2}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="text-wrapper">
-          <h2>{homeAboutData.heading}</h2>
+        {/* Right Column: Bordered Text Card */}
+        <div className="text-card">
+          <h2 className="about-heading">{homeAboutData.heading}</h2>
 
-          {homeAboutData.paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-
-          <a className="page-link white left" href={homeAboutData.button.path}>
-            {homeAboutData.button.text}
-          </a>
+          <div className="paragraphs-wrapper">
+            {homeAboutData.paragraphs.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+          <Link to={homeAboutData.button.path} className="page-link">
+            <span>{homeAboutData.button.text}</span>
+            {ButtonIcon && <ButtonIcon />}
+          </Link>
         </div>
       </div>
     </section>

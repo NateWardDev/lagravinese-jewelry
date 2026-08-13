@@ -1,34 +1,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-  /* ==========================================================================
-     1. Strict Color Palette (7 Colors Max)
-     ========================================================================== */
-  --bg-main: #e6dfd7; /* 1. Main Background */
-  --bg-alt: #bcb2a8; /* 2. Secondary/Off-Background */
+  /* Color Palette */
+  --bg-main: #f7f3ee;
+  --bg-alt: #bcb2a8;
 
-  --text-black: #000000; /* 3. Dark Text */
-  --text-white: #ffffff; /* 4. Light Text */
+  --text-black: #000000;
+  --text-white: #ffffff;
 
-  --accent-primary: #aa6d64; /* 5. Accent 1 (Secondary Button BG / Highlights) */
-  --accent-secondary: #9f4d1c; /* 6. Accent 2 (Primary Button BG / Hover) */
-  --accent-tertiary: #3b0e25; /* 7. Accent 3 (Dark Accent / Footers / Cards) */
+  --color-espresso: #2a1712;
+  --color-deep-cocoa: #4a2920;
+  --color-burnt-terracotta: #9a5039;
+  --color-champagne-gold: #c9a46a;
+  --color-soft-blush: #d8b5a5;
+  --color-warm-ivory: #f5eee5;
+  --color-pearl: #faf8f4;
 
   /* Functional Mappings */
   --bg-primary: var(--bg-main);
   --bg-secondary: var(--bg-alt);
-  --bg-accent: var(--accent-tertiary);
+  --bg-accent: var(--color-deep-cocoa);
 
   --text-main: var(--text-black);
-  --text-muted: var(--accent-primary);
+  --text-muted: var(--color-champagne-gold);
   --text-on-dark: var(--text-white);
 
-  --btn-bg: var(--accent-secondary);
-  --btn-bg-hover: var(--accent-primary);
+  --btn-bg: var(--color-burnt-terracotta);
+  --btn-bg-hover: var(--color-champagne-gold);
   --btn-text: var(--text-white);
 
-  --btn-secondary-bg: var(--accent-primary);
-  --btn-secondary-hover: var(--accent-tertiary);
+  --btn-secondary-bg: var(--color-champagne-gold);
+  --btn-secondary-hover: var(--color-burnt-terracotta);
+
+  /* Recalibrated Typography Scale */
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Montserrat", sans-serif;
+
+  /* Clamped Sizes */
+  --fs-hero: clamp(3.8rem, 7vw + 1rem, 6.5rem);
+  --fs-h1: clamp(2.8rem, 4.5vw + 0.5rem, 4.25rem);
+  --fs-h2: clamp(2.1rem, 3.2vw + 0.5rem, 3.25rem);
+  --fs-h3: clamp(1.5rem, 2vw + 0.5rem, 2.1rem);
+  --fs-h4: clamp(1.25rem, 1.2vw + 0.5rem, 1.55rem);
+
+  --fs-body: clamp(1.05rem, 0.5vw + 0.8rem, 1.2rem);
+  --fs-small: clamp(0.9rem, 0.4vw + 0.7rem, 1rem);
+
+  /* Adjusted Nav Link Size */
+  --fs-nav: clamp(0.8rem, 0.25vw + 0.7rem, 0.925rem);
 }
 
 /* Base Typography Setup */
@@ -40,85 +59,69 @@ body {
 }
 
 body {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 200;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-family: var(--font-body);
+  font-weight: 300;
   background-color: var(--bg-primary);
   color: var(--text-main);
+  font-size: var(--fs-body);
+  line-height: 1.6;
 }
 
 h1,
 h2,
 h3,
-h4,
-h5,
-h6 {
-  font-family: "Cormorant Garamond", serif;
-}
-
-h2 {
-  font-size: clamp(2.5rem, 3vw, 4rem);
-  line-height: 1;
-}
-
-h3 {
-  font-size: clamp(2rem, 2.25vw, 3rem);
-  line-height: 1;
-}
-
 h4 {
-  font-size: 1.75rem;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.15;
 }
 
-a,
-p {
-  font-size: 1.5rem;
+h1 {
+  font-size: var(--fs-h1);
+}
+h2,
+.service-icon {
+  font-size: var(--fs-h2);
+}
+h3 {
+  font-size: var(--fs-h3);
+}
+h4 {
+  font-size: var(--fs-h4);
+}
+
+p,
+a {
+  font-size: var(--fs-body);
 }
 
 header {
-  &.home {
-    h1 {
-      font-size: clamp(3.5rem, 8vw, 8rem);
-      line-height: 1;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 5vw, 5rem);
-      line-height: 1;
-    }
+  &.home h1 {
+    font-size: var(--fs-hero);
+    line-height: 1.05;
   }
 
   &.journey,
   &.work,
   &.inquiries {
     h1 {
-      font-size: clamp(3rem, 6vw, 6rem);
+      font-size: var(--fs-h1);
       line-height: 1.2;
     }
 
     h2 {
-      font-size: clamp(1.75rem, 3vw, 3rem);
-      line-height: 1;
+      font-size: var(--fs-h2);
+      line-height: 1.2;
     }
-  }
-
-  &.work,
-  &.inquiries {
-    display: none;
   }
 }
 
-.topnav {
-  .logo {
-    font-size: 2rem;
-    font-family: cursive;
-  }
-  a {
-    font-size: 1rem;
-    font-weight: 300;
-  }
-  svg {
-    font-size: 1.5rem;
-  }
+.faq button {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-body);
 }
 
 /* Navigation Typography & Color Behaviors */
@@ -128,15 +131,13 @@ nav,
     color: var(--text-black);
     a,
     p {
-      color: var(--text-main);
+      color: var(--text-black);
     }
     .bar {
       background: var(--text-main);
     }
-    .main-links a {
-      &::after {
-        background-color: var(--text-main);
-      }
+    .main-links a::after {
+      background-color: var(--text-main);
     }
   }
   .bar {
@@ -158,8 +159,8 @@ nav,
       left: 50%;
       bottom: -6px;
       transform: translate(-50%, -4px) scale(0);
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background-color: var(--text-on-dark);
       opacity: 0;
@@ -202,7 +203,21 @@ footer,
   background-color: var(--bg-secondary);
 }
 
-.faq button {
-  font-weight: 400;
-  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+.topnav {
+  a {
+    font-size: var(--fs-nav) !important;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+  .logo {
+    font-size: clamp(2.15rem, 2.5vw + 1rem, 2.85rem);
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    font-size: 10rem;
+  }
+  svg {
+    font-size: 1.35rem;
+  }
 }

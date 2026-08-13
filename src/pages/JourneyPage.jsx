@@ -39,7 +39,7 @@ const JourneyPage = () => {
           start: "top top",
           end: `+=${totalScrollDistance + window.innerHeight}`,
           pin: true,
-          scrub: 0.5,
+          scrub: true,
           invalidateOnRefresh: true, // Recalculate measurements on window resize
           animation: gsap.to(imagesContainer, {
             y: -totalScrollDistance,
@@ -78,10 +78,10 @@ const JourneyPage = () => {
         {journeyTimelineMobile.map((item, index) => (
           <div className="timeline-section" key={index}>
             <div className="timeline-text">
-              <p className="text-year">
+              <h4 className="text-year">
                 {item.generation} {item.years}
-              </p>
-              <h3>{item.head}</h3>
+              </h4>
+              <h2>{item.head}</h2>
               <p>{item.desc}</p>
             </div>
             <div className="img-wrapper">
@@ -110,10 +110,10 @@ const JourneyPage = () => {
               key={index}
               ref={(el) => (rightItemsRef.current[index] = el)}
             >
-              <p className="text-year">
+              <h4 className="text-year">
                 {item.generation} {item.years}
-              </p>
-              <h3>{item.head}</h3>
+              </h4>
+              <h2>{item.head}</h2>
               <p>{item.desc}</p>
             </div>
           ))}
