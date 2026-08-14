@@ -210,7 +210,7 @@ const CategoryPage = () => {
         <div className="lightbox-content desktop-only">
           <div className="category-meta">
             <p className="meta-label">CATEGORY</p>
-            <h1 className="meta-title">{category.title}</h1>
+            <h2 className="meta-title">{category.title}</h2>
           </div>
 
           <div className="main-display">

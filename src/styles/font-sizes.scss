@@ -9,10 +9,9 @@
   --text-white: #ffffff;
 
   --color-espresso: #2a1712;
-  --color-deep-cocoa: #4a2920;
-  --color-burnt-terracotta: #9a5039;
+  --color-deep-cocoa: #52151e;
+  --color-burnt-terracotta: #d8b5a5;
   --color-champagne-gold: #c9a46a;
-  --color-soft-blush: #d8b5a5;
   --color-warm-ivory: #f5eee5;
   --color-pearl: #faf8f4;
 
@@ -27,10 +26,10 @@
 
   --btn-bg: var(--color-burnt-terracotta);
   --btn-bg-hover: var(--color-champagne-gold);
-  --btn-text: var(--text-white);
+  --btn-text: var(--text-black);
 
-  --btn-secondary-bg: var(--color-champagne-gold);
-  --btn-secondary-hover: var(--color-burnt-terracotta);
+  --btn-secondary-bg: var(--color-burnt-terracotta);
+  --btn-secondary-hover: var(--color-deep-cocoa);
 
   /* Recalibrated Typography Scale */
   --font-heading: "Cormorant Garamond", serif;
@@ -203,21 +202,24 @@ footer,
   background-color: var(--bg-secondary);
 }
 
+/* TOPNAV SPECIFIC OVERRIDES */
 .topnav {
   a {
     font-size: var(--fs-nav) !important;
     font-weight: 400;
     letter-spacing: 0.03em;
   }
+
   .logo {
-    font-size: clamp(2.15rem, 2.5vw + 1rem, 2.85rem);
-    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 1.8vw + 0.8rem, 2.1rem) !important;
+    font-family: var(--font-heading) !important;
     font-weight: 500;
     line-height: 1;
     letter-spacing: -0.01em;
-    font-size: 10rem;
+    width: auto !important;
   }
+
   svg {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
   }
 }

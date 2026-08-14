@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router";
 import { headerData } from "../data";
-import { FaPlay, FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa6";
 
 const Header = () => {
   const pathname = useLocation().pathname;

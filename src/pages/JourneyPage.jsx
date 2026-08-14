@@ -78,9 +78,9 @@ const JourneyPage = () => {
         {journeyTimelineMobile.map((item, index) => (
           <div className="timeline-section" key={index}>
             <div className="timeline-text">
-              <h4 className="text-year">
+              <h className="text-year">
                 {item.generation} {item.years}
-              </h4>
+              </h>
               <h2>{item.head}</h2>
               <p>{item.desc}</p>
             </div>

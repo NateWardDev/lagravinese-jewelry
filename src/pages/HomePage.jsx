@@ -7,11 +7,11 @@ import TestimonialsHome from "../components/TestimonialsHome";
 const HomePage = () => {
   return (
     <>
-      <CollectionsHome />
-      <ServicesHome />
       <AboutHome />
-      <TestimonialsHome />
+      <ServicesHome />
+      <CollectionsHome />
       <ProcessHome />
+      <TestimonialsHome />
     </>
   );
 };

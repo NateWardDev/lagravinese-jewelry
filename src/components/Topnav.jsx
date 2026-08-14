@@ -3,58 +3,62 @@ import { navLinks, socialLinks } from "../data";
 import { Link, useLocation } from "react-router";
 
 const Topnav = () => {
-  // hammenu clicked open
   const [navOpen, setNavOpen] = useState(false);
-  // user scroll change background color of navbar
   const [navScroll, setNavScroll] = useState(false);
-  // hide navbar when scroll down | show navbar when scroll up
-  const [navHide, SetNavHide] = useState(false);
+  const [navHide, setNavHide] = useState(false);
 
-  // pathname
-  const pathname = useLocation().pathname;
+  // Get both pathname and hash from React Router
+  const { pathname, hash } = useLocation();
+  const fullPath = pathname + hash;
 
-  // List all main root pages here
-  const mainPages = navLinks.map((item) => item.linkPath);
+  // Extract base paths (e.g. "/#process" -> "/") so mainPages checks work
+  const mainPages = navLinks.map((item) => item.linkPath.split("#")[0]);
 
-  // Is dark text needed? True if current pathname is NOT in mainPages
+  // Is dark text needed?
   const isDarkText = !mainPages.includes(pathname) || pathname === "/inquiries";
 
-  // for scroll events to hide/ change color of the navbar
+  // 1. Handle Smooth Scrolling for Hash Links (#process)
+  useEffect(() => {
+    if (hash) {
+      const targetId = hash.replace("#", "");
+      const element = document.getElementById(targetId);
+
+      if (element) {
+        // Small delay ensures DOM is fully rendered if navigating from another page
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [pathname, hash]);
+
+  // 2. Scroll listener for hide/show and background styling
   useEffect(() => {
     let previousScrollY = window.scrollY || window.pageYOffset;
+
     const handleScroll = () => {
-      // navbar
       const currentScrollY = window.scrollY || window.pageYOffset;
 
       if (previousScrollY < currentScrollY && currentScrollY > 100) {
-        SetNavHide(true);
+        setNavHide(true);
       } else if (previousScrollY > currentScrollY) {
-        SetNavHide(false);
+        setNavHide(false);
       }
 
-      if (currentScrollY !== 0) {
-        setNavScroll(true);
-      } else {
-        setNavScroll(false);
-      }
-
+      setNavScroll(currentScrollY !== 0);
       previousScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
-      {/* topnav */}
       <nav
-        className={`topnav ${navScroll ? "nav-scroll-color" : ""} ${navHide ? "hide-menu" : ""} ${isDarkText ? "dark-text" : ""} `}
+        className={`topnav ${navScroll ? "nav-scroll-color" : ""} ${navHide ? "hide-menu" : ""} ${isDarkText ? "dark-text" : ""}`}
       >
-        {/* mobile ham menu & logo */}
+        {/* Mobile Header */}
         <div className="mobile-container">
           <Link to="/" className="logo">
             LG
@@ -70,23 +74,25 @@ const Topnav = () => {
           </button>
         </div>
 
-        {/* destop menu  */}
+        {/* Desktop Menu */}
         <div className="desktop-container">
           <Link to="/" className="logo">
             LaGravinese
           </Link>
 
           <ul className="main-links">
-            {navLinks.map((link) => (
-              <li key={link.linkName}>
-                <Link
-                  to={link.linkPath}
-                  className={link.linkPath === pathname ? "active" : ""}
-                >
-                  {link.linkName}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              // Exact match check considering both path and hash
+              const isActive = link.linkPath === (hash ? fullPath : pathname);
+
+              return (
+                <li key={link.linkName}>
+                  <Link to={link.linkPath} className={isActive ? "active" : ""}>
+                    {link.linkName}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <ul className="social-links">
@@ -101,21 +107,25 @@ const Topnav = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Overlay Menu */}
       <div className={`overlay-nav ${navOpen ? "menu-open" : ""}`}>
         <nav className="main-nav">
           <ul className="main-links">
-            {navLinks.map((link) => (
-              <li key={link.linkName}>
-                <Link
-                  to={link.linkPath}
-                  className={link.linkPath === pathname ? "active" : ""}
-                  onClick={() => setNavOpen(!navOpen)}
-                >
-                  {link.linkName}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.linkPath === (hash ? fullPath : pathname);
+
+              return (
+                <li key={link.linkName}>
+                  <Link
+                    to={link.linkPath}
+                    className={isActive ? "active" : ""}
+                    onClick={() => setNavOpen(false)}
+                  >
+                    {link.linkName}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <ul className="social-links">

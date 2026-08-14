@@ -18,7 +18,7 @@ export const navLinks = [
   },
   {
     linkName: "Our Process",
-    linkPath: "/process",
+    linkPath: "/#process",
     navColor: "dark-text",
   },
   {
@@ -102,7 +102,7 @@ export const footerData = [
 ];
 
 // images for headers
-import homeImage from "/images/greenCoat.jpeg";
+import homeImage from "/images/Header.jpeg";
 import journeyImage from "/images/greenCoat.jpeg";
 import workImage from "/images/greenCoat.jpeg";
 import inquiriesImage from "/images/greenCoat.jpeg";
@@ -111,8 +111,8 @@ export const headerData = [
     path: "/",
     name: "home",
     img: homeImage,
-    mainText: "LaGravinese",
-    secondText: "Jewelry",
+    mainText: "Beautiful Jewelry, Crafted by Family",
+    secondText: null,
   },
   {
     path: "/journey",
@@ -212,9 +212,10 @@ import contactImage1 from "/images/proc1.jpg";
 import contactImage2 from "/images/proc2.jpeg";
 import contactImage3 from "/images/proc3.webp";
 import contactImage4 from "/images/proc4.webp";
+
 export const homeContactData = {
   heading: "Let's Bring Your Vision to Life",
-
+  icon: FaArrowRight,
   process: [
     {
       id: 1,
@@ -243,7 +244,7 @@ export const homeContactData = {
   ],
 
   cta: {
-    text: "Start Your Project",
+    text: "Book a Consultation",
     path: "/inquiries",
   },
 
@@ -319,7 +320,6 @@ export const collections = {
       title: "Engagement Rings",
       image: engagementRings,
       alt: "Custom engagement ring",
-      link: "/collections/custom-engagement-rings",
       index: 0,
       gallery: [
         engagementRings,
@@ -359,7 +359,6 @@ export const collections = {
       title: "Wedding Bands",
       image: weddingBands,
       alt: "Wedding bands",
-      link: "/collections/wedding-bands",
       index: 1,
       gallery: [
         weddingBands,
@@ -374,7 +373,6 @@ export const collections = {
       title: "Anniversary Rings",
       image: anniversaryRings,
       alt: "Anniversary ring",
-      link: "/collections/anniversary-rings",
       index: 2,
       gallery: [
         engagementRings,
@@ -389,7 +387,6 @@ export const collections = {
       title: "Necklaces",
       image: necklaces,
       alt: "Custom necklace",
-      link: "/collections/necklaces",
       index: 3,
       gallery: [
         engagementRings,
@@ -404,7 +401,6 @@ export const collections = {
       title: "Earrings",
       image: earrings,
       alt: "Custom earrings",
-      link: "/collections/earrings",
       index: 4,
       gallery: [
         engagementRings,
@@ -419,7 +415,6 @@ export const collections = {
       title: "Bracelets",
       image: bracelets,
       alt: "Custom bracelet",
-      link: "/collections/bracelets",
       index: 5,
       gallery: [
         engagementRings,
@@ -434,7 +429,6 @@ export const collections = {
       title: "Pendants",
       image: pendants,
       alt: "Custom pendant",
-      link: "/collections/pendants",
       index: 6,
       gallery: [
         engagementRings,
@@ -448,12 +442,11 @@ export const collections = {
 };
 
 import { GiDiamondRing, GiGemPendant, GiScales } from "react-icons/gi";
-
 export const services = {
   header: "Jewelry Services",
   icon: FaArrowRight,
-  pageLink: "Services",
-  linkTo: "/work",
+  pageLink: "Contact Us",
+  linkTo: "/inquiries",
   image: engagementRings,
   imgAlt: "placeholder",
   items: [

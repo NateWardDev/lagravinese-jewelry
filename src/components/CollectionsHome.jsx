@@ -24,7 +24,7 @@ const CollectionsHome = () => {
       <div className="collections-grid">
         {collections.items.map((item, index) => (
           <Link
-            to={item.link}
+            to={`/work/${item.id}`}
             key={item.id}
             className={`bento-card bento-card-${index + 1}`}
           >

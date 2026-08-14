@@ -15,30 +15,32 @@ const ServicesHome = () => {
       </div>
 
       {/* 3-Column Grid */}
-      <div className="services-grid">
-        {services.items.map((item) => {
-          const ItemIcon = item.icon;
+      <div className="services-content-wrapper">
+        <div className="services-grid">
+          {services.items.map((item) => {
+            const ItemIcon = item.icon;
 
-          return (
-            <div key={item.title} className="service-column">
-              {/* React Icon Tag */}
-              {ItemIcon && <ItemIcon className="service-icon" />}
+            return (
+              <div key={item.title} className="service-column">
+                {/* React Icon Tag */}
+                {ItemIcon && <ItemIcon className="service-icon" />}
 
-              {/* Title & Description */}
-              <h3 className="column-title">{item.title}</h3>
-              <p className="column-description">{item.description}</p>
-            </div>
-          );
-        })}
+                {/* Title & Description */}
+                <h3 className="column-title">{item.title}</h3>
+                <p className="column-description">{item.description}</p>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Centered Footer CTA */}
+        {services.pageLink && (
+          <Link to={services.linkTo} className="page-link services-footer">
+            <span>{services.pageLink}</span>
+            <FooterIcon />
+          </Link>
+        )}
       </div>
-
-      {/* Centered Footer CTA */}
-      {services.pageLink && (
-        <Link to={services.linkTo} className="page-link services-footer">
-          <span>{services.pageLink}</span>
-          <FooterIcon />
-        </Link>
-      )}
     </section>
   );
 };
