@@ -10,6 +10,8 @@ const Inquiries = () => {
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
 
+  const ButtonIcon = contactForm.icon;
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -45,9 +47,9 @@ const Inquiries = () => {
         </div>
 
         {/* Right Isolated Form Context Panel */}
-        <form className="contact-form">
-          <h2>{contactForm.title}</h2>
-          <p>{contactForm.description}</p>
+        <form className="contact-form fade-in">
+          <h2 className="delay-1">{contactForm.title}</h2>
+          <p className="delay-2">{contactForm.description}</p>
 
           <div className="field-group">
             <label htmlFor="firstName">
@@ -160,6 +162,7 @@ const Inquiries = () => {
 
           <button className="page-link left" type="submit">
             {contactForm.submitText}
+            {ButtonIcon && <ButtonIcon />}
           </button>
         </form>
       </div>

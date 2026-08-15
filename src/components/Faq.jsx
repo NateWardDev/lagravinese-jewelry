@@ -12,12 +12,12 @@ export default function FAQ() {
 
   return (
     <section className="faq" id="faq">
-      <div className="content-wrapper">
-        <div className="faq-header">
+      <div className="content-wrapper fade-in">
+        <div className="faq-header delay-1">
           <h2>Frequently Asked Questions</h2>
         </div>
 
-        <div className="faq-layout-vertical">
+        <div className="faq-layout-vertical delay-2">
           {faqData.map((catItem, catIndex) => {
             const isCatActive = activeCategory === catIndex;
 
@@ -72,7 +72,7 @@ export default function FAQ() {
         </div>
 
         <div className="faq-footer">
-          <p>
+          <p className="fade-in">
             Have other questions? <a href="#contact">Contact us directly</a>
             —we're here to help!
           </p>

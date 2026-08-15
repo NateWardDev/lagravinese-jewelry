@@ -6,18 +6,20 @@ const CollectionsHome = () => {
 
   return (
     <section className="collections-bento-section">
-      <div className="section-header">
+      <div className="section-header fade-in">
         <div className="header-left">
-          <h2>{collections.header}</h2>
+          <h2 className="delay-1">{collections.header}</h2>
         </div>
         <div className="header-right">
-          <p>
+          <p className="delay-2">
             Explore our handcrafted fine jewelry collections, designed to
             celebrate life's most cherished milestones and moments.
           </p>
-          <Link to={collections.linkTo} className="page-link right">
-            View All <Icon />
-          </Link>
+          <div className="delay-3">
+            <Link to={collections.linkTo} className="page-link right">
+              View All <Icon />
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -26,7 +28,7 @@ const CollectionsHome = () => {
           <Link
             to={`/work/${item.id}`}
             key={item.id}
-            className={`bento-card bento-card-${index + 1}`}
+            className={`bento-card bento-card-${index + 1} fade-in`}
           >
             <div className="img-wrapper">
               <img src={item.image} alt={item.alt} />

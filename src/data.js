@@ -103,7 +103,7 @@ export const footerData = [
 
 // images for headers
 import homeImage from "/images/Header.jpeg";
-import journeyImage from "/images/greenCoat.jpeg";
+import journeyImage from "/images/placement1.jpg";
 import workImage from "/images/greenCoat.jpeg";
 import inquiriesImage from "/images/greenCoat.jpeg";
 export const headerData = [
@@ -306,7 +306,7 @@ import anniversaryRings from "/images/ring-test-placeholder3.jpg";
 import necklaces from "/images/necklace-placeholder.png";
 import earrings from "/images/earing-placeholder.png";
 import bracelets from "/images/bracelet-placeholder.jpg";
-import pendants from "/images/pendant.jpeg";
+import pendants from "/images/pendant.jpg";
 
 export const collections = {
   header: "Our Collections",
@@ -441,13 +441,14 @@ export const collections = {
   ],
 };
 
+import servicePhoto from "/images/proc3.webp";
 import { GiDiamondRing, GiGemPendant, GiScales } from "react-icons/gi";
 export const services = {
   header: "Jewelry Services",
   icon: FaArrowRight,
   pageLink: "Contact Us",
   linkTo: "/inquiries",
-  image: engagementRings,
+  image: servicePhoto,
   imgAlt: "placeholder",
   items: [
     {
@@ -482,7 +483,7 @@ export const contactForm = {
   title: "Request Information",
   description:
     "Tell us about your jewelry needs and we'll contact you to discuss your project or service.",
-
+  icon: FaArrowRight,
   fields: {
     firstName: {
       label: "First Name",

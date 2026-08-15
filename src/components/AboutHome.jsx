@@ -9,9 +9,9 @@ const AboutHome = () => {
         {/* Left Column: Overlapping Images */}
         <div className="images-column">
           {/* Outer Gold Border Frame */}
-          <div className="gold-frame">
+          <div className="gold-frame fade-in">
             {/* Primary Large Image */}
-            <div className="primary-img-wrapper img-wrapper">
+            <div className="primary-img-wrapper img-wrapper delay-1">
               <img
                 src={homeAboutData.images.src1}
                 alt={homeAboutData.images.alt1}
@@ -19,7 +19,7 @@ const AboutHome = () => {
             </div>
 
             {/* Secondary Overlapping Floating Image */}
-            <div className="secondary-img-wrapper img-wrapper">
+            <div className="secondary-img-wrapper img-wrapper delay-2">
               <img
                 src={homeAboutData.images.src2}
                 alt={homeAboutData.images.alt2}
@@ -29,18 +29,20 @@ const AboutHome = () => {
         </div>
 
         {/* Right Column: Bordered Text Card */}
-        <div className="text-card">
-          <h2 className="about-heading">{homeAboutData.heading}</h2>
+        <div className="text-card fade-in">
+          <h2 className="about-heading delay-1">{homeAboutData.heading}</h2>
 
-          <div className="paragraphs-wrapper">
+          <div className="paragraphs-wrapper delay-2">
             {homeAboutData.paragraphs.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
           </div>
-          <Link to={homeAboutData.button.path} className="page-link">
-            <span>{homeAboutData.button.text}</span>
-            {ButtonIcon && <ButtonIcon />}
-          </Link>
+          <div className="delay-3">
+            <Link to={homeAboutData.button.path} className="page-link">
+              <span>{homeAboutData.button.text}</span>
+              {ButtonIcon && <ButtonIcon />}
+            </Link>
+          </div>
         </div>
       </div>
     </section>

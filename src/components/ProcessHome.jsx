@@ -1,21 +1,52 @@
-import { homeContactData } from "../data";
+import { useRef } from "react";
 import { Link } from "react-router";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { homeContactData } from "../data";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ProcessHome = () => {
   const ButtonIcon = homeContactData.icon;
+  const sectionRef = useRef(null);
+  const lineFillRef = useRef(null);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        lineFillRef.current,
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 60%", // Begins expanding when section top reaches 60% of screen
+            end: "bottom 80%", // Reaches 100% full height near section bottom
+            scrub: 0.5, // Ties line length directly to scroll speed
+          },
+        },
+      );
+    },
+    { scope: sectionRef },
+  );
+
   return (
-    <section className="process-home" id="process">
+    <section ref={sectionRef} className="process-home" id="process">
       <div className="process-container">
         {/* Section Header */}
-        <div className="process-header">
-          <h2>Our Process</h2>
-          <p className="subtitle">From vision to heirloom</p>
+        <div className="process-header fade-in">
+          <h2 className="delay-1">Our Process</h2>
+          <p className="subtitle delay-2">From vision to heirloom</p>
         </div>
 
         {/* Timeline List */}
         <div className="process-timeline">
-          {/* Central Line Vector */}
-          <div className="process-line" />
+          {/* Central Line Vector with GSAP Fill Child */}
+          <div className="process-line">
+            <div ref={lineFillRef} className="process-line-fill" />
+          </div>
 
           {homeContactData.process.map((step, index) => {
             const isEven = index % 2 === 1; // 02, 04...
@@ -26,10 +57,10 @@ const ProcessHome = () => {
                 className={`timeline-item ${isEven ? "even" : "odd"}`}
               >
                 {/* Content Block */}
-                <div className="timeline-content">
-                  <p className="step-number">0{step.id}</p>
-                  <h3 className="step-title">{step.title}</h3>
-                  <p className="step-description">{step.description}</p>
+                <div className="timeline-content fade-in">
+                  <p className="step-number delay-1">0{step.id}</p>
+                  <h3 className="step-title delay-2">{step.title}</h3>
+                  <p className="step-description delay-3">{step.description}</p>
                 </div>
 
                 {/* Star Marker Component */}
@@ -48,7 +79,7 @@ const ProcessHome = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="process-cta">
+        <div className="process-cta fade-in">
           <Link className="page-link" to={homeContactData.cta.path}>
             {homeContactData.cta.text}
             {ButtonIcon && <ButtonIcon />}

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, Routes, Route } from "react-router";
 import "./styles/reset.scss";
 import "./styles/main.scss";
 import "./styles/font-sizes.scss";
-import { Routes, Route } from "react-router";
+
 import OurWorkPage from "./pages/OurWorkPage";
 import HomePage from "./pages/HomePage";
 import JourneyPage from "./pages/JourneyPage";
@@ -14,6 +14,29 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
+  const { pathname } = useLocation();
+
+  // Global Fade-In Scroll Observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target); // Trigger once per element
+          }
+        });
+      },
+      { threshold: 0.1 }, // Fires when 10% of element comes into view
+    );
+
+    // Automatically observes all structural sections + manual .fade-in items
+    const animatedElements = document.querySelectorAll(".fade-in");
+    animatedElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [pathname]);
+
   return (
     <>
       <ScrollToTop />

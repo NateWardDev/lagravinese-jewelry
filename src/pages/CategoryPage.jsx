@@ -20,6 +20,7 @@ const CategoryPage = () => {
 
   // Physics & Position Trackers
   const scrollPos = useRef({ current: 0, target: 0 });
+  const startYPos = useRef(0);
   const startXPos = useRef(0);
   const isDragging = useRef(false);
   const hasDragged = useRef(false);
@@ -28,15 +29,15 @@ const CategoryPage = () => {
     (item) => String(item.id) === String(id),
   );
 
+  // Keep Ref updated with state synchronously
   useEffect(() => {
     activeIndexRef.current = activeImageIndex;
   }, [activeImageIndex]);
 
-  // Next image handler
+  // Click handler to advance to next image
   const advanceImage = () => {
     if (!category) return;
     const nextIndex = (activeIndexRef.current + 1) % category.gallery.length;
-    setActiveImageIndex(nextIndex);
     scrollPos.current.target = nextIndex;
   };
 
@@ -44,7 +45,6 @@ const CategoryPage = () => {
   const handleThumbClick = (index, e) => {
     e?.stopPropagation();
     if (hasDragged.current) return;
-    setActiveImageIndex(index);
     scrollPos.current.target = index;
   };
 
@@ -65,6 +65,7 @@ const CategoryPage = () => {
     const lerpFactor = 0.25;
 
     const renderLoop = () => {
+      // Lerp smooth target interpolation
       scrollPos.current.current +=
         (scrollPos.current.target - scrollPos.current.current) * lerpFactor;
 
@@ -75,11 +76,14 @@ const CategoryPage = () => {
         0,
         Math.min(totalItems - 1, Math.round(progress)),
       );
+
+      // Update active state when nearest slide changes
       if (nearestIdx !== activeIndexRef.current) {
+        activeIndexRef.current = nearestIdx;
         setActiveImageIndex(nearestIdx);
       }
 
-      // 1. DESKTOP CONTINUOUS TRACK TRANSFORM
+      // 1. DESKTOP CONTINUOUS TRACK TRANSFORM (VERTICAL)
       if (
         window.innerWidth > 1024 &&
         desktopRailRef.current &&
@@ -95,7 +99,7 @@ const CategoryPage = () => {
         }
       }
 
-      // 2. MOBILE CONTINUOUS TRACK TRANSFORM
+      // 2. MOBILE CONTINUOUS TRACK TRANSFORM (HORIZONTAL)
       if (
         window.innerWidth <= 1024 &&
         mobileRailRef.current &&
@@ -119,6 +123,24 @@ const CategoryPage = () => {
   }, [category]);
 
   // -------------------------------------------------------------
+  // MAIN IMAGE CROSSFADE ANIMATION (GSAP)
+  // -------------------------------------------------------------
+  useEffect(() => {
+    if (!category) return;
+
+    category.gallery.forEach((_, idx) => {
+      const isCurrent = idx === activeImageIndex;
+      gsap.to(`.main-image-wrapper-${idx}`, {
+        opacity: isCurrent ? 1 : 0,
+        pointerEvents: isCurrent ? "auto" : "none",
+        duration: 0.35,
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    });
+  }, [activeImageIndex, category]);
+
+  // -------------------------------------------------------------
   // DESKTOP WHEEL SCROLL LISTENER
   // -------------------------------------------------------------
   useEffect(() => {
@@ -128,7 +150,7 @@ const CategoryPage = () => {
       if (window.innerWidth <= 1024) return;
 
       const maxIndex = category.gallery.length - 1;
-      const delta = e.deltaY * 0.01;
+      const delta = e.deltaY * 0.008;
 
       scrollPos.current.target = Math.max(
         0,
@@ -141,76 +163,73 @@ const CategoryPage = () => {
   }, [category]);
 
   // -------------------------------------------------------------
-  // POINTER DRAG HANDLERS (MOBILE & NARROW SCREEN)
+  // DESKTOP & IPAD DRAG / SWIPE HANDLERS
   // -------------------------------------------------------------
   const handlePointerDown = (e) => {
+    // Only handle primary touches or left mouse clicks
+    if (e.button !== undefined && e.button !== 0) return;
+
     isDragging.current = true;
     hasDragged.current = false;
+    startYPos.current = e.clientY;
     startXPos.current = e.clientX;
   };
 
   const handlePointerMove = (e) => {
     if (!isDragging.current || !category) return;
-    const currentX = e.clientX;
-    const diff = startXPos.current - currentX;
 
-    // Set drag flag if threshold passed
-    if (Math.abs(diff) > 5) {
+    const currentY = e.clientY;
+    const currentX = e.clientX;
+    const diffY = startYPos.current - currentY;
+    const diffX = startXPos.current - currentX;
+
+    const isDesktop = window.innerWidth > 1024;
+    // On desktop / iPad desktop view, use vertical movement
+    const movement = isDesktop ? diffY : diffX;
+
+    // Movement threshold to prevent canceling quick taps
+    if (Math.hypot(diffX, diffY) > 8) {
       hasDragged.current = true;
     }
 
-    const sensitivity = 0.015;
-    const maxIndex = category.gallery.length - 1;
+    if (hasDragged.current) {
+      const sensitivity = 0.015;
+      const maxIndex = category.gallery.length - 1;
 
-    scrollPos.current.target = Math.max(
-      0,
-      Math.min(maxIndex, scrollPos.current.target + diff * sensitivity),
-    );
+      scrollPos.current.target = Math.max(
+        0,
+        Math.min(maxIndex, scrollPos.current.target + movement * sensitivity),
+      );
+    }
+
+    startYPos.current = currentY;
     startXPos.current = currentX;
   };
 
-  const handlePointerUp = (e) => {
+  const handlePointerUp = () => {
     if (!isDragging.current) return;
     isDragging.current = false;
 
-    // Snap to nearest slide
+    // Snap target scroll position to nearest slide index
     scrollPos.current.target = Math.round(scrollPos.current.target);
-
-    // Mobile Tap Fallback: If user clicked main display directly without dragging
-    if (!hasDragged.current && e.target.closest(".main-display")) {
-      advanceImage();
-    }
   };
-
-  // -------------------------------------------------------------
-  // MAIN IMAGE CROSSFADE ANIMATION
-  // -------------------------------------------------------------
-  useEffect(() => {
-    if (!category) return;
-
-    gsap.to(".main-image-wrapper", {
-      opacity: 0,
-      duration: 0.35,
-      ease: "power2.out",
-    });
-
-    gsap.to(`.main-image-wrapper-${activeImageIndex}`, {
-      opacity: 1,
-      duration: 0.35,
-      ease: "power2.out",
-    });
-  }, [activeImageIndex, category]);
 
   if (!category) return null;
 
   return (
     <section className="category-page-overlay">
       <div className="lightbox-wrapper">
-        {/* ================= DESKTOP VIEW ================= */}
-        <div className="lightbox-content desktop-only">
-          <div className="category-meta">
-            <p className="meta-label">CATEGORY</p>
-            <h2 className="meta-title">{category.title}</h2>
+        {/* ================= DESKTOP / IPAD DESKTOP VIEW ================= */}
+        <div
+          className="lightbox-content desktop-only"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+        >
+          <div className="category-meta fade-in">
+            <p className="meta-label delay-1">CATEGORY</p>
+            <h2 className="meta-title delay-2">{category.title}</h2>
           </div>
 
           <div className="main-display">
@@ -218,7 +237,6 @@ const CategoryPage = () => {
               <div
                 key={idx}
                 className={`main-image-wrapper main-image-wrapper-${idx}`}
-                style={{ opacity: idx === 0 ? 1 : 0 }}
                 onClick={handleMainImageClick}
               >
                 <img src={imgUrl} alt={`${category.title} piece ${idx + 1}`} />
@@ -226,7 +244,7 @@ const CategoryPage = () => {
             ))}
           </div>
 
-          <div className="thumbnail-rail" ref={desktopRailRef}>
+          <div className="thumbnail-rail fade-in" ref={desktopRailRef}>
             <div className="thumbnail-track" ref={desktopTrackRef}>
               {category.gallery.map((imgUrl, idx) => (
                 <button
@@ -258,7 +276,6 @@ const CategoryPage = () => {
               <div
                 key={idx}
                 className={`main-image-wrapper main-image-wrapper-${idx}`}
-                style={{ opacity: idx === 0 ? 1 : 0 }}
                 onClick={handleMainImageClick}
               >
                 <img src={imgUrl} alt={`${category.title} piece ${idx + 1}`} />

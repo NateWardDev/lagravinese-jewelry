@@ -11,7 +11,7 @@ const ServicesHome = () => {
         <div className="img-wrapper">
           <img src={services.image} alt={services.imgAlt} />
         </div>
-        <h2>{services.header.toUpperCase()}</h2>
+        <h2 className="fade-in">{services.header.toUpperCase()}</h2>
       </div>
 
       {/* 3-Column Grid */}
@@ -21,25 +21,27 @@ const ServicesHome = () => {
             const ItemIcon = item.icon;
 
             return (
-              <div key={item.title} className="service-column">
+              <div key={item.title} className="service-column fade-in">
                 {/* React Icon Tag */}
-                {ItemIcon && <ItemIcon className="service-icon" />}
+                {ItemIcon && <ItemIcon className="service-icon delay-1" />}
 
                 {/* Title & Description */}
-                <h3 className="column-title">{item.title}</h3>
-                <p className="column-description">{item.description}</p>
+                <h3 className="column-title delay-2">{item.title}</h3>
+                <p className="column-description delay-3">{item.description}</p>
               </div>
             );
           })}
         </div>
 
         {/* Centered Footer CTA */}
-        {services.pageLink && (
-          <Link to={services.linkTo} className="page-link services-footer">
-            <span>{services.pageLink}</span>
-            <FooterIcon />
-          </Link>
-        )}
+        <div className="fade-in">
+          {services.pageLink && (
+            <Link to={services.linkTo} className="page-link services-footer">
+              <span>{services.pageLink}</span>
+              <FooterIcon />
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );

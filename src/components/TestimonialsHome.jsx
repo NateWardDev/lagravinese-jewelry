@@ -3,9 +3,9 @@ import { testimonialsData } from "../data";
 const TestimonialsHome = () => {
   return (
     <section className="testimonials">
-      <h2>{testimonialsData.heading}</h2>
+      <h2 className="fade-in">{testimonialsData.heading}</h2>
 
-      <div className="content-wrapper">
+      <div className="content-wrapper fade-in">
         {testimonialsData.testimonials.map((testimonial) => (
           <div className="card" key={testimonial.id}>
             <div className="img-wrapper couple-photo">

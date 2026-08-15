@@ -77,14 +77,14 @@ const JourneyPage = () => {
       <section className="timeline mobile">
         {journeyTimelineMobile.map((item, index) => (
           <div className="timeline-section" key={index}>
-            <div className="timeline-text">
-              <h className="text-year">
+            <div className="timeline-text fade-in">
+              <h4 className="text-year delay-1">
                 {item.generation} {item.years}
-              </h>
-              <h2>{item.head}</h2>
-              <p>{item.desc}</p>
+              </h4>
+              <h2 className="delay-2">{item.head}</h2>
+              <p className="delay-3">{item.desc}</p>
             </div>
-            <div className="img-wrapper">
+            <div className="img-wrapper fade-in">
               <img src={item.imgSrc} alt={item.imgAlt} />
             </div>
           </div>
