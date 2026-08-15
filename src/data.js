@@ -355,8 +355,8 @@ export const collections = {
       ],
     },
     {
-      id: "wedding-bands",
-      title: "Wedding Bands",
+      id: "Bridal",
+      title: "Bridal",
       image: weddingBands,
       alt: "Wedding bands",
       index: 1,
