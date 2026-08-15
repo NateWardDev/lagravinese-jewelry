@@ -27,7 +27,7 @@ function App() {
           }
         });
       },
-      { threshold: 0.1 }, // Fires when 10% of element comes into view
+      { threshold: 0.075 }, // Fires when 7.5% of element comes into view
     );
 
     // Automatically observes all structural sections + manual .fade-in items
