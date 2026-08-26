@@ -101,7 +101,7 @@ const Topnav = () => {
             className="logo"
             onClick={(e) => handleLinkClick(e, "/")}
           >
-            LG
+            LaGravinese
           </Link>
 
           <button
