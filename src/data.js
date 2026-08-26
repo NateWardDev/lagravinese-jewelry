@@ -1,4 +1,4 @@
-import { FaInstagram, FaArrowRight } from "react-icons/fa";
+import { FaInstagram, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 // IMAGE IMPORTS
 // Bracelets
@@ -263,6 +263,7 @@ export const homeAboutData = {
 export const collections = {
   header: "Our Collections",
   galleryheader: "Gallery",
+  arrowleftIcon: FaArrowLeft,
   icon: FaArrowRight,
   pageLink: "Gallery",
   linkTo: "/work",

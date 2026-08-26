@@ -1274,20 +1274,28 @@ section {
    Infinite Horizontal Strip Slider Styling
    ========================================================================== */
 .work-slider-container {
-  width: 100dvw;
+  /* Lock strictly to the mobile viewport frame */
+  position: fixed;
+  inset: 0; // Equivalent to top: 0, right: 0, bottom: 0, left: 0
+  width: 100%;
   height: 100dvh;
   max-height: 100dvh;
-  max-width: 100dvw;
-  min-height: 100dvh;
-  min-width: 100dvw;
+
+  /* Prevent touch/scroll interference */
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none; // Disables native browser drag/bounce
+
+  /* Layout & Styling */
   background-color: #0d0d0d;
-  position: relative;
   display: flex;
   align-items: center;
-  touch-action: none; // Disables native browser drag delay for instantaneous touch response
+  z-index: 10; // Ensures it stays above hidden page content underneath
+
+  /* Interaction Reset */
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
 
   .slider-track {
     display: flex;
@@ -1378,13 +1386,15 @@ section {
 // ==========================================
 .category-page-overlay {
   position: fixed;
-  inset: 0;
-  width: 100vw;
+  inset: 0; // Pins top, right, bottom, left to 0
+  width: 100%;
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
   box-sizing: border-box;
   touch-action: none; // Prevents browser pull-to-refresh during drag
+  overscroll-behavior: none; // Halts elastic bounce on mobile
+  z-index: 10;
 
   .lightbox-wrapper {
     width: 100%;
@@ -1416,6 +1426,14 @@ section {
     cursor: grab;
     user-select: none;
     touch-action: none;
+
+    .page-link {
+      position: absolute;
+      bottom: 1rem;
+      right: 50%;
+      transform: translateX(50%);
+      padding: 0.5rem 1rem;
+    }
 
     &:active {
       cursor: grabbing;
@@ -1625,15 +1643,21 @@ section {
 
       .category-meta {
         order: 3;
-        width: 95%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
+        width: 98%;
         margin-top: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
 
         .meta-title {
           margin: 0;
           text-align: center;
+        }
+        .page-link {
+          font-size: 0.75rem;
+          padding: 0.4rem 0.8em;
         }
       }
     }
@@ -2142,14 +2166,6 @@ section {
             }
           }
         }
-      }
-
-      .category-meta {
-        order: 3;
-        width: 95%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
       }
     }
   }

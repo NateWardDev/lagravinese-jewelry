@@ -17,26 +17,49 @@ import Footer from "./components/Footer";
 function App() {
   const { pathname } = useLocation();
 
+  // Hide global Header/Footer on full-screen slider pages if needed
+  const isFullScreenPage = pathname.startsWith("/work/");
+
   // Global Fade-In Scroll Observer
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target); // Trigger once per element
-          }
-        });
-      },
-      { threshold: 0.075 }, // Fires when 7.5% of element comes into view
-    );
+    let observer;
 
-    // Automatically observes all structural sections + manual .fade-in items
-    const animatedElements = document.querySelectorAll(".fade-in");
-    animatedElements.forEach((el) => observer.observe(el));
+    // Use requestAnimationFrame so the DOM has finished painting the route transition
+    const timeoutId = requestAnimationFrame(() => {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.075 },
+      );
 
-    return () => observer.disconnect();
+      const animatedElements = document.querySelectorAll(".fade-in");
+      animatedElements.forEach((el) => observer.observe(el));
+    });
+
+    return () => {
+      cancelAnimationFrame(timeoutId);
+      if (observer) observer.disconnect();
+    };
   }, [pathname]);
+
+  // Lock body scroll and prevent elastic bounce on full-screen slider routes
+  useEffect(() => {
+    if (isFullScreenPage) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+
+    return () => {
+      document.body.classList.remove("no-scroll");
+    };
+  }, [isFullScreenPage]);
 
   return (
     <>
@@ -51,7 +74,7 @@ function App() {
         <Route path="/inquiries" element={<InquiriesPage />} />
         <Route path="/privacy-policy" element={<PrivatePolicy />} />
       </Routes>
-      <Footer />
+      {!isFullScreenPage && <Footer />}
     </>
   );
 }
@@ -60,9 +83,11 @@ const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // Only scroll to top if there is no hash in the URL
     if (!hash) {
-      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      // Force immediate window scroll to 0,0 before browser paint
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     }
   }, [pathname, hash]);
 

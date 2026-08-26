@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { gsap } from "gsap";
 import { collections } from "../data";
+import { Link } from "react-router";
 
 const CategoryPage = () => {
   const { id } = useParams();
@@ -25,6 +26,8 @@ const CategoryPage = () => {
   const startXPos = useRef(0);
   const isDragging = useRef(false);
   const hasDragged = useRef(false);
+
+  const Icon = collections.arrowleftIcon;
 
   const category = collections.items.find(
     (item) => String(item.id) === String(id),
@@ -276,6 +279,11 @@ const CategoryPage = () => {
               ))}
             </div>
           </div>
+
+          <Link to="/work" className="page-link absolute-link">
+            <Icon />
+            Back to Colletions
+          </Link>
         </div>
 
         {/* ================= MOBILE / NARROW VIEW ================= */}
@@ -318,6 +326,9 @@ const CategoryPage = () => {
 
           <div className="category-meta">
             <h1 className="meta-title">{category.title}</h1>
+            <Link to="/work" className="page-link">
+              <Icon /> Back to Colletions
+            </Link>
           </div>
         </div>
       </div>
