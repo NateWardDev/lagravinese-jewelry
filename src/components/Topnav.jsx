@@ -69,19 +69,25 @@ const Topnav = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY || window.pageYOffset;
 
-      if (previousScrollY < currentScrollY && currentScrollY > 100) {
-        setNavHide(true);
-      } else if (previousScrollY > currentScrollY) {
-        setNavHide(false);
+      // Always update the scroll color
+      setNavScroll(currentScrollY !== 0);
+
+      // Only hide/show the nav when the mobile menu is closed
+      if (!navOpen) {
+        if (previousScrollY < currentScrollY && currentScrollY > 100) {
+          setNavHide(true);
+        } else if (previousScrollY > currentScrollY) {
+          setNavHide(false);
+        }
       }
 
-      setNavScroll(currentScrollY !== 0);
       previousScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navOpen]);
 
   return (
     <>

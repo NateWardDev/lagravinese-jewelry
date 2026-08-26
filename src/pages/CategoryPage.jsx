@@ -8,6 +8,7 @@ const CategoryPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   const activeIndexRef = useRef(activeImageIndex);
+  const isInitialRender = useRef(true);
 
   // Rail & Track Refs
   const desktopRailRef = useRef(null);
@@ -130,14 +131,28 @@ const CategoryPage = () => {
 
     category.gallery.forEach((_, idx) => {
       const isCurrent = idx === activeImageIndex;
-      gsap.to(`.main-image-wrapper-${idx}`, {
-        opacity: isCurrent ? 1 : 0,
-        pointerEvents: isCurrent ? "auto" : "none",
-        duration: 0,
-        ease: "power2.out",
-        overwrite: "auto",
-      });
+
+      if (isInitialRender.current) {
+        // Instant positioning on first load (no flash)
+        gsap.set(`.main-image-wrapper-${idx}`, {
+          opacity: isCurrent ? 1 : 0,
+          pointerEvents: isCurrent ? "auto" : "none",
+        });
+      } else {
+        // Smooth fade transition when scrolling/clicking
+        gsap.to(`.main-image-wrapper-${idx}`, {
+          opacity: isCurrent ? 1 : 0,
+          pointerEvents: isCurrent ? "auto" : "none",
+          duration: 0.35,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      }
     });
+
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+    }
   }, [activeImageIndex, category]);
 
   // -------------------------------------------------------------

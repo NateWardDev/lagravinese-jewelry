@@ -78,6 +78,12 @@ export const socialLinks = [
 
 export const footerData = [
   {
+    id: "location",
+    heading: "Visit Us",
+    address: "9375 E. Shea Blvd. Suite 100, Scottsdale, Arizona 85260",
+    note: "All design consults are by appointment only.",
+  },
+  {
     id: "navigation",
     heading: "Main Links",
     links: navLinks,

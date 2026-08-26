@@ -34,49 +34,65 @@ const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="footer-content">
-        {footerData.map((section) => (
-          <div
-            key={section.id}
-            className={`footer-section ${section.className || ""}`}
-          >
-            <h3>{section.heading}</h3>
+        {/* Top Links Grid */}
+        <div className="footer-links-grid">
+          {footerData
+            .filter((sec) => sec.id !== "location")
+            .map((section) => (
+              <div key={section.id} className="footer-section">
+                <h3>{section.heading}</h3>
+                {section.id === "social" ? (
+                  <ul className="social-list">
+                    {section.links.map((social) => {
+                      const Icon = social.icon;
+                      return (
+                        <li key={social.name}>
+                          <a
+                            href={social.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={social.name}
+                          >
+                            {Icon && <Icon />}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <nav>
+                    <ul>
+                      {section.links.map((link) => (
+                        <li key={link.linkName}>
+                          <Link
+                            to={link.linkPath}
+                            onClick={(e) => handleLinkClick(e, link.linkPath)}
+                          >
+                            {link.linkName}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
+              </div>
+            ))}
+        </div>
 
-            {section.id === "social" ? (
-              <ul className="social-list">
-                {section.links.map((social) => {
-                  const Icon = social.icon;
-                  return (
-                    <li key={social.name}>
-                      <a
-                        aria-label={social.name}
-                        href={social.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {Icon && <Icon />}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <nav>
-                <ul>
-                  {section.links.map((link) => (
-                    <li key={link.linkName}>
-                      <Link
-                        to={link.linkPath}
-                        onClick={(e) => handleLinkClick(e, link.linkPath)}
-                      >
-                        {link.linkName}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            )}
+        {/* Location Standalone Block Above Divider */}
+        {footerData.find((sec) => sec.id === "location") && (
+          <div className="footer-location-block">
+            <h3>Visit Us</h3>
+            <div className="location-info">
+              <address className="footer-address">
+                9375 E. Shea Blvd. Suite 100, Scottsdale, Arizona 85260
+              </address>
+              <span className="appointment-note">
+                All design consults are by appointment only.
+              </span>
+            </div>
           </div>
-        ))}
+        )}
       </div>
 
       <div className="footer-bottom">
