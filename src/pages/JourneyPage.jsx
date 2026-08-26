@@ -2,7 +2,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { journeyTimeline, journeyTimelineMobile } from "../data";
+import { journeyTimelineData } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +18,7 @@ const JourneyPage = () => {
       // Only run GSAP ScrollTrigger on Desktop
       mm.add("(min-width: 1024px)", () => {
         const imagesContainer = imagesRef.current;
-        const totalItems = journeyTimeline.images.length;
+        const totalItems = journeyTimelineData.length;
         if (!imagesContainer) return;
 
         // Calculate scroll height cleanly inside matchMedia context
@@ -75,7 +75,7 @@ const JourneyPage = () => {
     <>
       {/* Mobile Feed */}
       <section className="timeline mobile">
-        {journeyTimelineMobile.map((item, index) => (
+        {journeyTimelineData.map((item, index) => (
           <div className="timeline-section" key={index}>
             <div className="timeline-text fade-in">
               <h4 className="text-year delay-1">
@@ -95,7 +95,7 @@ const JourneyPage = () => {
       <section className="timeline desktop" ref={containerRef}>
         <div className="timeline-images-viewport">
           <div className="timeline-images" ref={imagesRef}>
-            {journeyTimeline.images.map((item, index) => (
+            {journeyTimelineData.map((item, index) => (
               <div className="img-wrapper" key={index}>
                 <img src={item.imgSrc} alt={item.imgAlt} />
               </div>
@@ -104,7 +104,7 @@ const JourneyPage = () => {
         </div>
 
         <div className="timeline-text">
-          {journeyTimeline.text.map((item, index) => (
+          {journeyTimelineData.map((item, index) => (
             <div
               className="text-wrapper"
               key={index}
