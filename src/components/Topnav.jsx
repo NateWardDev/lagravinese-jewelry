@@ -99,6 +99,7 @@ const Topnav = () => {
           </Link>
 
           <button
+            aria-label="Toggle navigation menu"
             className={`mobile-menu-bars ${navOpen ? "menu-open" : ""}`}
             onClick={() => setNavOpen(!navOpen)}
           >
@@ -139,7 +140,12 @@ const Topnav = () => {
           <ul className="social-links">
             {socialLinks.map((social) => (
               <li key={social.name}>
-                <a href={social.link} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                >
                   <social.icon />
                 </a>
               </li>
@@ -172,7 +178,12 @@ const Topnav = () => {
           <ul className="social-links">
             {socialLinks.map((social) => (
               <li key={social.name}>
-                <a href={social.link} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={social.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                >
                   <social.icon />
                 </a>
               </li>

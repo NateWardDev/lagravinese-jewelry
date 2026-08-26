@@ -133,7 +133,7 @@ const CategoryPage = () => {
       gsap.to(`.main-image-wrapper-${idx}`, {
         opacity: isCurrent ? 1 : 0,
         pointerEvents: isCurrent ? "auto" : "none",
-        duration: 0.35,
+        duration: 0,
         ease: "power2.out",
         overwrite: "auto",
       });

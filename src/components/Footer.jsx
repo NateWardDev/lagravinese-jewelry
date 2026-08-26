@@ -48,10 +48,10 @@ const Footer = () => {
                   return (
                     <li key={social.name}>
                       <a
+                        aria-label={social.name}
                         href={social.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={social.name}
                       >
                         {Icon && <Icon />}
                       </a>
