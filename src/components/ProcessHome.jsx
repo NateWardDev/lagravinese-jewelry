@@ -3,12 +3,12 @@ import { Link } from "react-router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { homeContactData } from "../data";
+import { processHomeData } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ProcessHome = () => {
-  const ButtonIcon = homeContactData.icon;
+  const ButtonIcon = processHomeData.icon;
   const sectionRef = useRef(null);
   const lineFillRef = useRef(null);
 
@@ -48,7 +48,7 @@ const ProcessHome = () => {
             <div ref={lineFillRef} className="process-line-fill" />
           </div>
 
-          {homeContactData.process.map((step, index) => {
+          {processHomeData.process.map((step, index) => {
             const isEven = index % 2 === 1; // 02, 04...
 
             return (
@@ -66,11 +66,11 @@ const ProcessHome = () => {
                 {/* Star Marker Component */}
                 <div className="timeline-marker">
                   <svg
-                    className="star-icon"
+                    className="diamond-icon"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                   >
-                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    <path d="M12 2L22 12L12 22L2 12Z" />
                   </svg>
                 </div>
               </div>
@@ -80,8 +80,8 @@ const ProcessHome = () => {
 
         {/* CTA Button */}
         <div className="process-cta fade-in">
-          <Link className="page-link" to={homeContactData.cta.path}>
-            {homeContactData.cta.text}
+          <Link className="page-link" to={processHomeData.cta.path}>
+            {processHomeData.cta.text}
             {ButtonIcon && <ButtonIcon />}
           </Link>
         </div>

@@ -4,6 +4,28 @@ import { Link, useLocation } from "react-router-dom";
 const Footer = () => {
   const { pathname } = useLocation();
 
+  // Shared Link Click Handler for Home & Hash scrolling
+  const handleLinkClick = (e, targetPath) => {
+    const [targetBase, targetHash] = targetPath.split("#");
+    const isSamePage =
+      pathname === targetBase || (targetBase === "/" && pathname === "/");
+
+    if (isSamePage) {
+      if (targetHash) {
+        e.preventDefault();
+        const element = document.getElementById(targetHash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", targetPath);
+        }
+      } else if (targetPath === "/") {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.history.pushState(null, "", "/");
+      }
+    }
+  };
+
   // Hide on /work and all nested sub-routes
   if (pathname.startsWith("/work")) {
     return null;
@@ -42,7 +64,12 @@ const Footer = () => {
                 <ul>
                   {section.links.map((link) => (
                     <li key={link.linkName}>
-                      <Link to={link.linkPath}>{link.linkName}</Link>
+                      <Link
+                        to={link.linkPath}
+                        onClick={(e) => handleLinkClick(e, link.linkPath)}
+                      >
+                        {link.linkName}
+                      </Link>
                     </li>
                   ))}
                 </ul>

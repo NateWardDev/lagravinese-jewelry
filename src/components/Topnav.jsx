@@ -17,14 +17,44 @@ const Topnav = () => {
   // Is dark text needed?
   const isDarkText = !mainPages.includes(pathname) || pathname === "/inquiries";
 
-  // 1. Handle Smooth Scrolling for Hash Links (#process)
+  // Shared Link Click Handler for Home & Hash reset logic
+  const handleLinkClick = (e, targetPath) => {
+    setNavOpen(false);
+
+    // 1. Home link clicked while on homepage
+    if (targetPath === "/" && pathname === "/" && !hash) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    // 2. Hash link clicked (e.g. "/#process")
+    if (targetPath.includes("#")) {
+      const [basePath, targetHash] = targetPath.split("#");
+
+      // If already on the homepage / page with the section
+      if (pathname === basePath || (basePath === "/" && pathname === "/")) {
+        e.preventDefault(); // Prevent standard React Router navigation duplicate
+
+        // Update URL hash without causing a page jump
+        window.history.pushState(null, "", targetPath);
+
+        // Scroll to the target element immediately
+        const element = document.getElementById(targetHash);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  };
+
+  // 1. Handle Smooth Scrolling for initial page load or route changes with Hash Links
   useEffect(() => {
     if (hash) {
       const targetId = hash.replace("#", "");
       const element = document.getElementById(targetId);
 
       if (element) {
-        // Small delay ensures DOM is fully rendered if navigating from another page
         setTimeout(() => {
           element.scrollIntoView({ behavior: "smooth" });
         }, 100);
@@ -60,7 +90,11 @@ const Topnav = () => {
       >
         {/* Mobile Header */}
         <div className="mobile-container">
-          <Link to="/" className="logo">
+          <Link
+            to="/"
+            className="logo"
+            onClick={(e) => handleLinkClick(e, "/")}
+          >
             LG
           </Link>
 
@@ -76,18 +110,25 @@ const Topnav = () => {
 
         {/* Desktop Menu */}
         <div className="desktop-container">
-          <Link to="/" className="logo">
+          <Link
+            to="/"
+            className="logo"
+            onClick={(e) => handleLinkClick(e, "/")}
+          >
             LaGravinese
           </Link>
 
           <ul className="main-links">
             {navLinks.map((link) => {
-              // Exact match check considering both path and hash
               const isActive = link.linkPath === (hash ? fullPath : pathname);
 
               return (
                 <li key={link.linkName}>
-                  <Link to={link.linkPath} className={isActive ? "active" : ""}>
+                  <Link
+                    to={link.linkPath}
+                    className={isActive ? "active" : ""}
+                    onClick={(e) => handleLinkClick(e, link.linkPath)}
+                  >
                     {link.linkName}
                   </Link>
                 </li>
@@ -119,7 +160,7 @@ const Topnav = () => {
                   <Link
                     to={link.linkPath}
                     className={isActive ? "active" : ""}
-                    onClick={() => setNavOpen(false)}
+                    onClick={(e) => handleLinkClick(e, link.linkPath)}
                   >
                     {link.linkName}
                   </Link>

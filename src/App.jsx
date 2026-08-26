@@ -57,11 +57,14 @@ function App() {
 }
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0 });
-  }, [pathname]);
+    // Only scroll to top if there is no hash in the URL
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }
+  }, [pathname, hash]);
 
   return null;
 };

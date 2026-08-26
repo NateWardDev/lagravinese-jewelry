@@ -43,7 +43,7 @@ body {
   gap: 0.75rem;
   padding: 0.6rem 1.4rem;
   border-radius: var(--border-rad);
-  background-color: var(--btn-secondary-bg);
+  background-color: var(--color-deep-cocoa);
   color: var(--btn-text);
   font-family: var(--font-body);
   font-size: var(--fs-small);
@@ -55,10 +55,10 @@ body {
     background-color 0.25s ease,
     color 0.25s ease,
     transform 0.25s ease;
-
+  color: var(--text-on-dark);
   &:hover {
-    color: var(--text-on-dark);
-    background-color: var(--btn-secondary-hover);
+    color: var(--btn-text);
+    background-color: var(--color-burnt-terracotta);
   }
 
   &.left {
@@ -110,6 +110,7 @@ body {
     justify-content: space-between;
     padding: 0.25rem 1rem;
     .mobile-menu-bars {
+      display: flex;
       height: 35px;
       width: 35px;
       display: flex;
@@ -125,14 +126,14 @@ body {
       &.menu-open {
         overflow: hidden;
         .bar1 {
-          transform: rotate(45deg) translate(7px, 7px);
+          transform: translateY(10px) rotate(45deg);
         }
         .bar2 {
           opacity: 0;
-          width: 10px;
+          transform: scaleX(0); /* Clean fade/shrink transition */
         }
         .bar3 {
-          transform: rotate(-45deg) translate(7px, -7px);
+          transform: translateY(-10px) rotate(-45deg);
         }
       }
     }
@@ -206,7 +207,7 @@ body {
   height: 70%;
   width: 100%;
   background-color: var(--bg-accent);
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -428,7 +429,7 @@ section {
   .collections-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 240px; /* Reduced explicit row height for tight, elegant proportion */
+    grid-template-rows: repeat(2, 1fr);
     gap: 1.25rem;
 
     .bento-card {
@@ -437,6 +438,7 @@ section {
       overflow: hidden;
       text-decoration: none;
       display: block;
+      height: 300px;
 
       .img-wrapper {
         position: absolute;
@@ -508,42 +510,21 @@ section {
       /* ----------------------------------------------------
          DESKTOP GRID SPANS (Columns 2 & 3 Swapped)
          ---------------------------------------------------- */
-      /* COLUMN 1 */
       &.bento-card-1 {
-        grid-column: 1;
-        grid-row: 1;
+        grid-area: 1 / 1 / 3 / 2;
+        height: 100%;
       }
-
-      &.bento-card-4 {
-        grid-column: 1;
-        grid-row: 2 / span 2; /* Tall card in column 1 (Necklaces) */
-      }
-
-      /* COLUMN 2 (Formerly Column 3) */
-      &.bento-card-3 {
-        grid-column: 2;
-        grid-row: 1; /* Anniversary Rings */
-      }
-
-      &.bento-card-5 {
-        grid-column: 2;
-        grid-row: 2; /* Earrings */
-      }
-
-      &.bento-card-7 {
-        grid-column: 2;
-        grid-row: 3; /* Pendants */
-      }
-
-      /* COLUMN 3 (Formerly Column 2) */
       &.bento-card-2 {
-        grid-column: 3;
-        grid-row: 1 / span 2; /* Tall card in column 3 (Wedding Bands) */
+        grid-area: 1 / 2 / 2 / 3;
       }
-
-      &.bento-card-6 {
-        grid-column: 3;
-        grid-row: 3; /* Bracelets */
+      &.bento-card-3 {
+        grid-area: 2 / 2 / 3 / 3;
+      }
+      &.bento-card-4 {
+        grid-area: 1 / 3 / 2 / 4;
+      }
+      &.bento-card-5 {
+        grid-area: 2 / 3 / 3 / 4;
       }
     }
   }
@@ -612,6 +593,7 @@ section {
           background-color: var(--color-deep-cocoa);
         }
         .service-icon {
+          display: none;
           color: var(--color-champagne-gold);
         }
       }
@@ -862,6 +844,7 @@ section {
         width: 100%;
         height: 100%;
         background-color: var(--color-champagne-gold);
+        background-color: var(--color-burnt-terracotta);
         transform-origin: top center;
         transform: scaleY(0);
         will-change: transform;
@@ -882,20 +865,7 @@ section {
       width: 45%;
       display: flex;
       flex-direction: column;
-
-      .step-number {
-        font-style: italic;
-        line-height: 1;
-        margin-bottom: 0.5rem;
-      }
-
-      .step-title {
-        margin-bottom: 0.75rem;
-      }
-
-      .step-description {
-        line-height: 1.6;
-      }
+      gap: 0.5rem;
     }
 
     /* STAR MARKER */
@@ -909,29 +879,25 @@ section {
       background: var(--bg-primary); /* Keeps center line hidden behind star */
       padding: 0.5rem 0;
 
-      .star-icon {
-        width: 42px;
-        height: 42px;
-        color: var(--color-champagne-gold);
+      .diamond-icon {
+        width: 30px;
+        height: 30px;
+        color: var(--color-burnt-terracotta);
       }
     }
 
     /* --- DESKTOP ALTERNATING ALIGNMENTS --- */
     &.odd {
       justify-content: flex-end;
-
       .timeline-content {
         text-align: left;
-        padding-left: 3rem;
       }
     }
 
     &.even {
       justify-content: flex-start;
-
       .timeline-content {
         text-align: right;
-        padding-right: 3rem;
         align-items: flex-end;
       }
     }
@@ -1037,7 +1003,7 @@ section {
           box-shadow 0.2s ease;
 
         &:focus {
-          outline: none;
+          outline-color: var(--btn-bg);
           border-color: var(--btn-bg);
         }
       }
@@ -1059,6 +1025,7 @@ section {
 .faq {
   @include flex-center;
   flex-direction: column;
+
   h2 {
     text-align: center;
   }
@@ -1090,6 +1057,9 @@ section {
           border: 1px solid rgba(0, 0, 0, 0.15);
 
           .faq-category-toggle {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
             color: var(--text-white);
             background: var(--bg-accent);
           }
@@ -1383,9 +1353,6 @@ section {
         white-space: nowrap;
         justify-content: center;
         gap: 1rem;
-        p {
-          // text-shadow: 0 0 1rem #000000fd;
-        }
       }
     }
     .subtext {
@@ -1812,6 +1779,9 @@ section {
       display: none;
     }
   }
+  .overlay-nav {
+    display: flex;
+  }
 
   .header-hero {
     display: flex;
@@ -1933,6 +1903,10 @@ section {
         /* Reset Desktop Spans for Mobile */
         grid-column: span 1 !important;
         grid-row: span 1 !important;
+        height: 300px;
+        &.bento-card {
+          height: 300px;
+        }
 
         @for $i from 1 through 7 {
           &.bento-card-#{$i} {
@@ -1947,12 +1921,6 @@ section {
             width: 30px;
             height: 30px;
           }
-        }
-
-        /* Make item #7 span 2 columns on mobile so it cleanly closes the 2-column grid */
-        &.bento-card-7 {
-          grid-column: span 2 !important;
-          grid-row: span 1 !important;
         }
       }
     }
@@ -1972,7 +1940,10 @@ section {
           text-align: center;
           align-items: center;
           &:not(:last-child)::after {
-            display: none; // Remove vertical dividers when stacked vertically
+            top: unset;
+            bottom: -1rem;
+            height: 1px;
+            width: 100%;
           }
         }
       }
@@ -2214,7 +2185,7 @@ section {
         }
 
         .timeline-content {
-          padding-left: 2.75rem !important;
+          padding-left: 2rem !important;
           padding-right: 0 !important;
         }
       }
@@ -2236,7 +2207,7 @@ section {
         }
 
         .timeline-content {
-          padding-right: 2.75rem !important;
+          padding-right: 2rem !important;
           padding-left: 0 !important;
         }
       }

@@ -1,30 +1,70 @@
-import { FaInstagram, FaTiktok, FaArrowRight } from "react-icons/fa";
+import { FaInstagram, FaArrowRight } from "react-icons/fa";
 
+// IMAGE IMPORTS
+// Bracelets
+import bracelet1 from "/images/bracelet1.jpg";
+import bracelet2 from "/images/bracelet2.jpg";
+import bracelet3 from "/images/bracelet3.jpg";
+import bracelet4 from "/images/bracelet4.jpg";
+import bracelet5 from "/images/bracelet5.jpg";
+import bracelet6 from "/images/bracelet6.jpg";
+import bracelet7 from "/images/bracelet7.jpg";
+
+// Earrings
+import earrings1 from "/images/earrings1.jpg";
+import earrings2 from "/images/earrings2.jpg";
+import earrings3 from "/images/earrings3.jpg";
+import earrings4 from "/images/earrings4.jpg";
+import earrings5 from "/images/earrings5.jpg";
+import earrings6 from "/images/earrings6.jpg";
+import earrings7 from "/images/earrings7.jpg";
+
+// Necklaces
+import necklace1 from "/images/necklace1.jpg";
+import necklace2 from "/images/necklace2.jpg";
+import necklace3 from "/images/necklace3.jpg";
+import necklace4 from "/images/necklace4.jpg";
+import necklace5 from "/images/necklace5.jpg";
+
+// Rings
+import ring1 from "/images/ring1.jpg";
+import ring2 from "/images/ring2.jpg";
+import ring3 from "/images/ring3.jpg";
+import ring4 from "/images/ring4.jpg";
+import ring5 from "/images/ring5.jpg";
+
+// navigation link throughout the siet
 export const navLinks = [
   {
     linkName: "Home",
     linkPath: "/",
-    navColor: "dark-text",
   },
   {
     linkName: "Our Journey",
     linkPath: "/journey",
-    navColor: "dark-text",
   },
   {
     linkName: "Our Collections",
     linkPath: "/work",
-    navColor: "dark-text",
   },
   {
     linkName: "Our Process",
     linkPath: "/#process",
-    navColor: "dark-text",
   },
   {
     linkName: "Inquiries",
     linkPath: "/inquiries",
-    navColor: "dark-text",
+  },
+];
+
+export const legalLinks = [
+  {
+    linkName: "Privacy Policy",
+    linkPath: "/privacy-policy",
+  },
+  {
+    linkName: "FAQ",
+    linkPath: "/inquiries#faq",
   },
 ];
 
@@ -34,84 +74,35 @@ export const socialLinks = [
     icon: FaInstagram,
     link: "https://www.instagram.com/lagravinesejewelry/?hl=en",
   },
-  {
-    name: "TikTok",
-    icon: FaTiktok,
-    link: "",
-  },
 ];
 
 export const footerData = [
   {
     id: "navigation",
-    heading: "Site Links",
-    links: [
-      {
-        linkName: "Home",
-        linkPath: "/",
-      },
-      {
-        linkName: "Our Journey",
-        linkPath: "/journey",
-      },
-      {
-        linkName: "Our Collections",
-        linkPath: "/work",
-      },
-      {
-        linkName: "Our Process",
-        linkPath: "/process",
-        navColor: "light-text",
-      },
-      {
-        linkName: "Inquiries",
-        linkPath: "/inquiries",
-      },
-    ],
+    heading: "Main Links",
+    links: navLinks,
   },
   {
     id: "legal",
     heading: "Other Links",
-    links: [
-      {
-        linkName: "Privacy Policy",
-        linkPath: "/privacy-policy",
-      },
-      {
-        linkName: "FAQ",
-        linkPath: "/inquiries#faq",
-      },
-    ],
+    links: legalLinks,
   },
   {
     id: "social",
     heading: "Social Media",
-    links: [
-      {
-        name: "Instagram",
-        icon: FaInstagram,
-        link: "https://www.instagram.com/lagravinesejewelry/?hl=en",
-      },
-      {
-        name: "TikTok",
-        icon: FaTiktok,
-        link: "",
-      },
-    ],
+    links: socialLinks,
   },
 ];
 
 // images for headers
 import homeImage from "/images/Header.jpeg";
-import journeyImage from "/images/placement1.jpg";
-import workImage from "/images/greenCoat.jpeg";
-import inquiriesImage from "/images/greenCoat.jpeg";
+import journeyImage from "/images/aboutheader.jpg";
 export const headerData = [
   {
     path: "/",
     name: "home",
     img: homeImage,
-    mainText: "Beautiful Jewelry, Crafted by Family",
+    mainText: "LaGravinese Jewelry",
     secondText: null,
   },
   {
@@ -124,37 +115,33 @@ export const headerData = [
   {
     path: "/work",
     name: "work",
-    img: workImage,
+    img: null,
     mainText: "Our Work",
     secondText: "Crafted with Precision",
   },
   {
     path: "/inquiries",
     name: "inquiries",
-    img: inquiriesImage,
+    img: null,
     mainText: "Inquiries",
     secondText: "Let's Create Together",
   },
 ];
 
 // Home testimonials Section
-import test1Head from "/images/eng-placeholder1.jpeg";
-import test2Head from "/images/eng-placeholder2.jpeg";
-import test3Head from "/images/eng-placeholder3.jpeg";
-import test4Head from "/images/eng-placeholder4.jpeg";
-import test1Background from "/images/ring-test-placeholder1.webp";
-import test2Background from "/images/ring-test-placeholder2.webp";
-import test3Background from "/images/ring-test-placeholder3.jpg";
-import test4Background from "/images/ring-test-placeholder4.jpeg";
+import testimonialCouple1 from "/images/testimonial-couple1.jpg";
+import testimonialCouple2 from "/images/testimonial-couple2.jpg";
+import testimonialCouple3 from "/images/testimonial-couple3.jpg";
+import testimonialCouple4 from "/images/testimonial-couple4.jpg";
 export const testimonialsData = {
   heading: "Kind Words from Our Clients",
   testimonials: [
     {
       id: 1,
-      clientImage: test1Head,
+      clientImage: testimonialCouple1,
       clientImageAlt: "Engagement photo of Ethan & Jackie",
 
-      jewelryImage: test1Background,
+      jewelryImage: ring1,
       jewelryImageAlt: "Custom engagement ring",
 
       testimonial:
@@ -165,10 +152,10 @@ export const testimonialsData = {
 
     {
       id: 2,
-      clientImage: test2Head,
+      clientImage: testimonialCouple2,
       clientImageAlt: "Engagement photo of Ethan & Jackie",
 
-      jewelryImage: test2Background,
+      jewelryImage: ring2,
       jewelryImageAlt: "Custom engagement ring",
 
       testimonial:
@@ -179,10 +166,10 @@ export const testimonialsData = {
 
     {
       id: 3,
-      clientImage: test3Head,
+      clientImage: testimonialCouple3,
       clientImageAlt: "Engagement photo of Ethan & Jackie",
 
-      jewelryImage: test3Background,
+      jewelryImage: ring3,
       jewelryImageAlt: "Custom engagement ring",
 
       testimonial:
@@ -193,10 +180,10 @@ export const testimonialsData = {
 
     {
       id: 4,
-      clientImage: test4Head,
+      clientImage: testimonialCouple4,
       clientImageAlt: "Engagement photo of Ethan & Jackie",
 
-      jewelryImage: test4Background,
+      jewelryImage: ring4,
       jewelryImageAlt: "Custom engagement ring",
 
       testimonial:
@@ -208,12 +195,7 @@ export const testimonialsData = {
 };
 
 // Home Process Section
-import contactImage1 from "/images/proc1.jpg";
-import contactImage2 from "/images/proc2.jpeg";
-import contactImage3 from "/images/proc3.webp";
-import contactImage4 from "/images/proc4.webp";
-
-export const homeContactData = {
+export const processHomeData = {
   heading: "Let's Bring Your Vision to Life",
   icon: FaArrowRight,
   process: [
@@ -247,39 +229,11 @@ export const homeContactData = {
     text: "Book a Consultation",
     path: "/inquiries",
   },
-
-  images: [
-    {
-      id: 1,
-      className: "img1",
-      src: contactImage1,
-      alt: "Jewelry consultation",
-    },
-    {
-      id: 2,
-      className: "img2",
-      src: contactImage2,
-      alt: "Jewelry design rendering",
-    },
-    {
-      id: 3,
-      className: "img3",
-      src: contactImage3,
-      alt: "Jewelry craftsmanship",
-    },
-    {
-      id: 4,
-      className: "img4",
-      src: contactImage4,
-      alt: "Completed custom jewelry",
-    },
-  ],
 };
 
 // home About section
 import homeAboutPhoto1 from "/images/siblings.jpg";
-import homeAboutPhoto2 from "/images/earing-placeholder.png"; // Add your second image import here
-
+import homeAboutPhoto2 from "/images/earrings6.jpg";
 export const homeAboutData = {
   heading: "Our Story",
   images: {
@@ -299,15 +253,7 @@ export const homeAboutData = {
   },
 };
 
-// home collections section
-import engagementRings from "/images/ring-test-placeholder1.webp";
-import weddingBands from "/images/ring-test-placeholder2.webp";
-import anniversaryRings from "/images/ring-test-placeholder3.jpg";
-import necklaces from "/images/necklace-placeholder.png";
-import earrings from "/images/earing-placeholder.png";
-import bracelets from "/images/bracelet-placeholder.jpg";
-import pendants from "/images/pendant.jpg";
-
+// Home Collections Section
 export const collections = {
   header: "Our Collections",
   galleryheader: "Gallery",
@@ -316,126 +262,68 @@ export const collections = {
   linkTo: "/work",
   items: [
     {
-      id: "engagement-rings",
-      title: "Engagement Rings",
-      image: engagementRings,
-      alt: "Custom engagement ring",
+      id: "bridal",
+      title: "Bridal",
+      image: ring2,
+      alt: "Wedding bands",
       index: 0,
       gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
+        ring2,
+        ring1,
+        necklace1,
+        necklace2,
+        earrings1,
+        earrings2,
+        bracelet1,
+        bracelet2,
       ],
     },
     {
-      id: "Bridal",
-      title: "Bridal",
-      image: weddingBands,
-      alt: "Wedding bands",
+      id: "rings",
+      title: "Rings",
+      image: ring1,
+      alt: "Custom ring",
       index: 1,
-      gallery: [
-        weddingBands,
-        weddingBands,
-        weddingBands,
-        weddingBands,
-        weddingBands,
-      ],
-    },
-    {
-      id: "anniversary-rings",
-      title: "Anniversary Rings",
-      image: anniversaryRings,
-      alt: "Anniversary ring",
-      index: 2,
-      gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-      ],
+      gallery: [ring1, ring2, ring3, ring4, ring5],
     },
     {
       id: "necklaces",
       title: "Necklaces",
-      image: necklaces,
+      image: necklace1,
       alt: "Custom necklace",
-      index: 3,
-      gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-      ],
+      index: 2,
+      gallery: [necklace1, necklace2, necklace3, necklace4, necklace5],
     },
     {
       id: "earrings",
       title: "Earrings",
-      image: earrings,
+      image: earrings1,
       alt: "Custom earrings",
-      index: 4,
+      index: 3,
       gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
+        earrings1,
+        earrings2,
+        earrings3,
+        earrings4,
+        earrings5,
+        earrings6,
+        earrings7,
       ],
     },
     {
       id: "bracelets",
       title: "Bracelets",
-      image: bracelets,
+      image: bracelet1,
       alt: "Custom bracelet",
-      index: 5,
+      index: 4,
       gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
-      ],
-    },
-    {
-      id: "pendants",
-      title: "Pendants",
-      image: pendants,
-      alt: "Custom pendant",
-      index: 6,
-      gallery: [
-        engagementRings,
-        weddingBands,
-        anniversaryRings,
-        necklaces,
-        earrings,
+        bracelet1,
+        bracelet2,
+        bracelet3,
+        bracelet4,
+        bracelet5,
+        bracelet6,
+        bracelet7,
       ],
     },
   ],
@@ -454,7 +342,6 @@ export const services = {
     {
       title: "Professional Jewelry Appraisals",
       icon: GiScales,
-      image: engagementRings,
       alt: "Jewelry Appraisal Services",
       description:
         "Receive a detailed, professional evaluation of your jewelry for insurance, estate planning, resale, or personal records.",
@@ -462,7 +349,6 @@ export const services = {
     {
       title: "Stone Replacement & Resetting",
       icon: GiGemPendant,
-      image: bracelets,
       alt: "Stone Replacement Services",
       description:
         "Restore your favorite pieces with expert stone replacement, secure resetting, and precision craftsmanship.",
@@ -470,7 +356,6 @@ export const services = {
     {
       title: "Custom Jewelry Design",
       icon: GiDiamondRing,
-      image: pendants,
       alt: "Custom Jewelry Design Services",
       description:
         "Work one-on-one with our designers to create a unique, handcrafted piece tailored to your vision and style.",
@@ -540,62 +425,62 @@ export const contactForm = {
   images: [
     {
       id: 0,
-      src: engagementRings,
+      src: ring1,
       alt: "Gallery image 1",
     },
     {
       id: 1,
-      src: weddingBands,
+      src: ring2,
       alt: "Gallery image 2",
     },
     {
       id: 2,
-      src: anniversaryRings,
+      src: ring3,
       alt: "Gallery image 3",
     },
     {
       id: 3,
-      src: necklaces,
+      src: necklace1,
       alt: "Gallery image 4",
     },
     {
       id: 4,
-      src: earrings,
+      src: earrings1,
       alt: "Gallery image 5",
     },
     {
       id: 5,
-      src: bracelets,
+      src: bracelet1,
       alt: "Gallery image 6",
     },
     {
       id: 6,
-      src: pendants,
+      src: necklace2,
       alt: "Gallery image 7",
     },
     {
       id: 7,
-      src: test1Head,
+      src: testimonialCouple1,
       alt: "Gallery image 8",
     },
     {
       id: 8,
-      src: test1Head,
+      src: testimonialCouple1,
       alt: "Gallery image 9",
     },
     {
       id: 9,
-      src: test1Head,
+      src: testimonialCouple1,
       alt: "Gallery image 10",
     },
     {
       id: 10,
-      src: test1Head,
+      src: testimonialCouple1,
       alt: "Gallery image 11",
     },
     {
       id: 11,
-      src: test1Head,
+      src: testimonialCouple1,
       alt: "Gallery image 12",
     },
   ],
@@ -650,7 +535,12 @@ export const faqData = [
       {
         question: "Do you provide warranties or insurance?",
         answer:
-          "While we do not provide jewelry insurance directly, we strongly encourage insuring valuable pieces against loss, theft, or accidental damage. If questions arise regarding craftsmanship, sizing, or adjustments, please contact us. We stand behind the quality of our work and will always do our best to provide a thoughtful and fair solution.",
+          "While we do not provide jewelry insurance directly, we strongly encourage insuring valuable pieces against loss, theft, or accidental damage. Every piece includes our 6-Month Limited Warranty covering manufacturing and workmanship-related issues from the date of delivery. If questions arise regarding craftsmanship, sizing, or adjustments, please contact us—we stand behind the quality of our work and will evaluate your piece to provide a thoughtful and fair solution.",
+      },
+      {
+        question: "What is covered under the 6-Month Limited Warranty?",
+        answer:
+          "Our 6-Month Limited Warranty covers manufacturing and workmanship-related issues starting from the date your piece is delivered. This includes loose or bent prongs, accent stones that loosen or fall out due to a manufacturing defect, and other construction-related issues. If you believe your piece has a manufacturing defect, please contact us so we can evaluate it and determine the best course of action.",
       },
     ],
   },
@@ -676,59 +566,12 @@ export const faqData = [
   },
 ];
 
-// timeline
-import journeyImage1 from "/images/journey1.jpg";
-import journeyImage2 from "/images/journey2.jpg";
-import journeyImage3 from "/images/journey2.jpg";
+// Our Journey Page/ About Page
+import journeyImage1 from "/images/gen1.jpg";
+import journeyImage2 from "/images/gen2.jpg";
+import journeyImage3 from "/images/gen3.jpg";
 import journeyImage4 from "/images/siblings.jpg";
-export const journeyTimeline = {
-  images: [
-    {
-      imgSrc: journeyImage1,
-      imgAlt: "placeholder",
-    },
-    {
-      imgSrc: journeyImage2,
-      imgAlt: "placeholder",
-    },
-    {
-      imgSrc: journeyImage3,
-      imgAlt: "placeholder",
-    },
-    {
-      imgSrc: journeyImage4,
-      imgAlt: "placeholder",
-    },
-  ],
-  text: [
-    {
-      generation: "1st Gen",
-      years: "1920",
-      head: "The Craft Begins",
-      desc: "Founded in a modest workbench workshop, our story began with raw metals, hand-forged techniques, and an unyielding dedication to true artisan benchwork.",
-    },
-    {
-      generation: "2nd Gen",
-      years: "1950",
-      head: "Refining the Heritage",
-      desc: "Expanding into bespoke gemstone cutting and intricate stone setting, the second generation elevated our signature style into timeless mid-century heirlooms.",
-    },
-    {
-      generation: "3rd Gen",
-      years: "1980",
-      head: "Mastering the Modern Classic",
-      desc: "Bridging traditional goldsmithing with modern design aesthetics, we introduced custom engagement creations tailored to the modern romantic.",
-    },
-    {
-      generation: "4th Gen",
-      years: "2010",
-      head: "Innovation & Legacy",
-      desc: "Combining state-of-the-art 3D modeling with four generations of bench mastery, we turn your unique stories into handcrafted modern masterpieces.",
-    },
-  ],
-};
-
-export const journeyTimelineMobile = [
+export const journeyTimelineData = [
   {
     generation: "1st Gen",
     years: "1920",

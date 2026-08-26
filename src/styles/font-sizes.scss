@@ -122,6 +122,7 @@ header {
 
 .faq button {
   font-family: var(--font-body);
+
   font-weight: 500;
   font-size: var(--fs-body);
 }
@@ -199,6 +200,15 @@ footer,
 .card {
   background-color: var(--color-deep-cocoa);
   color: var(--text-on-dark);
+}
+footer {
+  h3 {
+    font-size: var(--fs-h4);
+    opacity: 0.75;
+  }
+  svg {
+    font-size: var(--fs-h4xf);
+  }
 }
 
 .bg-color-two {
