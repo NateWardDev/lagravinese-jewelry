@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useLocation, Routes, Route } from "react-router";
+// Change import from "react-router" to "react-router-dom"
+import { useLocation, Routes, Route } from "react-router-dom";
 import "./styles/reset.scss";
 import "./styles/main.scss";
 import "./styles/font-sizes.scss";
@@ -24,7 +25,6 @@ function App() {
   useEffect(() => {
     let observer;
 
-    // Use requestAnimationFrame so the DOM has finished painting the route transition
     const timeoutId = requestAnimationFrame(() => {
       observer = new IntersectionObserver(
         (entries) => {
@@ -79,16 +79,26 @@ function App() {
   );
 }
 
+// Fixed ScrollToTop Component
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    if (!hash) {
-      // Force immediate window scroll to 0,0 before browser paint
-      window.scrollTo(0, 0);
+    // If navigating to an inline anchor tag (e.g. #info-collect), don't override scroll to top
+    if (hash) return;
+
+    // Use requestAnimationFrame to reset scroll right after React renders the new route
+    const frameId = requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "instant", // Bypasses CSS smooth-scroll overrides
+      });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-    }
+    });
+
+    return () => cancelAnimationFrame(frameId);
   }, [pathname, hash]);
 
   return null;

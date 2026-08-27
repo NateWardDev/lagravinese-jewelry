@@ -11,13 +11,10 @@ const CollectionsHome = () => {
           <h2 className="delay-1">{collections.header}</h2>
         </div>
         <div className="header-right">
-          <p className="delay-2">
-            Explore our handcrafted fine jewelry collections, designed to
-            celebrate life's most cherished milestones and moments.
-          </p>
+          <p className="delay-2">{collections.introText}</p>
           <div className="delay-3">
             <Link to={collections.linkTo} className="page-link right">
-              View All <Icon />
+              {collections.buttonText} <Icon />
             </Link>
           </div>
         </div>

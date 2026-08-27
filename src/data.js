@@ -33,7 +33,15 @@ import ring3 from "/images/ring3.jpg";
 import ring4 from "/images/ring4.jpg";
 import ring5 from "/images/ring5.jpg";
 
-// navigation link throughout the siet
+// navigation link throughout the site
+export const logo = "LaGravinese";
+
+export const navConfig = {
+  mobileMenuAriaLabel: "Toggle navigation menu",
+  // Routes where the header text should switch to dark mode
+  darkTextRoutes: ["/inquiries"],
+};
+
 export const navLinks = [
   {
     linkName: "Home",
@@ -76,29 +84,37 @@ export const socialLinks = [
   },
 ];
 
-export const footerData = [
-  {
-    id: "location",
-    heading: "Visit Us",
-    address: "9375 E. Shea Blvd. Suite 100, Scottsdale, Arizona 85260",
-    note: "All design consults are by appointment only.",
+export const footerData = {
+  sections: [
+    {
+      id: "location",
+      heading: "Visit Us",
+      address: "9375 E. Shea Blvd. Suite 100, Scottsdale, Arizona 85260",
+      note: "All design consults are by appointment only.",
+    },
+    {
+      id: "navigation",
+      heading: "Main Links",
+      links: navLinks,
+    },
+    {
+      id: "legal",
+      heading: "Other Links",
+      links: legalLinks,
+    },
+    {
+      id: "social",
+      heading: "Social Media",
+      links: socialLinks,
+    },
+  ],
+  bottom: {
+    companyName: "LaGravinese Jewelry",
+    creditText: "Website by",
+    creditName: "Narley Web Studios",
+    creditUrl: "https://narleyweb.com",
   },
-  {
-    id: "navigation",
-    heading: "Main Links",
-    links: navLinks,
-  },
-  {
-    id: "legal",
-    heading: "Other Links",
-    links: legalLinks,
-  },
-  {
-    id: "social",
-    heading: "Social Media",
-    links: socialLinks,
-  },
-];
+};
 
 // images for headers
 import homeImage from "/images/Header.jpeg";
@@ -110,6 +126,12 @@ export const headerData = [
     img: homeImage,
     mainText: "LaGravinese Jewelry",
     secondText: null,
+    card: {
+      description:
+        "Crafting fine jewelry that harmonizes modern elegance with timeless craftsmanship. Redefining high luxury for everyday moments.",
+      buttonText: "Explore Collections",
+      buttonPath: "/work",
+    },
   },
   {
     path: "/journey",
@@ -117,6 +139,7 @@ export const headerData = [
     img: journeyImage,
     mainText: "Our Journey",
     secondText: "A Family Legacy",
+    card: null,
   },
   {
     path: "/work",
@@ -124,6 +147,7 @@ export const headerData = [
     img: null,
     mainText: "Our Work",
     secondText: "Crafted with Precision",
+    card: null,
   },
   {
     path: "/inquiries",
@@ -131,6 +155,7 @@ export const headerData = [
     img: null,
     mainText: "Inquiries",
     secondText: "Let's Create Together",
+    card: null,
   },
 ];
 
@@ -202,8 +227,13 @@ export const testimonialsData = {
 
 // Home Process Section
 export const processHomeData = {
-  heading: "Let's Bring Your Vision to Life",
+  heading: "Our Process",
+  heading2: "From vision to heirloom",
   icon: FaArrowRight,
+  markerIcon: {
+    viewBox: "0 0 24 24",
+    path: "M12 2L22 12L12 22L2 12Z", // Diamond icon path
+  },
   process: [
     {
       id: 1,
@@ -263,9 +293,14 @@ export const homeAboutData = {
 export const collections = {
   header: "Our Collections",
   galleryheader: "Gallery",
+  introText:
+    "Explore our handcrafted fine jewelry collections, designed to celebrate life's most cherished milestones and moments.",
+  buttonText: "View All",
   arrowleftIcon: FaArrowLeft,
   icon: FaArrowRight,
   pageLink: "Gallery",
+  categoryLabel: "CATEGORY",
+  backTo: "Back to Collections",
   linkTo: "/work",
   items: [
     {
@@ -376,6 +411,10 @@ export const contactForm = {
   description:
     "Tell us about your jewelry needs and we'll contact you to discuss your project or service.",
   icon: FaArrowRight,
+  optgroups: {
+    products: "Fine Jewelry",
+    services: "Jewelry Services",
+  },
   fields: {
     firstName: {
       label: "First Name",
@@ -494,84 +533,95 @@ export const contactForm = {
 };
 
 // faq on inquiries page
-export const faqData = [
-  {
-    category: "Orders & Custom Design",
-    questions: [
-      {
-        question: "Do you have jewelry available for immediate purchase?",
-        answer:
-          "Our collections are thoughtfully made to order. Rather than carrying large inventories, we focus on creating pieces specifically for each client, ensuring exceptional craftsmanship and attention to detail. For custom bridal appointments, you'll also have the opportunity to explore a curated selection of sample rings and bands to help inspire your final design.",
-      },
-      {
-        question:
-          "I have an idea or inspiration for a piece. Can you create it?",
-        answer:
-          "Absolutely. Whether you have a sketch, a photograph, a design you've admired, or simply a vision in mind, we're here to bring it to life. Every custom project begins with a conversation about your style, preferences, and budget. From there, we'll guide you through selecting diamonds, gemstones, and precious metals before refining the design into a piece that's uniquely yours. Whether inspired by a family heirloom, a classic style, or a favorite design, every piece is thoughtfully crafted with the same care, precision, and attention to detail.",
-      },
-      {
-        question: "How long will my order take?",
-        answer:
-          "Each piece is made specifically for you, so production times vary depending on the project. Custom Bridal pieces typically require 4–6 weeks, while Custom Collection pieces are generally completed in 3–4 weeks. We'll keep you informed throughout the process so you'll always know what to expect.",
-      },
-    ],
+export const faqData = {
+  header: {
+    title: "Frequently Asked Questions",
   },
-  {
-    category: "Shipping & Pickup",
-    questions: [
-      {
-        question: "Do you offer shipping?",
-        answer:
-          "Yes. We proudly ship nationwide. Every order is carefully packaged, fully insured, and shipped with signature confirmation to ensure your jewelry arrives safely and securely.",
-      },
-      {
-        question: "Do you offer local pickup?",
-        answer:
-          "Yes. We are based in Scottsdale, Arizona, and are happy to coordinate local pickup by appointment.",
-      },
-    ],
+  categories: [
+    {
+      category: "Orders & Custom Design",
+      questions: [
+        {
+          question: "Do you have jewelry available for immediate purchase?",
+          answer:
+            "Our collections are thoughtfully made to order. Rather than carrying large inventories, we focus on creating pieces specifically for each client, ensuring exceptional craftsmanship and attention to detail. For custom bridal appointments, you'll also have the opportunity to explore a curated selection of sample rings and bands to help inspire your final design.",
+        },
+        {
+          question:
+            "I have an idea or inspiration for a piece. Can you create it?",
+          answer:
+            "Absolutely. Whether you have a sketch, a photograph, a design you've admired, or simply a vision in mind, we're here to bring it to life. Every custom project begins with a conversation about your style, preferences, and budget. From there, we'll guide you through selecting diamonds, gemstones, and precious metals before refining the design into a piece that's uniquely yours. Whether inspired by a family heirloom, a classic style, or a favorite design, every piece is thoughtfully crafted with the same care, precision, and attention to detail.",
+        },
+        {
+          question: "How long will my order take?",
+          answer:
+            "Each piece is made specifically for you, so production times vary depending on the project. Custom Bridal pieces typically require 4–6 weeks, while Custom Collection pieces are generally completed in 3–4 weeks. We'll keep you informed throughout the process so you'll always know what to expect.",
+        },
+      ],
+    },
+    {
+      category: "Shipping & Pickup",
+      questions: [
+        {
+          question: "Do you offer shipping?",
+          answer:
+            "Yes. We proudly ship nationwide. Every order is carefully packaged, fully insured, and shipped with signature confirmation to ensure your jewelry arrives safely and securely.",
+        },
+        {
+          question: "Do you offer local pickup?",
+          answer:
+            "Yes. We are based in Scottsdale, Arizona, and are happy to coordinate local pickup by appointment.",
+        },
+      ],
+    },
+    {
+      category: "Appraisals & Insurance",
+      questions: [
+        {
+          question: "Do you offer appraisals?",
+          answer:
+            "Yes. Every bridal purchase includes a complimentary professional appraisal completed by Tom LaGravinese, Graduate Gemologist (GG). This appraisal may be used to obtain jewelry insurance through the provider of your choice. Professional appraisals are also available for custom pieces and other jewelry at a preferred client rate.",
+        },
+        {
+          question: "Do you provide warranties or insurance?",
+          answer:
+            "While we do not provide jewelry insurance directly, we strongly encourage insuring valuable pieces against loss, theft, or accidental damage. Every piece includes our 6-Month Limited Warranty covering manufacturing and workmanship-related issues from the date of delivery. If questions arise regarding craftsmanship, sizing, or adjustments, please contact us—we stand behind the quality of our work and will evaluate your piece to provide a thoughtful and fair solution.",
+        },
+        {
+          question: "What is covered under the 6-Month Limited Warranty?",
+          answer:
+            "Our 6-Month Limited Warranty covers manufacturing and workmanship-related issues starting from the date your piece is delivered. This includes loose or bent prongs, accent stones that loosen or fall out due to a manufacturing defect, and other construction-related issues. If you believe your piece has a manufacturing defect, please contact us so we can evaluate it and determine the best course of action.",
+        },
+      ],
+    },
+    {
+      category: "Returns & Adjustments",
+      questions: [
+        {
+          question: "What is your return policy?",
+          answer:
+            "Because each piece is custom made or specially ordered, all sales are considered final. However, our relationship with you doesn't end once your jewelry is delivered. If you have concerns about your piece, we encourage you to contact us. We'll carefully review each situation individually and work with you to determine the best available solution. When appropriate, we may also be able to assist with services such as ring resizing or other minor adjustments. Our goal is for you to enjoy your jewelry with confidence for many years to come.",
+        },
+        {
+          question: "Do you work with heirloom jewelry?",
+          answer:
+            "We love helping clients breathe new life into treasured family pieces. Whether you'd like to redesign an inherited ring, incorporate existing gemstones, or preserve the sentimental value of an heirloom, we'll guide you through the process with care and respect.",
+        },
+        {
+          question: "Can I use my own diamonds or gemstones?",
+          answer:
+            "Absolutely. We love incorporating meaningful diamonds and gemstones into new designs whenever possible. During your consultation, we'll carefully examine your stones, discuss your vision, and guide you through the best options for creating a beautiful piece that honors both your story and the integrity of the materials.",
+        },
+      ],
+    },
+  ],
+  footer: {
+    promptText: "Have other questions?",
+    linkText: "Contact us directly",
+    linkUrl: "#contact",
+    suffixText: "—we're here to help!",
   },
-  {
-    category: "Appraisals & Insurance",
-    questions: [
-      {
-        question: "Do you offer appraisals?",
-        answer:
-          "Yes. Every bridal purchase includes a complimentary professional appraisal completed by Tom LaGravinese, Graduate Gemologist (GG). This appraisal may be used to obtain jewelry insurance through the provider of your choice. Professional appraisals are also available for custom pieces and other jewelry at a preferred client rate.",
-      },
-      {
-        question: "Do you provide warranties or insurance?",
-        answer:
-          "While we do not provide jewelry insurance directly, we strongly encourage insuring valuable pieces against loss, theft, or accidental damage. Every piece includes our 6-Month Limited Warranty covering manufacturing and workmanship-related issues from the date of delivery. If questions arise regarding craftsmanship, sizing, or adjustments, please contact us—we stand behind the quality of our work and will evaluate your piece to provide a thoughtful and fair solution.",
-      },
-      {
-        question: "What is covered under the 6-Month Limited Warranty?",
-        answer:
-          "Our 6-Month Limited Warranty covers manufacturing and workmanship-related issues starting from the date your piece is delivered. This includes loose or bent prongs, accent stones that loosen or fall out due to a manufacturing defect, and other construction-related issues. If you believe your piece has a manufacturing defect, please contact us so we can evaluate it and determine the best course of action.",
-      },
-    ],
-  },
-  {
-    category: "Returns & Adjustments",
-    questions: [
-      {
-        question: "What is your return policy?",
-        answer:
-          "Because each piece is custom made or specially ordered, all sales are considered final. However, our relationship with you doesn't end once your jewelry is delivered. If you have concerns about your piece, we encourage you to contact us. We'll carefully review each situation individually and work with you to determine the best available solution. When appropriate, we may also be able to assist with services such as ring resizing or other minor adjustments. Our goal is for you to enjoy your jewelry with confidence for many years to come.",
-      },
-      {
-        question: "Do you work with heirloom jewelry?",
-        answer:
-          "We love helping clients breathe new life into treasured family pieces. Whether you'd like to redesign an inherited ring, incorporate existing gemstones, or preserve the sentimental value of an heirloom, we'll guide you through the process with care and respect.",
-      },
-      {
-        question: "Can I use my own diamonds or gemstones?",
-        answer:
-          "Absolutely. We love incorporating meaningful diamonds and gemstones into new designs whenever possible. During your consultation, we'll carefully examine your stones, discuss your vision, and guide you through the best options for creating a beautiful piece that honors both your story and the integrity of the materials.",
-      },
-    ],
-  },
-];
+};
 
 // Our Journey Page/ About Page
 import journeyImage1 from "/images/gen1.jpg";

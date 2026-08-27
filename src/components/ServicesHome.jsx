@@ -38,7 +38,7 @@ const ServicesHome = () => {
           {services.pageLink && (
             <Link to={services.linkTo} className="page-link services-footer">
               <span>{services.pageLink}</span>
-              <FooterIcon />
+              {FooterIcon && <FooterIcon />}
             </Link>
           )}
         </div>

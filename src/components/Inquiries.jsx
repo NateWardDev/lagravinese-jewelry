@@ -116,14 +116,14 @@ const Inquiries = () => {
               <option value="" disabled>
                 {contactForm.fields.interest.placeholder}
               </option>
-              <optgroup label="Fine Jewelry">
+              <optgroup label={contactForm.optgroups.products}>
                 {contactForm.productOptions.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}
                   </option>
                 ))}
               </optgroup>
-              <optgroup label="Jewelry Services">
+              <optgroup label={contactForm.optgroups.services}>
                 {contactForm.serviceOptions.map((item) => (
                   <option key={item.id} value={item.id}>
                     {item.label}

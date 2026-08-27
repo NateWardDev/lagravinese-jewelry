@@ -37,8 +37,8 @@ const ProcessHome = () => {
       <div className="process-container">
         {/* Section Header */}
         <div className="process-header fade-in">
-          <h2 className="delay-1">Our Process</h2>
-          <p className="subtitle delay-2">From vision to heirloom</p>
+          <h2 className="delay-1">{processHomeData.heading}</h2>
+          <p className="subtitle delay-2">{processHomeData.heading2}</p>
         </div>
 
         {/* Timeline List */}
@@ -67,10 +67,10 @@ const ProcessHome = () => {
                 <div className="timeline-marker">
                   <svg
                     className="diamond-icon"
-                    viewBox="0 0 24 24"
+                    viewBox={processHomeData.markerIcon.viewBox}
                     fill="currentColor"
                   >
-                    <path d="M12 2L22 12L12 22L2 12Z" />
+                    <path d={processHomeData.markerIcon.path} />
                   </svg>
                 </div>
               </div>

@@ -31,12 +31,16 @@ const Footer = () => {
     return null;
   }
 
+  const locationSection = footerData.sections.find(
+    (sec) => sec.id === "location",
+  );
+
   return (
     <footer className="site-footer">
       <div className="footer-content">
         {/* Top Links Grid */}
         <div className="footer-links-grid">
-          {footerData
+          {footerData.sections
             .filter((sec) => sec.id !== "location")
             .map((section) => (
               <div key={section.id} className="footer-section">
@@ -80,16 +84,14 @@ const Footer = () => {
         </div>
 
         {/* Location Standalone Block Above Divider */}
-        {footerData.find((sec) => sec.id === "location") && (
+        {locationSection && (
           <div className="footer-location-block">
-            <h3>Visit Us</h3>
+            <h3>{locationSection.heading}</h3>
             <div className="location-info">
               <address className="footer-address">
-                9375 E. Shea Blvd. Suite 100, Scottsdale, Arizona 85260
+                {locationSection.address}
               </address>
-              <span className="appointment-note">
-                All design consults are by appointment only.
-              </span>
+              <span className="appointment-note">{locationSection.note}</span>
             </div>
           </div>
         )}
@@ -97,13 +99,17 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} LaGravinese Jewelry. All rights
-          reserved.
+          &copy; {new Date().getFullYear()} {footerData.bottom.companyName}. All
+          rights reserved.
         </p>
         <p>
-          Website by{" "}
-          <a href="https://narleyweb.com" target="_blank" rel="noreferrer">
-            Narley Web Studios
+          {footerData.bottom.creditText}{" "}
+          <a
+            href={footerData.bottom.creditUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {footerData.bottom.creditName}
           </a>
         </p>
       </div>

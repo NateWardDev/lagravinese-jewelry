@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { collections } from "../data";
-import { Link } from "react-router";
 
 const CategoryPage = () => {
   const { id } = useParams();
@@ -59,9 +58,7 @@ const CategoryPage = () => {
     advanceImage();
   };
 
-  // -------------------------------------------------------------
-  // CONTINUOUS LERP ANIMATION ENGINE
-  // -------------------------------------------------------------
+  // Continuous LERP Animation Engine
   useEffect(() => {
     if (!category) return;
 
@@ -69,7 +66,6 @@ const CategoryPage = () => {
     const lerpFactor = 0.25;
 
     const renderLoop = () => {
-      // Lerp smooth target interpolation
       scrollPos.current.current +=
         (scrollPos.current.target - scrollPos.current.current) * lerpFactor;
 
@@ -81,13 +77,12 @@ const CategoryPage = () => {
         Math.min(totalItems - 1, Math.round(progress)),
       );
 
-      // Update active state when nearest slide changes
       if (nearestIdx !== activeIndexRef.current) {
         activeIndexRef.current = nearestIdx;
         setActiveImageIndex(nearestIdx);
       }
 
-      // 1. DESKTOP CONTINUOUS TRACK TRANSFORM (VERTICAL)
+      // Desktop continuous track transform (Vertical)
       if (
         window.innerWidth > 1024 &&
         desktopRailRef.current &&
@@ -103,7 +98,7 @@ const CategoryPage = () => {
         }
       }
 
-      // 2. MOBILE CONTINUOUS TRACK TRANSFORM (HORIZONTAL)
+      // Mobile continuous track transform (Horizontal)
       if (
         window.innerWidth <= 1024 &&
         mobileRailRef.current &&
@@ -126,9 +121,7 @@ const CategoryPage = () => {
     return () => cancelAnimationFrame(frameId);
   }, [category]);
 
-  // -------------------------------------------------------------
-  // MAIN IMAGE CROSSFADE ANIMATION (GSAP)
-  // -------------------------------------------------------------
+  // Main Image Crossfade Animation (GSAP)
   useEffect(() => {
     if (!category) return;
 
@@ -136,13 +129,11 @@ const CategoryPage = () => {
       const isCurrent = idx === activeImageIndex;
 
       if (isInitialRender.current) {
-        // Instant positioning on first load (no flash)
         gsap.set(`.main-image-wrapper-${idx}`, {
           opacity: isCurrent ? 1 : 0,
           pointerEvents: isCurrent ? "auto" : "none",
         });
       } else {
-        // Smooth fade transition when scrolling/clicking
         gsap.to(`.main-image-wrapper-${idx}`, {
           opacity: isCurrent ? 1 : 0,
           pointerEvents: isCurrent ? "auto" : "none",
@@ -158,9 +149,7 @@ const CategoryPage = () => {
     }
   }, [activeImageIndex, category]);
 
-  // -------------------------------------------------------------
-  // DESKTOP WHEEL SCROLL LISTENER
-  // -------------------------------------------------------------
+  // Desktop Wheel Scroll Listener
   useEffect(() => {
     if (!category) return;
 
@@ -180,11 +169,8 @@ const CategoryPage = () => {
     return () => window.removeEventListener("wheel", handleWheel);
   }, [category]);
 
-  // -------------------------------------------------------------
-  // DESKTOP & IPAD DRAG / SWIPE HANDLERS
-  // -------------------------------------------------------------
+  // Pointer & Drag Handlers
   const handlePointerDown = (e) => {
-    // Only handle primary touches or left mouse clicks
     if (e.button !== undefined && e.button !== 0) return;
 
     isDragging.current = true;
@@ -202,10 +188,8 @@ const CategoryPage = () => {
     const diffX = startXPos.current - currentX;
 
     const isDesktop = window.innerWidth > 1024;
-    // On desktop / iPad desktop view, use vertical movement
     const movement = isDesktop ? diffY : diffX;
 
-    // Movement threshold to prevent canceling quick taps
     if (Math.hypot(diffX, diffY) > 8) {
       hasDragged.current = true;
     }
@@ -228,7 +212,6 @@ const CategoryPage = () => {
     if (!isDragging.current) return;
     isDragging.current = false;
 
-    // Snap target scroll position to nearest slide index
     scrollPos.current.target = Math.round(scrollPos.current.target);
   };
 
@@ -237,7 +220,7 @@ const CategoryPage = () => {
   return (
     <section className="category-page-overlay">
       <div className="lightbox-wrapper">
-        {/* ================= DESKTOP / IPAD DESKTOP VIEW ================= */}
+        {/* ================= DESKTOP VIEW ================= */}
         <div
           className="lightbox-content desktop-only"
           onPointerDown={handlePointerDown}
@@ -246,7 +229,9 @@ const CategoryPage = () => {
           onPointerCancel={handlePointerUp}
         >
           <div className="category-meta fade-in">
-            <p className="meta-label delay-1">CATEGORY</p>
+            <p className="meta-label delay-1">
+              {collections.categoryLabel || "CATEGORY"}
+            </p>
             <h2 className="meta-title delay-2">{category.title}</h2>
           </div>
 
@@ -281,12 +266,12 @@ const CategoryPage = () => {
           </div>
 
           <Link to="/work" className="page-link absolute-link">
-            <Icon />
-            Back to Colletions
+            {Icon && <Icon />}
+            {collections.backTo}
           </Link>
         </div>
 
-        {/* ================= MOBILE / NARROW VIEW ================= */}
+        {/* ================= MOBILE VIEW ================= */}
         <div
           className="lightbox-content mobile-only"
           onPointerDown={handlePointerDown}
@@ -327,7 +312,7 @@ const CategoryPage = () => {
           <div className="category-meta">
             <h1 className="meta-title">{category.title}</h1>
             <Link to="/work" className="page-link">
-              <Icon /> Back to Colletions
+              {Icon && <Icon />} {collections.backTo}
             </Link>
           </div>
         </div>
